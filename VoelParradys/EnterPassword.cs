@@ -9,10 +9,10 @@ using System.Windows.Forms;
 
 namespace VoelParadys
 {
-    public partial class EnterPasswordForm : Form
+    public partial class EnterPassword : Form
     {
         string sEnteredPass;
-        public EnterPasswordForm()
+        public EnterPassword()
         {
             InitializeComponent();
             sEnteredPass = "";

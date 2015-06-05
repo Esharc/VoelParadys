@@ -65,35 +65,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomerDetailsForm.cs">
+    <Compile Include="NewSupplier.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CustomerDetailsForm.Designer.cs">
-      <DependentUpon>CustomerDetailsForm.cs</DependentUpon>
+    <Compile Include="NewSupplier.Designer.cs">
+      <DependentUpon>NewSupplier.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomersForm.cs">
+    <Compile Include="CustomerDetails.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CustomersForm.Designer.cs">
-      <DependentUpon>CustomersForm.cs</DependentUpon>
+    <Compile Include="CustomerDetails.Designer.cs">
+      <DependentUpon>CustomerDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="EnterPasswordForm.cs">
+    <Compile Include="Customers.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EnterPasswordForm.Designer.cs">
-      <DependentUpon>EnterPasswordForm.cs</DependentUpon>
+    <Compile Include="Customers.Designer.cs">
+      <DependentUpon>Customers.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewSuperUserPasswordForm.cs">
+    <Compile Include="EnterPassword.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewSuperUserPasswordForm.Designer.cs">
-      <DependentUpon>NewSuperUserPasswordForm.cs</DependentUpon>
+    <Compile Include="EnterPassword.Designer.cs">
+      <DependentUpon>EnterPassword.cs</DependentUpon>
     </Compile>
-    <Compile Include="SuppliersForm.cs">
+    <Compile Include="NewSuperUserPassword.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SuppliersForm.Designer.cs">
-      <DependentUpon>SuppliersForm.cs</DependentUpon>
+    <Compile Include="NewSuperUserPassword.Designer.cs">
+      <DependentUpon>NewSuperUserPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SuppliersDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SuppliersDetails.Designer.cs">
+      <DependentUpon>SuppliersDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Suppliers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Suppliers.Designer.cs">
+      <DependentUpon>Suppliers.cs</DependentUpon>
     </Compile>
     <Compile Include="VoelParadysKeyCodeManager.cs" />
     <Compile Include="NewCustomer.cs">
@@ -108,11 +120,11 @@
     <Compile Include="NewWishListItem.Designer.cs">
       <DependentUpon>NewWishListItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="StoreUsageForm.cs">
+    <Compile Include="StoreUsage.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StoreUsageForm.Designer.cs">
-      <DependentUpon>StoreUsageForm.cs</DependentUpon>
+    <Compile Include="StoreUsage.Designer.cs">
+      <DependentUpon>StoreUsage.cs</DependentUpon>
     </Compile>
     <Compile Include="VoelParadysDataController.cs" />
     <Compile Include="VoelParadysInventoryData.cs" />
@@ -139,14 +151,14 @@
     <Compile Include="VoelParadysCustomerData.cs" />
     <Compile Include="VoelParadysSuppliersData.cs" />
     <Compile Include="VoelParadysXmlParser.cs" />
-    <EmbeddedResource Include="CustomerDetailsForm.resx">
-      <DependentUpon>CustomerDetailsForm.cs</DependentUpon>
+    <EmbeddedResource Include="CustomerDetails.resx">
+      <DependentUpon>CustomerDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CustomersForm.resx">
-      <DependentUpon>CustomersForm.cs</DependentUpon>
+    <EmbeddedResource Include="Customers.resx">
+      <DependentUpon>Customers.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EnterPasswordForm.resx">
-      <DependentUpon>EnterPasswordForm.cs</DependentUpon>
+    <EmbeddedResource Include="EnterPassword.resx">
+      <DependentUpon>EnterPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inventory.resx">
       <DependentUpon>Inventory.cs</DependentUpon>
@@ -157,8 +169,11 @@
     <EmbeddedResource Include="NewStockItem.resx">
       <DependentUpon>NewStockItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewSuperUserPasswordForm.resx">
-      <DependentUpon>NewSuperUserPasswordForm.cs</DependentUpon>
+    <EmbeddedResource Include="NewSuperUserPassword.resx">
+      <DependentUpon>NewSuperUserPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewSupplier.resx">
+      <DependentUpon>NewSupplier.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewWishListItem.resx">
       <DependentUpon>NewWishListItem.cs</DependentUpon>
@@ -176,11 +191,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="StoreUsageForm.resx">
-      <DependentUpon>StoreUsageForm.cs</DependentUpon>
+    <EmbeddedResource Include="StoreUsage.resx">
+      <DependentUpon>StoreUsage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SuppliersForm.resx">
-      <DependentUpon>SuppliersForm.cs</DependentUpon>
+    <EmbeddedResource Include="SuppliersDetails.resx">
+      <DependentUpon>SuppliersDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Suppliers.resx">
+      <DependentUpon>Suppliers.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />

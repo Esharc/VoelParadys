@@ -9,16 +9,16 @@ using System.Windows.Forms;
 
 namespace VoelParadys
 {
-    public partial class CustomerDetailsForm : Form
+    public partial class CustomerDetails : Form
     {
         string m_sSelectedItem;
         int m_iSelectedCustomerID;
-        private CustomerDetailsForm()
+        private CustomerDetails()
         {
             InitializeComponent();
             m_sSelectedItem = "";
         }
-        public CustomerDetailsForm(int theSelectedCustomerId)
+        public CustomerDetails(int theSelectedCustomerId)
         {
             InitializeComponent();
             m_sSelectedItem = "";
@@ -48,7 +48,7 @@ namespace VoelParadys
         {
             // Here we should get all the stock items and add them to the list.
             WishListView.Items.Clear();
-            string[] arr = new string[7];
+            string[] arr = new string[1];
             ListViewItem itm;
             var rDataController = VoelParadysDataController.GetInstance();
 

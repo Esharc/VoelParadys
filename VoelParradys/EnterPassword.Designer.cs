@@ -1,6 +1,6 @@
 ﻿namespace VoelParadys
 {
-    partial class EnterPasswordForm
+    partial class EnterPassword
     {
         /// <summary>
         /// Required designer variable.

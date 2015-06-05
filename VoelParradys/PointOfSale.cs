@@ -288,7 +288,7 @@ namespace VoelParadys
 
             if (rDataController.UsePassword())
             {
-                var PassForm = new EnterPasswordForm();
+                var PassForm = new EnterPassword();
                 PassForm.Show();
             }
             else
@@ -364,7 +364,7 @@ namespace VoelParadys
 
         private void StoreUsageButton_Click(object sender, EventArgs e)
         {
-            var UsageForm = new StoreUsageForm();
+            var UsageForm = new StoreUsage();
             UsageForm.Show();
         }
 
@@ -404,19 +404,19 @@ namespace VoelParadys
 
         private void CustomersButton_Click(object sender, EventArgs e)
         {
-            var CustomersForm = new CustomersForm();
+            var CustomersForm = new Customers();
             CustomersForm.Show();
         }
 
         private void ChangePasswordButton_Click(object sender, EventArgs e)
         {
-            var SuperUserPasswordForm = new NewSuperUserPasswordForm();
+            var SuperUserPasswordForm = new NewSuperUserPassword();
             SuperUserPasswordForm.Show();
         }
 
         private void SuppliersButton_Click(object sender, EventArgs e)
         {
-            var SuppliersForm = new SuppliersForm();
+            var SuppliersForm = new Suppliers();
             SuppliersForm.Show();
         }
     }

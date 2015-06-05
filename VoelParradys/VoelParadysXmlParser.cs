@@ -577,8 +577,11 @@ namespace VoelParadys
                 TheWriter.WriteStartElement("Suppliers");
                 for (int i = 0; i < lSupplierItems.Count; ++i)
                 {
+                    string sName = lSupplierItems[i].GetSupplierName();
+                    sName = sName.Replace(" ", "");
+                    sName = sName.Replace("'", "");
                     TheWriter.WriteComment("This is the start of " + lSupplierItems[i].GetSupplierName());
-                    TheWriter.WriteStartElement(lSupplierItems[i].GetSupplierName().Replace(" ", ""));
+                    TheWriter.WriteStartElement(sName);
                     TheWriter.WriteElementString("ID", lSupplierItems[i].GetSupplierID().ToString());
                     TheWriter.WriteElementString("Name", lSupplierItems[i].GetSupplierName());
                     TheWriter.WriteElementString("RepName", lSupplierItems[i].GetRepName());

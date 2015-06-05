@@ -9,12 +9,12 @@ using System.Windows.Forms;
 
 namespace VoelParadys
 {
-    public partial class StoreUsageForm : Form
+    public partial class StoreUsage : Form
     {
         private string m_sSelectedStockItemCode;
         private int m_iAmountToBeUsed;
 
-        public StoreUsageForm()
+        public StoreUsage()
         {
             InitializeComponent();
             m_sSelectedStockItemCode = "";

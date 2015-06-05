@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace VoelParadys
 {
-    public partial class CustomersForm : Form
+    public partial class Customers : Form
     {
         private int m_iSelectedCustomerID;                          // The ID of the selected customer [can be edited]
         private string m_sTempName;                                 // The name of the selected customer [can be edited]
@@ -18,7 +18,7 @@ namespace VoelParadys
         private string m_sTempAddress;                              // The address of the selected customer [can be edited]
         private long m_lTempIDNumber;                               // The ID number of the selected customer [can be edited]
 
-        public CustomersForm()
+        public Customers()
         {
             InitializeComponent();
             SetUpCustomersList();
@@ -290,7 +290,7 @@ namespace VoelParadys
 
         private void CustomerDetailsButton_Click(object sender, EventArgs e)
         {
-            var theCustomerDetailsForm = new CustomerDetailsForm(m_iSelectedCustomerID);
+            var theCustomerDetailsForm = new CustomerDetails(m_iSelectedCustomerID);
             theCustomerDetailsForm.Show();
         }
 

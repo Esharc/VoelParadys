@@ -1,6 +1,6 @@
 ﻿namespace VoelParadys
 {
-    partial class StoreUsageForm
+    partial class StoreUsage
     {
         /// <summary>
         /// Required designer variable.

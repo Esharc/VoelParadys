@@ -1,6 +1,6 @@
 ﻿namespace VoelParadys
 {
-    partial class CustomerDetailsForm
+    partial class CustomerDetails
     {
         /// <summary>
         /// Required designer variable.

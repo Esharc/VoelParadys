@@ -9,13 +9,13 @@ using System.Windows.Forms;
 
 namespace VoelParadys
 {
-    public partial class NewSuperUserPasswordForm : Form
+    public partial class NewSuperUserPassword : Form
     {
         string m_sEnteredNewPassword;
         string m_sOldPassword;
         bool m_bOldMatch;
         bool m_bNewValid;
-        public NewSuperUserPasswordForm()
+        public NewSuperUserPassword()
         {
             InitializeComponent();
             m_sEnteredNewPassword = "";

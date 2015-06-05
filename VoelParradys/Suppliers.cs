@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace VoelParadys
 {
-    public partial class SuppliersForm : Form
+    public partial class Suppliers : Form
     {
         int m_iSelectedSupplierID;
         string m_sTempName;
@@ -18,7 +18,7 @@ namespace VoelParadys
         string m_sTempPhone;
         string m_sTempAddress;
             
-        public SuppliersForm()
+        public Suppliers()
         {
             InitializeComponent();
             SetUpSuppliersList();
@@ -82,7 +82,7 @@ namespace VoelParadys
                 UpdateButton.Enabled = true;
             if (!DeleteButton.Enabled)
                 DeleteButton.Enabled = true;
-            if (!DetailsButton.Enabled)
+           if (!DetailsButton.Enabled)
                 DetailsButton.Enabled = true;
 
             var rDataController = VoelParadysDataController.GetInstance();
@@ -278,12 +278,14 @@ namespace VoelParadys
 
         private void DetailsButton_Click(object sender, EventArgs e)
         {
-            // We want to open the supplier details form here
+            var theSupplierDetailsForm = new SuppliersDetails(m_iSelectedSupplierID);
+            theSupplierDetailsForm.Show();
         }
 
         private void AddButton_Click(object sender, EventArgs e)
         {
-            // We want to open the add new supplier form here
+            var AddNewSupplierForm = new NewSupplier();
+            AddNewSupplierForm.Show();
         }
     }
 }

@@ -16,3 +16,5 @@ VoelParradys/ThirdParty/ObjectListView/obj/Debug/ObjectListView2010.csproj.FileL
 VoelParradys/ThirdParty/ObjectListView/obj/Debug/ObjectListView2012.csproj.FileListAbsolute.txt
 VoelParradys/ThirdParty/ObjectListView/obj/Release/ObjectListView2012.csproj.FileListAbsolute.txt
 *.suo
+*.suo
+VoelParradys/VoelParradys.suo

@@ -1,6 +1,6 @@
 ﻿namespace VoelParadys
 {
-    partial class NewSuperUserPasswordForm
+    partial class NewSuperUserPassword
     {
         /// <summary>
         /// Required designer variable.

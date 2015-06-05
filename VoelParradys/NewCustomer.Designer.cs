@@ -233,6 +233,7 @@
             this.Controls.Add(this.SurnameLabel);
             this.Controls.Add(this.NameTextBox);
             this.Controls.Add(this.NameLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "NewCustomer";
             this.Text = "NewCustomer";
             this.ResumeLayout(false);

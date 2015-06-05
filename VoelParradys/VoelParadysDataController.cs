@@ -97,6 +97,7 @@ namespace VoelParadys
             // If we do not have any xml files yet, create them
             m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysInventory.xml");
             m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysCustomers.xml");
+            m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysSuppliers.xml");
             // TODO: Add the other xml files here as they are created 
         }
         // Inventory data functions
@@ -294,6 +295,11 @@ namespace VoelParadys
             return GetCustomerFromID(iCustomerID).GetCustomerWishListItemAt(iIndex);
         }
         // Supplier data functions
+        // Get a unique ID for the new supplier
+        public void GetUniqueSupplierID(ref int iUniqueID)
+        {
+            m_SupplierData.GetUniqueSupplierID(ref iUniqueID);
+        }
         // Read in the supplier details from the XML file
         public void ReadSupplierDataFromDB(List<CSupplierDetails> lSupplierList)
         {

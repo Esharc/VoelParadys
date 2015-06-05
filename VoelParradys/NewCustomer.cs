@@ -52,14 +52,12 @@ namespace VoelParadys
                                 "Only South African telephone numbers are accepted (cell or land line).\n" + 
                                 "All inputs will be accepted, but no formatting will take place, and the number will be displayed as it was entered.";
             string sCaption = "Customer Input Help";
-            DialogResult dialogResult;
-
-            dialogResult = MessageBox.Show(sMessage, sCaption);
+            MessageBox.Show(sMessage, sCaption);
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            if (m_NewCustomer.GetCustomerName() != "")
+            if (m_NewCustomer.GetCustomerName() != "-1" || m_NewCustomer.GetCustomerName() != "")
             {
                 string sAddress = "";
                 if (m_sAddress1 != "")
