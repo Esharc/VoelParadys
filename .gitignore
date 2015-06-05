@@ -1,0 +1,7 @@
+*.dll
+*.pdb
+VoelParradys/bin/Debug/ObjectListView.xml
+*.exe
+VoelParradys/bin/Debug/VoelParadys.exe.config
+VoelParradys/bin/Debug/VoelParadys.vshost.exe.config
+VoelParradys/bin/Debug/VoelParadys.vshost.exe.manifest

@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D852C308-AB4D-4613-9277-E47AF91FCD88}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VoelParadys</RootNamespace>
+    <AssemblyName>VoelParadys</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ListViewPrinter">
+      <HintPath>ThirdParty\ListViewPrinter\bin\Release\ListViewPrinter.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomerDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerDetailsForm.Designer.cs">
+      <DependentUpon>CustomerDetailsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomersForm.Designer.cs">
+      <DependentUpon>CustomersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EnterPasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EnterPasswordForm.Designer.cs">
+      <DependentUpon>EnterPasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewSuperUserPasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewSuperUserPasswordForm.Designer.cs">
+      <DependentUpon>NewSuperUserPasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SuppliersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SuppliersForm.Designer.cs">
+      <DependentUpon>SuppliersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VoelParadysKeyCodeManager.cs" />
+    <Compile Include="NewCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewCustomer.Designer.cs">
+      <DependentUpon>NewCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NewWishListItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewWishListItem.Designer.cs">
+      <DependentUpon>NewWishListItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StoreUsageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StoreUsageForm.Designer.cs">
+      <DependentUpon>StoreUsageForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VoelParadysDataController.cs" />
+    <Compile Include="VoelParadysInventoryData.cs" />
+    <Compile Include="NewStockItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NewStockItem.Designer.cs">
+      <DependentUpon>NewStockItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PointOfSale.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PointOfSale.Designer.cs">
+      <DependentUpon>PointOfSale.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Inventory.Designer.cs">
+      <DependentUpon>Inventory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VoelParadysCustomerData.cs" />
+    <Compile Include="VoelParadysSuppliersData.cs" />
+    <Compile Include="VoelParadysXmlParser.cs" />
+    <EmbeddedResource Include="CustomerDetailsForm.resx">
+      <DependentUpon>CustomerDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomersForm.resx">
+      <DependentUpon>CustomersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnterPasswordForm.resx">
+      <DependentUpon>EnterPasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory.resx">
+      <DependentUpon>Inventory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewCustomer.resx">
+      <DependentUpon>NewCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewStockItem.resx">
+      <DependentUpon>NewStockItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewSuperUserPasswordForm.resx">
+      <DependentUpon>NewSuperUserPasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NewWishListItem.resx">
+      <DependentUpon>NewWishListItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PointOfSale.resx">
+      <DependentUpon>PointOfSale.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="StoreUsageForm.resx">
+      <DependentUpon>StoreUsageForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SuppliersForm.resx">
+      <DependentUpon>SuppliersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
