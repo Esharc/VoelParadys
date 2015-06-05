@@ -1,7 +1,0 @@
-G:\Ets\Private\Timmy\From Phone\VoelParadys\VoelParradys\ThirdParty\ObjectListView\bin\Release\ObjectListView.dll
-G:\Ets\Private\Timmy\From Phone\VoelParadys\VoelParradys\ThirdParty\ObjectListView\bin\Release\ObjectListView.pdb
-G:\Ets\Private\Timmy\From Phone\VoelParadys\VoelParradys\ThirdParty\ObjectListView\obj\Release\BrightIdeasSoftware.Properties.Resources.resources
-G:\Ets\Private\Timmy\From Phone\VoelParadys\VoelParradys\ThirdParty\ObjectListView\obj\Release\BrightIdeasSoftware.ColumnSelectionForm.resources
-G:\Ets\Private\Timmy\From Phone\VoelParadys\VoelParradys\ThirdParty\ObjectListView\obj\Release\ObjectListView2012.csproj.GenerateResource.Cache
-G:\Ets\Private\Timmy\From Phone\VoelParadys\VoelParradys\ThirdParty\ObjectListView\obj\Release\ObjectListView.dll
-G:\Ets\Private\Timmy\From Phone\VoelParadys\VoelParradys\ThirdParty\ObjectListView\obj\Release\ObjectListView.pdb
