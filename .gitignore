@@ -1,5 +1,6 @@
 *.dll
 *.pdb
+VoelParradys/obj
 VoelParradys/bin/Debug/ObjectListView.xml
 *.exe
 VoelParradys/bin/Debug/VoelParadys.exe.config
