@@ -6,3 +6,8 @@ VoelParradys/bin/Debug/ObjectListView.xml
 VoelParradys/bin/Debug/VoelParadys.exe.config
 VoelParradys/bin/Debug/VoelParadys.vshost.exe.config
 VoelParradys/bin/Debug/VoelParadys.vshost.exe.manifest
+*.resources
+*.cache
+VoelParradys/ThirdParty/ObjectListView/obj/Debug/ObjectListView2010.csproj.FileListAbsolute.txt
+VoelParradys/ThirdParty/ObjectListView/obj/Debug/ObjectListView2012.csproj.FileListAbsolute.txt
+VoelParradys/ThirdParty/ObjectListView/obj/Release/ObjectListView2012.csproj.FileListAbsolute.txt

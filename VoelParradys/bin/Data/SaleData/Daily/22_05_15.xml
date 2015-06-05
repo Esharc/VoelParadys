@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DailySaleData>
+  <!--This is the start of sale item with time stamp 6:39:19-->
+  <TimeStamp63919>
+    <Time>6:39:19</Time>
+    <ItemCode>100200214</ItemCode>
+    <QuantitySold>2</QuantitySold>
+    <SaleTotal>60.00</SaleTotal>
+    <CashReceived>0.00</CashReceived>
+    <TypeOfPayment>Cash</TypeOfPayment>
+  </TimeStamp63919>
+  <!--This is the start of sale item with time stamp 6:44:17-->
+  <TimeStamp64417>
+    <Time>6:44:17</Time>
+    <ItemCode>100200214</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <ItemCode>100200314</ItemCode>
+    <QuantitySold>2</QuantitySold>
+    <ItemCode>100200514</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SaleTotal>128.00</SaleTotal>
+    <CashReceived>150.00</CashReceived>
+    <TypeOfPayment>Bank Transfer</TypeOfPayment>
+  </TimeStamp64417>
+</DailySaleData>

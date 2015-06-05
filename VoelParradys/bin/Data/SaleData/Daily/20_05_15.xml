@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DailySaleData>
+  <!--This is the start of sale item with time stamp 12:24:25-->
+  <TimeStamp122425>
+    <Time>12:24:25</Time>
+    <ItemCode>100200614</ItemCode>
+    <QuantitySold>2</QuantitySold>
+    <SaleTotal>136.00</SaleTotal>
+    <CashReceived>200.00</CashReceived>
+    <TypeOfPayment>EFT</TypeOfPayment>
+  </TimeStamp122425>
+  <!--This is the start of sale item with time stamp 12:25:44-->
+  <TimeStamp122544>
+    <Time>12:25:44</Time>
+    <ItemCode>100200214</ItemCode>
+    <QuantitySold>2</QuantitySold>
+    <SaleTotal>60.00</SaleTotal>
+    <CashReceived>100.00</CashReceived>
+    <TypeOfPayment>Cash</TypeOfPayment>
+  </TimeStamp122544>
+  <!--This is the start of sale item with time stamp 12:26:49-->
+  <TimeStamp122649>
+    <Time>12:26:49</Time>
+    <ItemCode>100200314</ItemCode>
+    <QuantitySold>2</QuantitySold>
+    <SaleTotal>80.00</SaleTotal>
+    <CashReceived>100.00</CashReceived>
+    <TypeOfPayment>EFT</TypeOfPayment>
+  </TimeStamp122649>
+  <!--This is the start of sale item with time stamp 12:27:18-->
+  <TimeStamp122718>
+    <Time>12:27:18</Time>
+    <ItemCode>100200414</ItemCode>
+    <QuantitySold>5</QuantitySold>
+    <ItemCode>100200614</ItemCode>
+    <QuantitySold>3</QuantitySold>
+    <SaleTotal>304.00</SaleTotal>
+    <CashReceived>400.00</CashReceived>
+    <TypeOfPayment>Cash</TypeOfPayment>
+  </TimeStamp122718>
+</DailySaleData>
