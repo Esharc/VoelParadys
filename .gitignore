@@ -18,3 +18,13 @@ VoelParradys/ThirdParty/ObjectListView/obj/Release/ObjectListView2012.csproj.Fil
 *.suo
 *.suo
 VoelParradys/VoelParradys.suo
+/VoelParradys/ThirdParty/ListViewPrinter/bin/Debug/ObjectListView.xml
+/VoelParradys/ThirdParty/ListViewPrinter/bin/Release/ObjectListView.xml
+/VoelParradys/ThirdParty/ObjectListView/bin/Debug/ObjectListView.XML
+/VoelParradys/ThirdParty/ObjectListView/bin/Release/ObjectListView.XML
+/VoelParradys/ThirdParty/ListViewPrinter/obj/Debug/ListViewPrinter2012.csproj.FileListAbsolute.txt
+/VoelParradys/ThirdParty/ListViewPrinter/obj/Debug/ListViewPrinter2010.csproj.FileListAbsolute.txt
+/VoelParradys/ThirdParty/ListViewPrinter/obj/Release/ListViewPrinter2012.csproj.FileListAbsolute.txt
+/VoelParradys/ThirdParty/ListViewPrinter/ListViewPrinter2012.suo
+/VoelParradys/ThirdParty/ObjectListView/ObjectListView2012.suo
+/VoelParradys/*.suo
