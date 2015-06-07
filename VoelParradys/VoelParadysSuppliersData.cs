@@ -117,12 +117,16 @@ namespace VoelParadys
         {
             for (int i = 0; i < lsSuppliedItemsList.Count; ++i)
             {
+                // If the item exists in the list, then update it
                 if (lsSuppliedItemsList[i].GetItemCode() == sItemCode)
                 {
                     lsSuppliedItemsList[i].UpdateItemQuantity(iQuantity);
-                    break;
+                    return;
                 }
             }
+
+            // If the item does not exist in the list, then we add it. This will only be reached if the for loop does not return
+            lsSuppliedItemsList.Add(new SSuppliedItem(sItemCode, iQuantity));
         }
         public void DeleteSuppliedItemsListItem(string sItemCode)
         {
@@ -282,6 +286,25 @@ namespace VoelParadys
         public void SortSupplierList()
         {
             m_lSupplierList.Sort();
+        }
+        // Get the supplier ID from the supplier name
+        public int GetSupplieIDFromName(string sName)
+        {
+            for (int i = 0; i < m_lSupplierList.Count; ++i)
+            {
+                if (m_lSupplierList[i].GetSupplierName() == sName)
+                    return m_lSupplierList[i].GetSupplierID();
+            }
+            return -1;
+        }
+        // Get a list of all the suppliers names
+        public List<string> GetAllSupplierNames()
+        {
+            List<string> lsTempList = new List<string>();
+
+            for (int i = 0; i < m_lSupplierList.Count; ++i)
+                lsTempList.Add(m_lSupplierList[i].GetSupplierName());
+            return lsTempList;
         }
     }
 }

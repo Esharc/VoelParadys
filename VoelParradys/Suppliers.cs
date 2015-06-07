@@ -209,6 +209,8 @@ namespace VoelParadys
                 if (bChanged)
                 {
                     rDataController.UpdateSupplierDetails(m_iSelectedSupplierID, sName, sRepName, sRepSurname, sAddress, sPhoneNumber);
+                    ClearMemberVairiables();
+                    ClearTextBoxes();
                     this.Refresh();
                 }
             }

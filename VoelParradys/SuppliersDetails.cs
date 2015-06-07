@@ -26,6 +26,7 @@ namespace VoelParadys
 
             HeadingLabel.Text = "Supplied items for " + sName;
             SetUpSuppliedItems();
+            AddSuppliedItemsToList();
         }
         // Add the column headers to the customers list
         private void SetUpSuppliedItems()

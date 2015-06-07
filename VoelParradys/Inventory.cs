@@ -12,7 +12,7 @@ namespace VoelParadys
     public partial class Inventory : Form
     {
         private string m_sSelectedItemCode;                 // The code of the currently selected item
-        // private SStockItemDetails theSelectedItemDetails;   // The details of the currently selected item
+        private int m_iSelectedSupplierID;                  // The details of the currently selected item
         private string m_sTempQuantityBought;               // The temporary quantity bought that was entered by the user
         private string m_sTempBuyPrice;                     // The temporary buy price entered by the user
         private string m_sTempSellPrice;                    // The temporary sell price entered by the user
@@ -22,12 +22,13 @@ namespace VoelParadys
         {
             InitializeComponent();
             m_sSelectedItemCode = "";
-            // theSelectedItemDetails = new SStockItemDetails();
+            m_iSelectedSupplierID = -1;
             m_sTempQuantityBought = "";
             m_sTempBuyPrice = "";
             m_sTempSellPrice = "";
             m_bNewItemWindowLoaded = false;
             SetUpInventoryList();
+            PopulateSupplierComboBox();
             AddItemsToList();
         }
 
@@ -76,6 +77,16 @@ namespace VoelParadys
             InventoryListView.Columns.Add("Qty Used", 80);
             InventoryListView.Columns.Add("Qty In Stock", 90);
             InventoryListView.Columns.Add("Profit", 80);
+        }
+
+        private void PopulateSupplierComboBox()
+        {
+            List<string> lsSupplierNames = VoelParadysDataController.GetInstance().GetAllSupplierNames();
+            List<string> lsDataSource = new List<string>();
+            lsDataSource.Add("None");
+            for (int i = 0; i < lsSupplierNames.Count; ++i)
+                lsDataSource.Add(lsSupplierNames[i]);
+            SupplierComboBox.DataSource = lsDataSource;
         }
 
         private void InventoryOnSelected(object sender, EventArgs e)
@@ -188,6 +199,8 @@ namespace VoelParadys
                 if (m_sTempQuantityBought != "" && int.TryParse(m_sTempQuantityBought, out iTempVal))
                 {
                     iQuantityBought += iTempVal;
+                    if (SupplierComboBox.SelectedItem.ToString() != "None")
+                        UpdateSupplierQuantity(iTempVal);
                     bChanged = true;
                 }
                 float fTempValue = -1;
@@ -204,6 +217,9 @@ namespace VoelParadys
                 if (bChanged)
                 {
                     rDataController.UpdateInventoryItem(m_sSelectedItemCode, sName, iQuantitySold, iQuantityBought, iQuantityUsed, fCostPrice, fSellPrice);
+                    m_sSelectedItemCode = "";
+                    ClearTextFields();
+                    DisableButtons();
                     this.Refresh();
                 }
             }
@@ -214,6 +230,9 @@ namespace VoelParadys
             // We want to refresh once when we have focus again.
             if (m_bNewItemWindowLoaded)
             {
+                m_sSelectedItemCode = "";
+                ClearTextFields();
+                DisableButtons();
                 this.Refresh();
                 m_bNewItemWindowLoaded = false;
             }
@@ -238,9 +257,12 @@ namespace VoelParadys
                     DeleteItemButton.Enabled = false;
                     rDataController.DeleteInventoryItem(m_sSelectedItemCode);
                     m_sSelectedItemCode = "";
+                    m_iSelectedSupplierID = -1;
                     BuyPriceTextBox.Clear();
                     SellPriceTextBox.Clear();
                     ItemNameLabel.Text = "Item Name";
+                    ClearTextFields();
+                    DisableButtons();
                     this.Refresh();
                 }
             }
@@ -250,6 +272,30 @@ namespace VoelParadys
         {
             AddItemsToList();
             base.Refresh();
+        }
+
+        private void SupplierComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string sSelectedSupplier = SupplierComboBox.SelectedItem.ToString();
+            m_iSelectedSupplierID = VoelParadysDataController.GetInstance().GetSupplierIDFromName(sSelectedSupplier);
+        }
+
+        private void UpdateSupplierQuantity(int iIncrement)
+        {
+            VoelParadysDataController.GetInstance().UpdateSuppliedItem(m_iSelectedSupplierID, m_sSelectedItemCode, iIncrement);
+        }
+        private void ClearTextFields()
+        {
+            ItemNameLabel.Text = "Item Name";
+            QuantityTextBox.Clear();
+            BuyPriceTextBox.Clear();
+            SellPriceTextBox.Clear();
+            SupplierComboBox.SelectedIndex = 0;
+        }
+        private void DisableButtons()
+        {
+            UpdateItemButton.Enabled = false;
+            DeleteItemButton.Enabled = false;
         }
     }
 }

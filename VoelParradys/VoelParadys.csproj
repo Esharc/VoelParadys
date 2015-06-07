@@ -95,6 +95,12 @@
     <Compile Include="NewSuperUserPassword.Designer.cs">
       <DependentUpon>NewSuperUserPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="Orders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Orders.Designer.cs">
+      <DependentUpon>Orders.cs</DependentUpon>
+    </Compile>
     <Compile Include="SuppliersDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NewWishListItem.resx">
       <DependentUpon>NewWishListItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Orders.resx">
+      <DependentUpon>Orders.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PointOfSale.resx">
       <DependentUpon>PointOfSale.cs</DependentUpon>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Suppliers>
+  <!--This is the start of Chunky's-->
+  <Chunkys>
+    <ID>1</ID>
+    <Name>Chunky's</Name>
+    <RepName>Eric</RepName>
+    <RepSurname>Louw</RepSurname>
+    <Address>Randburg;Gauteng</Address>
+    <Phone>0847258921</Phone>
+    <SuppliedItemCode>100200114</SuppliedItemCode>
+    <SuppliedItemQuantity>50</SuppliedItemQuantity>
+    <SuppliedItemCode>100200614</SuppliedItemCode>
+    <SuppliedItemQuantity>50</SuppliedItemQuantity>
+  </Chunkys>
+  <!--This is the start of Slopy Joe's-->
+  <SlopyJoes>
+    <ID>2</ID>
+    <Name>Slopy Joe's</Name>
+    <RepName>Wilna</RepName>
+    <RepSurname>Pepler</RepSurname>
+    <Address>Wonderboom;Pretoria;Gauteng</Address>
+    <Phone>0872465254</Phone>
+    <SuppliedItemCode>100200214</SuppliedItemCode>
+    <SuppliedItemQuantity>20</SuppliedItemQuantity>
+  </SlopyJoes>
+</Suppliers>

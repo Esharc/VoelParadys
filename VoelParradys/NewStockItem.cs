@@ -17,16 +17,19 @@ namespace VoelParadys
         private float m_fBuyPrice;
         private float m_fSellPrice;
         private bool m_bMessageBoxShown;
+        int m_iSelectedSupplier;
 
         public NewStockItem()
         {
             InitializeComponent();
+            PopulateSupplierComboBox();
             m_sItemCode = "";
             m_sItemName = "";
             m_iItemQuantity = -1;
             m_fBuyPrice = -1;
             m_fSellPrice = -1;
             m_bMessageBoxShown = false;
+            m_iSelectedSupplier = -1;
         }
 
         private bool IsValidCode()
@@ -170,6 +173,8 @@ namespace VoelParadys
             if (IsValidItem())
             {
                 VoelParadysDataController.GetInstance().AddNewInventoryItemToList(m_sItemCode, m_sItemName, m_iItemQuantity, m_fBuyPrice, m_fSellPrice);
+                if (SupplierComboBox.SelectedItem.ToString() != "None")
+                    UpdateSupplierQuantity(m_iItemQuantity);
                 this.Close();
             }
             else
@@ -186,6 +191,27 @@ namespace VoelParadys
                     m_bMessageBoxShown = false;
                 }
             }
+        }
+
+        private void PopulateSupplierComboBox()
+        {
+            List<string> lsSupplierNames = VoelParadysDataController.GetInstance().GetAllSupplierNames();
+            List<string> lsDataSource = new List<string>();
+            lsDataSource.Add("None");
+            for (int i = 0; i < lsSupplierNames.Count; ++i)
+                lsDataSource.Add(lsSupplierNames[i]);
+            SupplierComboBox.DataSource = lsDataSource;
+        }
+
+        private void SupplierComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string sSelectedSupplier = SupplierComboBox.SelectedItem.ToString();
+            m_iSelectedSupplier = VoelParadysDataController.GetInstance().GetSupplierIDFromName(sSelectedSupplier);
+        }
+
+        private void UpdateSupplierQuantity(int iIncrement)
+        {
+            VoelParadysDataController.GetInstance().UpdateSuppliedItem(m_iSelectedSupplier, m_sItemCode, iIncrement);
         }
     }
 }

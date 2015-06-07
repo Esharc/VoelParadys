@@ -419,5 +419,11 @@ namespace VoelParadys
             var SuppliersForm = new Suppliers();
             SuppliersForm.Show();
         }
+
+        private void OrdersButton_Click(object sender, EventArgs e)
+        {
+            var OrdersForm = new Orders();
+            OrdersForm.Show();
+        }
     }
 }

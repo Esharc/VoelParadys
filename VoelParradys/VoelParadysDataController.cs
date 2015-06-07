@@ -294,6 +294,16 @@ namespace VoelParadys
         {
             return GetCustomerFromID(iCustomerID).GetCustomerWishListItemAt(iIndex);
         }
+        // Get the ID of a customer with the given name
+        public int GetCustomerIDFromName(string sName)
+        {
+            return m_CustomerData.GetCustomerIDFromName(sName);
+        }
+        // Get a list of all the customer names
+        public List<string> GetAllCustomerNames()
+        {
+            return m_CustomerData.GetAllCustomerNames();
+        }
         // Supplier data functions
         // Get a unique ID for the new supplier
         public void GetUniqueSupplierID(ref int iUniqueID)
@@ -404,6 +414,15 @@ namespace VoelParadys
         public void GetSuppliedListItemAt(int iSupplierID, int iIndex, ref string sItemCode, ref int iItemQuantity)
         {
             GetSupplierFromID(iSupplierID).GetSuppliedItemsListItemAt(iIndex, ref sItemCode, ref iItemQuantity);
+        }
+        // Get the ID of the supplier with the given name
+        public int GetSupplierIDFromName(string sName)
+        {
+            return m_SupplierData.GetSupplieIDFromName(sName);
+        }
+        public List<string> GetAllSupplierNames()
+        {
+            return m_SupplierData.GetAllSupplierNames();
         }
         // }
     }

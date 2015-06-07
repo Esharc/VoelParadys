@@ -311,6 +311,7 @@
             this.OrdersButton.TabIndex = 32;
             this.OrdersButton.Text = "Orders";
             this.OrdersButton.UseVisualStyleBackColor = true;
+            this.OrdersButton.Click += new System.EventHandler(this.OrdersButton_Click);
             // 
             // ReportsButton
             // 

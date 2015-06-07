@@ -97,8 +97,10 @@ namespace VoelParadys
                 TheWriter.WriteStartElement("Inventory");
                 for (int i = 0; i < lStockItems.Count; ++i)
                 {
+                    string sName = lStockItems[i].GetStockItemName().Replace(" ", "");
+                    sName = sName.Replace("'", "");
                     TheWriter.WriteComment("This is the start of " + lStockItems[i].GetStockItemName());
-                    TheWriter.WriteStartElement(lStockItems[i].GetStockItemName().Replace(" ", ""));
+                    TheWriter.WriteStartElement(sName);
                     TheWriter.WriteElementString("Code", lStockItems[i].GetStockItemCode());
                     TheWriter.WriteElementString("Name", lStockItems[i].GetStockItemName());
                     TheWriter.WriteElementString("QuantitySold", lStockItems[i].GetStockItemQuantitySold().ToString());
@@ -450,8 +452,10 @@ namespace VoelParadys
                 TheWriter.WriteStartElement("Customers");
                 for (int i = 0; i < lCustomerItems.Count; ++i)
                 {
+                    string sName = lCustomerItems[i].GetCustomerName().Replace(" ", "");
+                    sName = sName.Replace("'", "");
                     TheWriter.WriteComment("This is the start of " + lCustomerItems[i].GetCustomerName());
-                    TheWriter.WriteStartElement(lCustomerItems[i].GetCustomerName().Replace(" ", ""));
+                    TheWriter.WriteStartElement(sName);
                     TheWriter.WriteElementString("ID", lCustomerItems[i].GetCustomerID().ToString());
                     TheWriter.WriteElementString("Name", lCustomerItems[i].GetCustomerName());
                     TheWriter.WriteElementString("Surname", lCustomerItems[i].GetCustomerSurname());

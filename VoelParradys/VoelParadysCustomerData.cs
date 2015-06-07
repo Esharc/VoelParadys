@@ -234,5 +234,23 @@ namespace VoelParadys
         {
             m_lCustomerList.Sort();
         }
+        // Get a customers ID given his name
+        public int GetCustomerIDFromName(string sName)
+        {
+            for (int i = 0; i < m_lCustomerList.Count; ++i)
+            {
+                if (m_lCustomerList[i].GetCustomerName() == sName)
+                    return m_lCustomerList[i].GetCustomerID();
+            }
+            return -1;
+        }
+        // Get a list of all the customers names
+        public List<string> GetAllCustomerNames()
+        {
+            List<string> lsTempNames = new List<string>();
+            for (int i = 0; i < m_lCustomerList.Count; ++i)
+                lsTempNames.Add(m_lCustomerList[i].GetCustomerName());
+            return lsTempNames;
+        }
     }
 }

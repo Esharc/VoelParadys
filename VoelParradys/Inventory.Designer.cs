@@ -41,6 +41,8 @@
             this.UpdateItemButton = new System.Windows.Forms.Button();
             this.ItemNameLabel = new System.Windows.Forms.Label();
             this.DeleteItemButton = new System.Windows.Forms.Button();
+            this.SupplierComboBox = new System.Windows.Forms.ComboBox();
+            this.SupplierLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // InventoryReturn
@@ -177,11 +179,33 @@
             this.DeleteItemButton.UseVisualStyleBackColor = true;
             this.DeleteItemButton.Click += new System.EventHandler(this.DeleteItemButton_Click);
             // 
+            // SupplierComboBox
+            // 
+            this.SupplierComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SupplierComboBox.FormattingEnabled = true;
+            this.SupplierComboBox.Location = new System.Drawing.Point(658, 303);
+            this.SupplierComboBox.Name = "SupplierComboBox";
+            this.SupplierComboBox.Size = new System.Drawing.Size(145, 28);
+            this.SupplierComboBox.TabIndex = 12;
+            this.SupplierComboBox.SelectedIndexChanged += new System.EventHandler(this.SupplierComboBox_SelectedIndexChanged);
+            // 
+            // SupplierLabel
+            // 
+            this.SupplierLabel.AutoSize = true;
+            this.SupplierLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SupplierLabel.Location = new System.Drawing.Point(655, 276);
+            this.SupplierLabel.Name = "SupplierLabel";
+            this.SupplierLabel.Size = new System.Drawing.Size(88, 24);
+            this.SupplierLabel.TabIndex = 13;
+            this.SupplierLabel.Text = "Supplier";
+            // 
             // Inventory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(818, 715);
+            this.Controls.Add(this.SupplierLabel);
+            this.Controls.Add(this.SupplierComboBox);
             this.Controls.Add(this.DeleteItemButton);
             this.Controls.Add(this.ItemNameLabel);
             this.Controls.Add(this.UpdateItemButton);
@@ -219,5 +243,7 @@
         private System.Windows.Forms.Button UpdateItemButton;
         private System.Windows.Forms.Label ItemNameLabel;
         private System.Windows.Forms.Button DeleteItemButton;
+        private System.Windows.Forms.ComboBox SupplierComboBox;
+        private System.Windows.Forms.Label SupplierLabel;
     }
 }
