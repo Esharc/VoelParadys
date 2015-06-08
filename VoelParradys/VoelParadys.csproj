@@ -157,6 +157,12 @@
     <Compile Include="VoelParadysCustomerData.cs" />
     <Compile Include="VoelParadysSuppliersData.cs" />
     <Compile Include="VoelParadysXmlParser.cs" />
+    <Compile Include="WishListItems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WishListItems.Designer.cs">
+      <DependentUpon>WishListItems.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CustomerDetails.resx">
       <DependentUpon>CustomerDetails.cs</DependentUpon>
     </EmbeddedResource>
@@ -208,6 +214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Suppliers.resx">
       <DependentUpon>Suppliers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WishListItems.resx">
+      <DependentUpon>WishListItems.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />

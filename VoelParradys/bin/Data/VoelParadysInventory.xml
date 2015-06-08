@@ -20,26 +20,6 @@
     <CostPrice>5.00</CostPrice>
     <SellPrice>15.00</SellPrice>
   </CatFood5kg>
-  <!--This is the start of Cat Food 10kg-->
-  <CatFood10kg>
-    <Code>100200314</Code>
-    <Name>Cat Food 10kg</Name>
-    <QuantitySold>9</QuantitySold>
-    <QuantityBought>100</QuantityBought>
-    <QuantityUsed>5</QuantityUsed>
-    <CostPrice>19.50</CostPrice>
-    <SellPrice>41.50</SellPrice>
-  </CatFood10kg>
-  <!--This is the start of Fish Food 100g-->
-  <FishFood100g>
-    <Code>100200414</Code>
-    <Name>Fish Food 100g</Name>
-    <QuantitySold>17</QuantitySold>
-    <QuantityBought>100</QuantityBought>
-    <QuantityUsed>2</QuantityUsed>
-    <CostPrice>10.00</CostPrice>
-    <SellPrice>20.00</SellPrice>
-  </FishFood100g>
   <!--This is the start of Puppy's Chow-->
   <PuppysChow>
     <Code>100200814</Code>
@@ -50,16 +30,6 @@
     <CostPrice>45.00</CostPrice>
     <SellPrice>90.00</SellPrice>
   </PuppysChow>
-  <!--This is the start of Dog Food 10kg-->
-  <DogFood10kg>
-    <Code>100200214</Code>
-    <Name>Dog Food 10kg</Name>
-    <QuantitySold>16</QuantitySold>
-    <QuantityBought>120</QuantityBought>
-    <QuantityUsed>0</QuantityUsed>
-    <CostPrice>15.00</CostPrice>
-    <SellPrice>30.00</SellPrice>
-  </DogFood10kg>
   <!--This is the start of Bird Seed 2kg-->
   <BirdSeed2kg>
     <Code>100200714</Code>
@@ -80,4 +50,44 @@
     <CostPrice>34.00</CostPrice>
     <SellPrice>68.00</SellPrice>
   </CatFoodTins>
+  <!--This is the start of Fish Food 100g-->
+  <FishFood100g>
+    <Code>100200414</Code>
+    <Name>Fish Food 100g</Name>
+    <QuantitySold>18</QuantitySold>
+    <QuantityBought>100</QuantityBought>
+    <QuantityUsed>2</QuantityUsed>
+    <CostPrice>10.00</CostPrice>
+    <SellPrice>20.00</SellPrice>
+  </FishFood100g>
+  <!--This is the start of Dog Food 10kg-->
+  <DogFood10kg>
+    <Code>100200214</Code>
+    <Name>Dog Food 10kg</Name>
+    <QuantitySold>18</QuantitySold>
+    <QuantityBought>120</QuantityBought>
+    <QuantityUsed>0</QuantityUsed>
+    <CostPrice>15.00</CostPrice>
+    <SellPrice>30.00</SellPrice>
+  </DogFood10kg>
+  <!--This is the start of Husky Dog Food 10kg-->
+  <HuskyDogFood10kg>
+    <Code>Husk0021</Code>
+    <Name>Husky Dog Food 10kg</Name>
+    <QuantitySold>2</QuantitySold>
+    <QuantityBought>10</QuantityBought>
+    <QuantityUsed>0</QuantityUsed>
+    <CostPrice>25.00</CostPrice>
+    <SellPrice>50.00</SellPrice>
+  </HuskyDogFood10kg>
+  <!--This is the start of Cat Food 10kg-->
+  <CatFood10kg>
+    <Code>100200314</Code>
+    <Name>Cat Food 10kg</Name>
+    <QuantitySold>12</QuantitySold>
+    <QuantityBought>100</QuantityBought>
+    <QuantityUsed>5</QuantityUsed>
+    <CostPrice>19.50</CostPrice>
+    <SellPrice>41.50</SellPrice>
+  </CatFood10kg>
 </Inventory>

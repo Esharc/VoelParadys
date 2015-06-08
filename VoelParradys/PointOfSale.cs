@@ -85,6 +85,21 @@ namespace VoelParadys
             m_fSubTotal = 0;
             m_sSelectedItemCode = "";
         }
+        public void SetWishListSaleData(List<string> WishListItems, int iCustomerID)
+        {
+            string sTempItemCode = "";
+            var rDataController = VoelParadysDataController.GetInstance();
+
+            for (int i = 0; i < WishListItems.Count; ++i)
+            {
+                if (rDataController.DoesItemExistInDatabase(WishListItems[i], ref sTempItemCode))
+                {
+                    m_lSaleItems.Add(new SSaleInvoiceData(sTempItemCode, WishListItems[i], 1));
+                    rDataController.DeleteCustomerWishListItem(iCustomerID, WishListItems[i]);
+                }
+            }
+            UpdateSaleInvoice();
+        }
         // What should happen when the text in the code box changes
         private void ItemCodeBox_TextChanged(object sender, EventArgs e)
         {
@@ -139,7 +154,7 @@ namespace VoelParadys
 
                 if (bValidInput)
                 {
-                    m_lSaleItems.Add(m_SItem);
+                    AddSaleItem(m_SItem);
                     m_SItem.ClearItem();
                     ItemCodeBox.Clear();
                     ItemNameBox.Clear();
@@ -148,6 +163,16 @@ namespace VoelParadys
                     ItemCodeBox.Focus();
                 }
             }
+        }
+        // If the item already exists in the sale data, then just rewrite it
+        private void AddSaleItem(SSaleInvoiceData theSaleData)
+        {
+            for (int i = 0; i < m_lSaleItems.Count; ++i)
+            {
+                if (m_lSaleItems[i].GetItemCode() == theSaleData.GetItemCode())
+                    m_lSaleItems.RemoveAt(i);
+            }
+            m_lSaleItems.Add(theSaleData);
         }
         // What should happen when enter is pressed on the cash received box
         private void OnCashEntered(object sender, KeyEventArgs e)
@@ -357,7 +382,8 @@ namespace VoelParadys
             lListPrinter.ListHeaderFormat.SetBorderPen(Sides.All, new Pen(Color.Black, 0.5f));
             lListPrinter.ListGridPen = new Pen(Color.Black);
 
-            lListPrinter.PrintPreview();
+            lListPrinter.Print();
+            // lListPrinter.PrintPreview();
             // TODO: Once the product is complete, uncomment this to actually print the page, and comment out the PrintPreview to print directly without first viewing it
             // lListPrinter.PrintWithDialog();
         }
@@ -382,6 +408,25 @@ namespace VoelParadys
         private void OnItemSelected(object sender, EventArgs e)
         {
             m_sSelectedItemCode = InvoiceListView.SelectedItems[0].SubItems[0].Text;
+
+            if (m_sSelectedItemCode != "")
+            {
+                for (int i = 0; i < m_lSaleItems.Count; ++i)
+                {
+                    if (m_sSelectedItemCode == m_lSaleItems[i].GetItemCode())
+                    {
+                        ItemCodeBox.Text = m_lSaleItems[i].GetItemCode();
+                        ItemNameBox.Text = m_lSaleItems[i].GetItemName();
+                        QuantityBox.Text = m_lSaleItems[i].GetItemQuantity().ToString();
+                    }
+                }
+            }
+            else
+            {
+                ItemCodeBox.Text = "";
+                ItemNameBox.Text = "";
+                QuantityBox.Text = "";
+            }
         }
 
         private void ClearButton_Click(object sender, EventArgs e)
@@ -422,7 +467,7 @@ namespace VoelParadys
 
         private void OrdersButton_Click(object sender, EventArgs e)
         {
-            var OrdersForm = new Orders();
+            var OrdersForm = new Orders(this);
             OrdersForm.Show();
         }
     }

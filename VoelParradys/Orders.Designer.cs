@@ -64,6 +64,7 @@
             this.AddNewOrderButton.TabIndex = 2;
             this.AddNewOrderButton.Text = "Add New Order";
             this.AddNewOrderButton.UseVisualStyleBackColor = true;
+            this.AddNewOrderButton.Click += new System.EventHandler(this.AddNewOrderButton_Click);
             // 
             // TheHelpButton
             // 

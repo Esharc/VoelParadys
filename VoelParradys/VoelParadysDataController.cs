@@ -121,6 +121,23 @@ namespace VoelParadys
         {
             return m_InventoryData.DoesItemExistInDatabase(sName, ref rsItemCode);
         }
+        // Determine if a list of items exists in the database
+        public bool AllItemsExistInDatabase(List<string> lsNames)
+        {
+            bool bRetval = true;
+            string sTempItemCode = "";
+
+            for (int i = 0; i < lsNames.Count; ++i)
+            {
+                if (!DoesItemExistInDatabase(lsNames[i], ref sTempItemCode))
+                {
+                    bRetval = false;
+                    break;
+                }
+            }
+
+            return bRetval;
+        }
         // Get an inventory item given the code of the item
         private SStockItemDetails GetInventoryItem(string sCode)
         {
@@ -300,9 +317,9 @@ namespace VoelParadys
             return m_CustomerData.GetCustomerIDFromName(sName);
         }
         // Get a list of all the customer names
-        public List<string> GetAllCustomerNames()
+        public List<CIntStringMap> GetAllCustomersNameAndID()
         {
-            return m_CustomerData.GetAllCustomerNames();
+            return m_CustomerData.GetAllCustomersNameAndID();
         }
         // Supplier data functions
         // Get a unique ID for the new supplier

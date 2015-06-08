@@ -5,6 +5,17 @@ using System.Text;
 
 namespace VoelParadys
 {
+    public class CIntStringMap
+    {
+        public int m_iCustomerID { get; set; }
+        public string m_sCustomerName { get; set; }
+        public CIntStringMap(int iID, string sName)
+        {
+            m_iCustomerID = iID;
+            m_sCustomerName = sName;
+        }
+    }
+
     public class CCustomerDetails : IEquatable<CCustomerDetails>, IComparable<CCustomerDetails>
     {
         int iCustomerID;                            // The ID of the customer (Unique and auto generated)
@@ -245,12 +256,12 @@ namespace VoelParadys
             return -1;
         }
         // Get a list of all the customers names
-        public List<string> GetAllCustomerNames()
+        public List<CIntStringMap> GetAllCustomersNameAndID()
         {
-            List<string> lsTempNames = new List<string>();
+            List<CIntStringMap> lsTempNameID = new List<CIntStringMap>();
             for (int i = 0; i < m_lCustomerList.Count; ++i)
-                lsTempNames.Add(m_lCustomerList[i].GetCustomerName());
-            return lsTempNames;
+                lsTempNameID.Add(new CIntStringMap(m_lCustomerList[i].GetCustomerID(), m_lCustomerList[i].GetCustomerName()));
+            return lsTempNameID;
         }
     }
 }
