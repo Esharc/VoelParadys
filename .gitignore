@@ -28,3 +28,5 @@ VoelParradys/VoelParradys.suo
 /VoelParradys/ThirdParty/ListViewPrinter/ListViewPrinter2012.suo
 /VoelParradys/ThirdParty/ObjectListView/ObjectListView2012.suo
 /VoelParradys/*.suo
+/VoelParradys/bin/Release/*.config
+/VoelParradys/bin/Release/*.manifest
