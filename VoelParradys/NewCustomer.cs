@@ -48,7 +48,7 @@ namespace VoelParadys
         {
             string sMessage = "Only the name of the customer is required to ensure a valid customer input.\n" +
                                 "The address only supplies 5 lines. If the address is more than 5 lines long,\n" +
-                                "separate the rest of the address on line 5 with semi colons\n(e.g Monument park;Pretoria;0181).\n" +
+                                "separate the rest of the address on line 5 with semi-colons\n(e.g Monument park;Pretoria;0181).\n" +
                                 "Only South African telephone numbers are accepted (cell or land line).\n" + 
                                 "All inputs will be accepted, but no formatting will take place, and the number will be displayed as it was entered.";
             string sCaption = "Customer Input Help";

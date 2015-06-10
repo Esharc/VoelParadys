@@ -73,6 +73,7 @@
             this.ItemCodeBox.Size = new System.Drawing.Size(178, 26);
             this.ItemCodeBox.TabIndex = 0;
             this.ItemCodeBox.TextChanged += new System.EventHandler(this.ItemCodeBox_TextChanged);
+            this.ItemCodeBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnQuantityEnter);
             // 
             // ItemCode
             // 
@@ -102,6 +103,7 @@
             this.ItemNameBox.Size = new System.Drawing.Size(178, 26);
             this.ItemNameBox.TabIndex = 1;
             this.ItemNameBox.TextChanged += new System.EventHandler(this.ItemNameBox_TextChanged);
+            this.ItemNameBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnQuantityEnter);
             // 
             // QuantityLabel
             // 
@@ -120,6 +122,7 @@
             this.QuantityBox.Name = "QuantityBox";
             this.QuantityBox.Size = new System.Drawing.Size(178, 26);
             this.QuantityBox.TabIndex = 2;
+            this.QuantityBox.Text = "1";
             this.QuantityBox.TextChanged += new System.EventHandler(this.QuantityBox_TextChanged);
             this.QuantityBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnQuantityEnter);
             // 
@@ -214,6 +217,7 @@
             // 
             this.ClearButton.BackColor = System.Drawing.Color.Red;
             this.ClearButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ClearButton.Enabled = false;
             this.ClearButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ClearButton.Location = new System.Drawing.Point(434, 502);
             this.ClearButton.Name = "ClearButton";

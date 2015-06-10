@@ -46,7 +46,7 @@ namespace VoelParadys
         {
             m_sItemCode = "";
             m_sItemName = "";
-            m_iItemQuantity = -1;
+            m_iItemQuantity = 1;
         }
         // Get the sale item code
         public string GetItemCode()
@@ -80,7 +80,7 @@ namespace VoelParadys
             InitializeComponent();
             SetUpInvoiceList();
             m_lSaleItems = new List<SSaleInvoiceData>();
-            m_SItem = new SSaleInvoiceData("", "", -1);
+            m_SItem = new SSaleInvoiceData("", "", 1);
             m_fCashReceived = 0;
             m_fSubTotal = 0;
             m_sSelectedItemCode = "";
@@ -158,7 +158,7 @@ namespace VoelParadys
                     m_SItem.ClearItem();
                     ItemCodeBox.Clear();
                     ItemNameBox.Clear();
-                    QuantityBox.Clear();
+                    QuantityBox.Text = "1";
                     UpdateSaleInvoice();
                     ItemCodeBox.Focus();
                 }
@@ -329,33 +329,36 @@ namespace VoelParadys
             // As well as printing the receipt, this action will consider the sale to be final, and the entered quantities can then be removed from the
             // inventory database and saved.
 
-            PrintReceipt();
-            string sPaymentType = "";
-            if (cashRadioButton.Checked)
-                sPaymentType = "Cash";
-            else if (EftRadioButton.Checked)
-                sPaymentType = "EFT";
-            else
-                sPaymentType = "Bank Transfer";
-            VoelParadysDataController.GetInstance().WriteDailySaleDataToDB(m_lSaleItems, m_fSubTotal, m_fCashReceived, sPaymentType);
-
-            for (int i = 0; i < m_lSaleItems.Count; ++i)
+            if (m_lSaleItems.Count > 0)
             {
-                var rDataController = VoelParadysDataController.GetInstance();
-                string sCode = m_lSaleItems[i].GetItemCode(), sName = "";
-                int iQuantitySold = -1, iQuantityBought = -1, iQuantityUsed = -1;
-                float fCostPrice = -1, fSellPrice = -1;
+                PrintReceipt();
+                string sPaymentType = "";
+                if (cashRadioButton.Checked)
+                    sPaymentType = "Cash";
+                else if (EftRadioButton.Checked)
+                    sPaymentType = "EFT";
+                else
+                    sPaymentType = "Bank Transfer";
+                VoelParadysDataController.GetInstance().WriteDailySaleDataToDB(m_lSaleItems, m_fSubTotal, m_fCashReceived, sPaymentType);
 
-                rDataController.GetStockItemData(sCode, ref sName, ref iQuantitySold, ref iQuantityBought, ref iQuantityUsed, ref fCostPrice, ref fSellPrice);
-                iQuantitySold += m_lSaleItems[i].GetItemQuantity();
-                rDataController.UpdateInventoryItem(sCode, sName, iQuantitySold, iQuantityBought, iQuantityUsed, fCostPrice, fSellPrice);
+                for (int i = 0; i < m_lSaleItems.Count; ++i)
+                {
+                    var rDataController = VoelParadysDataController.GetInstance();
+                    string sCode = m_lSaleItems[i].GetItemCode(), sName = "";
+                    int iQuantitySold = -1, iQuantityBought = -1, iQuantityUsed = -1;
+                    float fCostPrice = -1, fSellPrice = -1;
+
+                    rDataController.GetStockItemData(sCode, ref sName, ref iQuantitySold, ref iQuantityBought, ref iQuantityUsed, ref fCostPrice, ref fSellPrice);
+                    iQuantitySold += m_lSaleItems[i].GetItemQuantity();
+                    rDataController.UpdateInventoryItem(sCode, sName, iQuantitySold, iQuantityBought, iQuantityUsed, fCostPrice, fSellPrice);
+                }
+                m_lSaleItems.Clear();
+                InvoiceListView.Clear();
+                m_fCashReceived = 0;
+                m_fSubTotal = 0;
+                cashRadioButton.Checked = true;
+                SetUpInvoiceList();
             }
-            m_lSaleItems.Clear();
-            InvoiceListView.Clear();
-            m_fCashReceived = 0;
-            m_fSubTotal = 0;
-            cashRadioButton.Checked = true;
-            SetUpInvoiceList();
         }
 
         public void PrintReceipt()
@@ -382,8 +385,8 @@ namespace VoelParadys
             lListPrinter.ListHeaderFormat.SetBorderPen(Sides.All, new Pen(Color.Black, 0.5f));
             lListPrinter.ListGridPen = new Pen(Color.Black);
 
-            lListPrinter.Print();
-            // lListPrinter.PrintPreview();
+            // lListPrinter.Print();
+            lListPrinter.PrintPreview();
             // TODO: Once the product is complete, uncomment this to actually print the page, and comment out the PrintPreview to print directly without first viewing it
             // lListPrinter.PrintWithDialog();
         }
@@ -402,6 +405,7 @@ namespace VoelParadys
             m_lSaleItems.Clear();
             InvoiceListView.Clear();
             cashRadioButton.Checked = true;
+            ClearButton.Enabled = false;
             SetUpInvoiceList();
         }
 
@@ -418,6 +422,7 @@ namespace VoelParadys
                         ItemCodeBox.Text = m_lSaleItems[i].GetItemCode();
                         ItemNameBox.Text = m_lSaleItems[i].GetItemName();
                         QuantityBox.Text = m_lSaleItems[i].GetItemQuantity().ToString();
+                        ClearButton.Enabled = true;
                     }
                 }
             }
@@ -426,6 +431,7 @@ namespace VoelParadys
                 ItemCodeBox.Text = "";
                 ItemNameBox.Text = "";
                 QuantityBox.Text = "";
+                ClearButton.Enabled = false;
             }
         }
 

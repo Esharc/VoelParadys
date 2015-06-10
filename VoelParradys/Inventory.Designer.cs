@@ -223,6 +223,7 @@
             this.Name = "Inventory";
             this.Text = "Inventory";
             this.Activated += new System.EventHandler(this.Inventory_Activated);
+            this.Deactivate += new System.EventHandler(this.Inventory_Deactivate);
             this.ResumeLayout(false);
             this.PerformLayout();
 

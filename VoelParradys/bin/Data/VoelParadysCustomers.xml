@@ -27,6 +27,15 @@
     <Phone>0722464840</Phone>
     <IdNumber>8406194452089</IdNumber>
   </Timothy>
+  <!--This is the start of Piet-->
+  <Piet>
+    <ID>4</ID>
+    <Name>Piet</Name>
+    <Surname>-1</Surname>
+    <Address>-1</Address>
+    <Phone>-1</Phone>
+    <IdNumber>-1</IdNumber>
+  </Piet>
   <!--This is the start of Jacky-->
   <Jacky>
     <ID>5</ID>

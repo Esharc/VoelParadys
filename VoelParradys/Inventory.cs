@@ -115,9 +115,9 @@ namespace VoelParadys
 
         private void AddNewStockItem_Click(object sender, EventArgs e)
         {
+            m_bNewItemWindowLoaded = true;
             var NewStockItemForm = new NewStockItem();
             NewStockItemForm.Show();
-            m_bNewItemWindowLoaded = true;
         }
 
         private void QuantityTextBox_TextChanged(object sender, EventArgs e)
@@ -238,6 +238,12 @@ namespace VoelParadys
             }
         }
 
+        private void Inventory_Deactivate(object sender, EventArgs e)
+        {
+            if (!m_bNewItemWindowLoaded)
+                this.Close();
+        }
+
         private void DeleteItemButton_Click(object sender, EventArgs e)
         {
             var rDataController = VoelParadysDataController.GetInstance();
@@ -297,5 +303,7 @@ namespace VoelParadys
             UpdateItemButton.Enabled = false;
             DeleteItemButton.Enabled = false;
         }
+
+        
     }
 }

@@ -77,7 +77,7 @@ namespace VoelParadys
             catch (XmlException exception)
             {
                 // MessageBox.Show(sXmlFileName + " is empty. New data must be added");
-                // TheReader.Close();
+                TheReader.Close();
                 return false;
             }
             TheReader.Close();

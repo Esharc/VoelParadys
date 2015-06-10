@@ -30,16 +30,6 @@
     <CostPrice>45.00</CostPrice>
     <SellPrice>90.00</SellPrice>
   </PuppysChow>
-  <!--This is the start of Bird Seed 2kg-->
-  <BirdSeed2kg>
-    <Code>100200714</Code>
-    <Name>Bird Seed 2kg</Name>
-    <QuantitySold>2</QuantitySold>
-    <QuantityBought>120</QuantityBought>
-    <QuantityUsed>0</QuantityUsed>
-    <CostPrice>12.50</CostPrice>
-    <SellPrice>25.00</SellPrice>
-  </BirdSeed2kg>
   <!--This is the start of Cat Food Tins-->
   <CatFoodTins>
     <Code>100200614</Code>
@@ -60,16 +50,6 @@
     <CostPrice>10.00</CostPrice>
     <SellPrice>20.00</SellPrice>
   </FishFood100g>
-  <!--This is the start of Dog Food 10kg-->
-  <DogFood10kg>
-    <Code>100200214</Code>
-    <Name>Dog Food 10kg</Name>
-    <QuantitySold>18</QuantitySold>
-    <QuantityBought>120</QuantityBought>
-    <QuantityUsed>0</QuantityUsed>
-    <CostPrice>15.00</CostPrice>
-    <SellPrice>30.00</SellPrice>
-  </DogFood10kg>
   <!--This is the start of Husky Dog Food 10kg-->
   <HuskyDogFood10kg>
     <Code>Husk0021</Code>
@@ -80,14 +60,34 @@
     <CostPrice>25.00</CostPrice>
     <SellPrice>50.00</SellPrice>
   </HuskyDogFood10kg>
+  <!--This is the start of Dog Food 10kg-->
+  <DogFood10kg>
+    <Code>100200214</Code>
+    <Name>Dog Food 10kg</Name>
+    <QuantitySold>20</QuantitySold>
+    <QuantityBought>120</QuantityBought>
+    <QuantityUsed>0</QuantityUsed>
+    <CostPrice>15.00</CostPrice>
+    <SellPrice>30.00</SellPrice>
+  </DogFood10kg>
   <!--This is the start of Cat Food 10kg-->
   <CatFood10kg>
     <Code>100200314</Code>
     <Name>Cat Food 10kg</Name>
-    <QuantitySold>12</QuantitySold>
+    <QuantitySold>14</QuantitySold>
     <QuantityBought>100</QuantityBought>
     <QuantityUsed>5</QuantityUsed>
     <CostPrice>19.50</CostPrice>
     <SellPrice>41.50</SellPrice>
   </CatFood10kg>
+  <!--This is the start of Bird Seed 2kg-->
+  <BirdSeed2kg>
+    <Code>100200714</Code>
+    <Name>Bird Seed 2kg</Name>
+    <QuantitySold>2</QuantitySold>
+    <QuantityBought>120</QuantityBought>
+    <QuantityUsed>1</QuantityUsed>
+    <CostPrice>12.50</CostPrice>
+    <SellPrice>25.00</SellPrice>
+  </BirdSeed2kg>
 </Inventory>
