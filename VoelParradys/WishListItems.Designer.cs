@@ -36,7 +36,9 @@
             // 
             // WishListBox
             // 
+            this.WishListBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.WishListBox.FormattingEnabled = true;
+            this.WishListBox.ItemHeight = 16;
             this.WishListBox.Location = new System.Drawing.Point(12, 40);
             this.WishListBox.Name = "WishListBox";
             this.WishListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;

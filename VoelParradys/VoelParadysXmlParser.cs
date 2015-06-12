@@ -31,13 +31,14 @@ namespace VoelParadys
             // Getters
             public string GetSaleItemCodeAt(int iIndex) { return lsItemDetailList[iIndex].GetItemCode(); }
             public int GetSaleItemQuantitySoldAt(int iIndex) { return lsItemDetailList[iIndex].GetItemQuantitySold(); }
+            public float GetSaleItemSellPriceAt(int iIndex) { return lsItemDetailList[iIndex].GetItemSellPrice(); }
             public float GetSaleCashReceived() { return fCashReceived; }
             public float GetSaleTotal() { return fSaleTotal; }
             public string GetSalePaymentType() { return sTypeOfPayment; }
             public string GetSaleTime() { return sTime; }
             public int GetSaleItemsCount() { return lsItemDetailList.Count; }
             // Setters
-            public void SetSaleItemDetail(string sCode, int iQuantity) { SItemDetails SItem = new SItemDetails(sCode, iQuantity); lsItemDetailList.Add(SItem); }
+            public void SetSaleItemDetail(string sCode, int iQuantity, float fTheSellPrice) { SItemDetails SItem = new SItemDetails(sCode, iQuantity, fTheSellPrice); lsItemDetailList.Add(SItem); }
             public void SetSaleCashReceived(float fCash) { fCashReceived = fCash; }
             public void SetSaleTotal(float fTotal) { fSaleTotal = fTotal; }
             public void SetSalePaymentType(string sType) { sTypeOfPayment = sType; }
@@ -82,6 +83,16 @@ namespace VoelParadys
             }
             TheReader.Close();
             return true;
+        }
+        public bool DoesFileExist(string sFileName, string sTheSaleData)
+        {
+            string sFilePath = "";
+            if (sTheSaleData == "")
+                sFilePath = "../Data/" + sFileName + ".xml";
+            else
+                sFilePath = "../Data/SaleData/" + sTheSaleData+ "/" + sFileName + ".xml";
+
+            return File.Exists(sFilePath);
         }
         // Write to the stock xml file
         public void VoelParadysStockXmlWriter(List<SStockItemDetails> lStockItems)
@@ -225,7 +236,7 @@ namespace VoelParadys
             // Then add the new sale data to the SaleData type
             for (int i = 0; i < lSaleItems.Count; ++i)
             {
-                theNewSaleData.SetSaleItemDetail(lSaleItems[i].GetItemCode(), lSaleItems[i].GetItemQuantity());
+                theNewSaleData.SetSaleItemDetail(lSaleItems[i].GetItemCode(), lSaleItems[i].GetItemQuantity(), lSaleItems[i].GetItemSellPrice());
             }
             theNewSaleData.SetSaleTime(theTime);
             theNewSaleData.SetSaleTotal(fSaleTotal);
@@ -253,6 +264,7 @@ namespace VoelParadys
                     {
                         TheWriter.WriteElementString("ItemCode", theSaleDetailsList[i].GetSaleItemCodeAt(j).ToString());
                         TheWriter.WriteElementString("QuantitySold", theSaleDetailsList[i].GetSaleItemQuantitySoldAt(j).ToString());
+                        TheWriter.WriteElementString("SellPrice", theSaleDetailsList[i].GetSaleItemSellPriceAt(j).ToString());
                     }
                     TheWriter.WriteElementString("SaleTotal", theSaleDetailsList[i].GetSaleTotal().ToString("F2"));
                     TheWriter.WriteElementString("CashReceived", theSaleDetailsList[i].GetSaleCashReceived().ToString("F2"));
@@ -267,13 +279,20 @@ namespace VoelParadys
             
         }
         // Reader from the sale file 
-        public void VoelParadysDailySaleDataXmlReader(string sSaleFileName, ref List<SSaleDetails> theSaleDataList)
+        public void VoelParadysDailySaleDataXmlReader(string sSaleFileName, ref List<SSaleDetails> theSaleDataList, bool bFromCashup = false)
         {
-            if (IsXmlFileValid(sSaleFileName))
+            string sFilePath = "";
+            if (bFromCashup)
+                sFilePath = "../Data/SaleData/Daily/" + sSaleFileName + ".xml";
+            else
+                sFilePath = sSaleFileName;
+
+            if (IsXmlFileValid(sFilePath))
             {
-                XmlReader TheReader = XmlReader.Create(sSaleFileName);
+                XmlReader TheReader = XmlReader.Create(sFilePath);
                 string sTempCode = "";
                 int iTempQuantity = -1;
+                float fTempSellPrice = -1;
                 while (TheReader.Read())
                 {
                     if (TheReader.NodeType == XmlNodeType.Element)
@@ -316,7 +335,20 @@ namespace VoelParadys
                                        iTempQuantity = int.Parse(TheReader.Value);
                                    }
                                 }
-                                TempSaleDetail.SetSaleItemDetail(sTempCode, iTempQuantity);
+                                TheReader.Read();
+                            }
+                            if (TheReader.Name == "SellPrice")
+                            {
+                                while (TheReader.NodeType != XmlNodeType.EndElement)
+                                {
+                                    TheReader.Read();
+                                    if (TheReader.NodeType == XmlNodeType.Text)
+                                    {
+                                        fTempSellPrice = -1;
+                                        fTempSellPrice = float.Parse(TheReader.Value);
+                                    }
+                                }
+                                TempSaleDetail.SetSaleItemDetail(sTempCode, iTempQuantity, fTempSellPrice);
                                 TheReader.Read();
                             }
                             if (TheReader.Name == "SaleTotal")

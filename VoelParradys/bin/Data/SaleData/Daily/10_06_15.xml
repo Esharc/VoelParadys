@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DailySaleData>
+  <!--This is the start of sale item with time stamp 8:15:50-->
+  <TimeStamp81550>
+    <Time>8:15:50</Time>
+    <SaleTotal>0.00</SaleTotal>
+    <CashReceived>0.00</CashReceived>
+    <TypeOfPayment>Cash</TypeOfPayment>
+  </TimeStamp81550>
+</DailySaleData>

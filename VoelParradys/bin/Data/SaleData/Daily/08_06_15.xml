@@ -5,10 +5,13 @@
     <Time>12:38:59</Time>
     <ItemCode>Husk0021</ItemCode>
     <QuantitySold>1</QuantitySold>
+    <SellPrice>50.00</SellPrice>
     <ItemCode>100200314</ItemCode>
     <QuantitySold>1</QuantitySold>
+    <SellPrice>41.50</SellPrice>
     <ItemCode>100200414</ItemCode>
     <QuantitySold>1</QuantitySold>
+    <SellPrice>20.00</SellPrice>
     <SaleTotal>111.50</SaleTotal>
     <CashReceived>120.00</CashReceived>
     <TypeOfPayment>Cash</TypeOfPayment>
@@ -18,10 +21,13 @@
     <Time>12:53:01</Time>
     <ItemCode>100200214</ItemCode>
     <QuantitySold>2</QuantitySold>
+    <SellPrice>30.00</SellPrice>
     <ItemCode>Husk0021</ItemCode>
     <QuantitySold>1</QuantitySold>
+    <SellPrice>50.00</SellPrice>
     <ItemCode>100200314</ItemCode>
     <QuantitySold>2</QuantitySold>
+    <SellPrice>41.50</SellPrice>
     <SaleTotal>193.00</SaleTotal>
     <CashReceived>200.00</CashReceived>
     <TypeOfPayment>Cash</TypeOfPayment>

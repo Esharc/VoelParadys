@@ -166,7 +166,7 @@ namespace VoelParadys
             {
                 if (HasIDBeenUsed(iTempID))
                 {
-                    if (m_lCustomerList[i].GetCustomerID() > iTempID)
+                    if (m_lCustomerList[i].GetCustomerID() >= iTempID)
                         iTempID = m_lCustomerList[i].GetCustomerID() + 1;
                 }
                 else

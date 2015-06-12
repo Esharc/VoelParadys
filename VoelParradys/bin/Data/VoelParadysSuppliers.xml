@@ -1,29 +1,50 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Suppliers>
-  <!--This is the start of Chunky's-->
-  <Chunkys>
+  <!--This is the start of Ajay Haas-->
+  <AjayHaas>
     <ID>1</ID>
-    <Name>Chunky's</Name>
-    <RepName>Eric</RepName>
-    <RepSurname>Louw</RepSurname>
-    <Address>Randburg;Gauteng</Address>
-    <Phone>0847258921</Phone>
-    <SuppliedItemCode>100200114</SuppliedItemCode>
-    <SuppliedItemQuantity>50</SuppliedItemQuantity>
-    <SuppliedItemCode>100200614</SuppliedItemCode>
-    <SuppliedItemQuantity>50</SuppliedItemQuantity>
-  </Chunkys>
-  <!--This is the start of Slopy Joe's-->
-  <SlopyJoes>
+    <Name>Ajay Haas</Name>
+    <RepName>Ajay</RepName>
+    <RepSurname>Prinsloo</RepSurname>
+    <Address>9 Porcupine;AmSomething;Can't;See;This</Address>
+    <Phone>0826527102</Phone>
+  </AjayHaas>
+  <!--This is the start of Mariza Kattle-->
+  <MarizaKattle>
     <ID>2</ID>
-    <Name>Slopy Joe's</Name>
-    <RepName>Wilna</RepName>
-    <RepSurname>Pepler</RepSurname>
-    <Address>Wonderboom;Pretoria;Gauteng</Address>
-    <Phone>0872465254</Phone>
-    <SuppliedItemCode>100200214</SuppliedItemCode>
+    <Name>Mariza Kattle</Name>
+    <RepName>Mariza</RepName>
+    <RepSurname>Prinsloo</RepSurname>
+    <Address>1 Merensky;Setaria;Limpopo;0362</Address>
+    <Phone>0826527102</Phone>
+  </MarizaKattle>
+  <!--This is the start of Nadia Horns-->
+  <NadiaHorns>
+    <ID>3</ID>
+    <Name>Nadia Horns</Name>
+    <RepName>Nadia</RepName>
+    <RepSurname>Prinsloo</RepSurname>
+    <Address>1 Merensky;Setaria;Limpopo;0362</Address>
+    <Phone>0826527102</Phone>
+  </NadiaHorns>
+  <!--This is the start of Timothy Bones-->
+  <TimothyBones>
+    <ID>4</ID>
+    <Name>Timothy Bones</Name>
+    <RepName>Timothy</RepName>
+    <RepSurname>Harcombe</RepSurname>
+    <Address>3914 Zeldriepark;Tabazimbi</Address>
+    <Phone>0722464840</Phone>
+    <SuppliedItemCode>Bones001</SuppliedItemCode>
     <SuppliedItemQuantity>20</SuppliedItemQuantity>
-    <SuppliedItemCode>Husk0021</SuppliedItemCode>
-    <SuppliedItemQuantity>10</SuppliedItemQuantity>
-  </SlopyJoes>
+  </TimothyBones>
+  <!--This is the start of Angus Fish-->
+  <AngusFish>
+    <ID>5</ID>
+    <Name>Angus Fish</Name>
+    <RepName>Angus</RepName>
+    <RepSurname>Watson</RepSurname>
+    <Address>Plot 1;Northam;Tabazimbi</Address>
+    <Phone>0147841248</Phone>
+  </AngusFish>
 </Suppliers>

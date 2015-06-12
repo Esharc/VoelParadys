@@ -8,6 +8,10 @@
     <Address>1205 Carter str;Queenswood;Pretoria;0186</Address>
     <Phone>0767885325</Phone>
     <IdNumber>8003275023089</IdNumber>
+    <WishListItem>Cat Food 10kg</WishListItem>
+    <WishListItem>Dog Food 5kg</WishListItem>
+    <WishListItem>Dog Tin Food</WishListItem>
+    <WishListItem>Cat Food Tins</WishListItem>
   </Etienne>
   <!--This is the start of Mariette-->
   <Mariette>
@@ -53,5 +57,8 @@
     <Address>-1</Address>
     <Phone>0824827799</Phone>
     <IdNumber>7808025401087</IdNumber>
+    <WishListItem>Husky Dog Food 10kg</WishListItem>
+    <WishListItem>Husky dogg food</WishListItem>
+    <WishListItem>Fish Food 100g</WishListItem>
   </Gilbert>
 </Customers>

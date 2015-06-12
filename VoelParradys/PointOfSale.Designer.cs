@@ -326,6 +326,7 @@
             this.ReportsButton.TabIndex = 33;
             this.ReportsButton.Text = "Reports";
             this.ReportsButton.UseVisualStyleBackColor = true;
+            this.ReportsButton.Click += new System.EventHandler(this.ReportsButton_Click);
             // 
             // PointOfSale
             // 

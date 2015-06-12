@@ -18,12 +18,14 @@ namespace VoelParadys
         string m_sItemCode;                 // The code of the item to be sold
         string m_sItemName;                 // The name of the item to be sold
         int m_iItemQuantity;                // The amount of the item to be sold
+        float m_fItemSellPrice;             // The price that the item was sold at
 
-        public SSaleInvoiceData(string sItemCode, string sItemName, int iItemQuantity)
+        public SSaleInvoiceData(string sItemCode, string sItemName, int iItemQuantity, float fSellPrice)
         {
             m_sItemCode = sItemCode;
             m_sItemName = sItemName;
             m_iItemQuantity = iItemQuantity;
+            m_fItemSellPrice = fSellPrice;
         }
 
         // Add the item code to the sale item
@@ -41,12 +43,18 @@ namespace VoelParadys
         {
             m_iItemQuantity = iQuantity;
         }
+        // Add the quantity to the sale item
+        public void AddSellPrice(float fPrice)
+        {
+            m_fItemSellPrice = fPrice;
+        }
         // Clear the sale item for a new entry
         public void ClearItem()
         {
             m_sItemCode = "";
             m_sItemName = "";
             m_iItemQuantity = 1;
+            m_fItemSellPrice = 0;
         }
         // Get the sale item code
         public string GetItemCode()
@@ -62,6 +70,11 @@ namespace VoelParadys
         public int GetItemQuantity()
         {
             return m_iItemQuantity;
+        }
+        // Get the sale item sell price
+        public float GetItemSellPrice()
+        {
+            return m_fItemSellPrice;
         }
     }
 
@@ -80,7 +93,7 @@ namespace VoelParadys
             InitializeComponent();
             SetUpInvoiceList();
             m_lSaleItems = new List<SSaleInvoiceData>();
-            m_SItem = new SSaleInvoiceData("", "", 1);
+            m_SItem = new SSaleInvoiceData("", "", 1, 0);
             m_fCashReceived = 0;
             m_fSubTotal = 0;
             m_sSelectedItemCode = "";
@@ -94,7 +107,11 @@ namespace VoelParadys
             {
                 if (rDataController.DoesItemExistInDatabase(WishListItems[i], ref sTempItemCode))
                 {
-                    m_lSaleItems.Add(new SSaleInvoiceData(sTempItemCode, WishListItems[i], 1));
+                    string sName = "";
+                    int iQuantS = -1, iQuantB = -1, iQuantU = -1;
+                    float fCPrice = 0, fSPrice = 0;
+                    rDataController.GetStockItemData(sTempItemCode, ref sName, ref iQuantS, ref iQuantB, ref iQuantU, ref fCPrice, ref fSPrice);
+                    m_lSaleItems.Add(new SSaleInvoiceData(sTempItemCode, WishListItems[i], 1, fSPrice));
                     rDataController.DeleteCustomerWishListItem(iCustomerID, WishListItems[i]);
                 }
             }
@@ -154,6 +171,11 @@ namespace VoelParadys
 
                 if (bValidInput)
                 {
+                    string sName = "";
+                    int iQuantS = -1, iQuantB = -1, iQuantU = -1;
+                    float fCPrice = 0, fSPrice = 0;
+                    rDataController.GetStockItemData(m_SItem.GetItemCode(), ref sName, ref iQuantS, ref iQuantB, ref iQuantU, ref fCPrice, ref fSPrice);
+                    m_SItem.AddSellPrice(fSPrice);
                     AddSaleItem(m_SItem);
                     m_SItem.ClearItem();
                     ItemCodeBox.Clear();
@@ -385,7 +407,6 @@ namespace VoelParadys
             lListPrinter.ListHeaderFormat.SetBorderPen(Sides.All, new Pen(Color.Black, 0.5f));
             lListPrinter.ListGridPen = new Pen(Color.Black);
 
-            // lListPrinter.Print();
             lListPrinter.PrintPreview();
             // TODO: Once the product is complete, uncomment this to actually print the page, and comment out the PrintPreview to print directly without first viewing it
             // lListPrinter.PrintWithDialog();
@@ -475,6 +496,12 @@ namespace VoelParadys
         {
             var OrdersForm = new Orders(this);
             OrdersForm.Show();
+        }
+
+        private void ReportsButton_Click(object sender, EventArgs e)
+        {
+            var ReportsForm = new Reports();
+            ReportsForm.Show();
         }
     }
 }

@@ -208,7 +208,7 @@ namespace VoelParadys
             {
                 if (HasIDBeenUsed(iTempID))
                 {
-                    if (m_lSupplierList[i].GetSupplierID() > iTempID)
+                    if (m_lSupplierList[i].GetSupplierID() >= iTempID)
                         iTempID = m_lSupplierList[i].GetSupplierID() + 1;
                 }
                 else

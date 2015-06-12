@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DailySaleData>
+  <!--This is the start of sale item with time stamp 13:21:09-->
+  <TimeStamp132109>
+    <Time>13:21:09</Time>
+    <ItemCode>100200214</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>30</SellPrice>
+    <ItemCode>100200814</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>90</SellPrice>
+    <ItemCode>100200714</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>25</SellPrice>
+    <ItemCode>100200514</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>15</SellPrice>
+    <ItemCode>100200314</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>41.5</SellPrice>
+    <SaleTotal>201.50</SaleTotal>
+    <CashReceived>220.00</CashReceived>
+    <TypeOfPayment>EFT</TypeOfPayment>
+  </TimeStamp132109>
+  <!--This is the start of sale item with time stamp 13:22:07-->
+  <TimeStamp132207>
+    <Time>13:22:07</Time>
+    <ItemCode>100200514</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>15</SellPrice>
+    <ItemCode>100200814</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>90</SellPrice>
+    <ItemCode>100200214</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>30</SellPrice>
+    <ItemCode>100200314</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>41.5</SellPrice>
+    <ItemCode>100200414</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>20</SellPrice>
+    <SaleTotal>196.50</SaleTotal>
+    <CashReceived>200.00</CashReceived>
+    <TypeOfPayment>Bank Transfer</TypeOfPayment>
+  </TimeStamp132207>
+  <!--This is the start of sale item with time stamp 13:22:19-->
+  <TimeStamp132219>
+    <Time>13:22:19</Time>
+    <ItemCode>100200514</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>15</SellPrice>
+    <SaleTotal>15.00</SaleTotal>
+    <CashReceived>20.00</CashReceived>
+    <TypeOfPayment>Cash</TypeOfPayment>
+  </TimeStamp132219>
+  <!--This is the start of sale item with time stamp 13:22:30-->
+  <TimeStamp132230>
+    <Time>13:22:30</Time>
+    <ItemCode>100200614</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>68</SellPrice>
+    <SaleTotal>68.00</SaleTotal>
+    <CashReceived>70.00</CashReceived>
+    <TypeOfPayment>Bank Transfer</TypeOfPayment>
+  </TimeStamp132230>
+  <!--This is the start of sale item with time stamp 13:22:45-->
+  <TimeStamp132245>
+    <Time>13:22:45</Time>
+    <ItemCode>100200814</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>90</SellPrice>
+    <ItemCode>100200714</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>25</SellPrice>
+    <SaleTotal>115.00</SaleTotal>
+    <CashReceived>120.00</CashReceived>
+    <TypeOfPayment>EFT</TypeOfPayment>
+  </TimeStamp132245>
+  <!--This is the start of sale item with time stamp 13:22:55-->
+  <TimeStamp132255>
+    <Time>13:22:55</Time>
+    <ItemCode>100200214</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>30</SellPrice>
+    <SaleTotal>30.00</SaleTotal>
+    <CashReceived>50.00</CashReceived>
+    <TypeOfPayment>Cash</TypeOfPayment>
+  </TimeStamp132255>
+  <!--This is the start of sale item with time stamp 13:32:22-->
+  <TimeStamp133222>
+    <Time>13:32:22</Time>
+    <ItemCode>100200514</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>15</SellPrice>
+    <SaleTotal>15.00</SaleTotal>
+    <CashReceived>20.00</CashReceived>
+    <TypeOfPayment>Cash</TypeOfPayment>
+  </TimeStamp133222>
+  <!--This is the start of sale item with time stamp 13:32:32-->
+  <TimeStamp133232>
+    <Time>13:32:32</Time>
+    <ItemCode>100200614</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>68</SellPrice>
+    <SaleTotal>68.00</SaleTotal>
+    <CashReceived>70.00</CashReceived>
+    <TypeOfPayment>EFT</TypeOfPayment>
+  </TimeStamp133232>
+  <!--This is the start of sale item with time stamp 13:32:48-->
+  <TimeStamp133248>
+    <Time>13:32:48</Time>
+    <ItemCode>100200514</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>15</SellPrice>
+    <ItemCode>100200814</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>90</SellPrice>
+    <ItemCode>100200714</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>25</SellPrice>
+    <SaleTotal>130.00</SaleTotal>
+    <CashReceived>150.00</CashReceived>
+    <TypeOfPayment>Bank Transfer</TypeOfPayment>
+  </TimeStamp133248>
+</DailySaleData>

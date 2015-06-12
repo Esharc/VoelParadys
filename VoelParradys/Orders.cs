@@ -70,20 +70,74 @@ namespace VoelParadys
         private void CustomerComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_SelectedCustomer = CustomerComboBox.SelectedItem as CIntStringMap;
+            if (m_SelectedCustomer.m_iCustomerID != -1)
+            {
+                var rDataController = VoelParadysDataController.GetInstance();
+
+                if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID) > 1)
+                {
+                    List<string> TempList = new List<string>();
+                    for (int i = 0; i < rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID); ++i)
+                        TempList.Add(rDataController.GetCustomerWishListItemAt(m_SelectedCustomer.m_iCustomerID, i));
+                    var theWishListItems = new WishListItems(this, TempList);
+                    theWishListItems.Show();
+                }
+                else if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID) == 1)
+                {
+                    m_lsWishListItems.Add(rDataController.GetCustomerWishListItemAt(m_SelectedCustomer.m_iCustomerID, 0));
+                    CallParentWindow();
+                }
+                else
+                {
+                    string sMessage = DetermieErrorOnCustomerSelect();
+                    string sCaption = "Error!!!";
+                    MessageBox.Show(sMessage, sCaption);
+                }
+            }
+        }
+
+        private string DetermieErrorOnCustomerSelect()
+        {
             var rDataController = VoelParadysDataController.GetInstance();
 
-            if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID) > 1)
+            if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID) == 0)
+                return "No wish list items found for " + m_SelectedCustomer.m_sCustomerName;
+            else if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID) == 1)
             {
-                List<string> TempList = new List<string>();
-                for (int i = 0; i < rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID); ++i)
-                    TempList.Add(rDataController.GetCustomerWishListItemAt(m_SelectedCustomer.m_iCustomerID, i));
-                var theWishListItems = new WishListItems(this, TempList);
-                theWishListItems.Show();
+                string sStockItem = rDataController.GetCustomerWishListItemAt(m_SelectedCustomer.m_iCustomerID, 0);
+                string sItemCode = "";
+                if (!rDataController.DoesItemExistInDatabase(sStockItem, ref sItemCode))
+                    return sStockItem + " does not exist in the database";
+                else
+                    return "I am here because the item exists in the database but \n" +
+                        "that means that I should not be here. Contact the developer";
             }
             else
             {
-                m_lsWishListItems.Add(rDataController.GetCustomerWishListItemAt(m_SelectedCustomer.m_iCustomerID, 0));
-                CallParentWindow();
+                string sTempCode = "";
+                List<string> sItems = new List<string>();
+                for (int i = 0; i < m_lsWishListItems.Count; ++i)
+                {
+                    if (rDataController.DoesItemExistInDatabase(m_lsWishListItems[i], ref sTempCode))
+                        sItems.Add(m_lsWishListItems[i]);
+                }
+
+                if (sItems.Count > 0)
+                {
+                    string sRetVal = "";
+                    for (int j = 0; j < sItems.Count; ++j)
+                    {
+                        if (j == sItems.Count - 1)
+                            sRetVal += sItems[j];
+                        else
+                            sRetVal += sItems[j] + ", ";
+                    }
+
+                    return "Non existent item(s) in the database: " + sRetVal;
+                }
+                else
+                    return "I am here because there is more than one item in the list \n" +
+                        "and technically I should not be here. Contact the developer";
             }
         }
 
@@ -94,6 +148,13 @@ namespace VoelParadys
                 m_Parent.SetWishListSaleData(m_lsWishListItems, m_SelectedCustomer.m_iCustomerID);
                 this.Close();
             }
+            else
+            {
+                string sMessage = DetermieErrorOnCustomerSelect();
+                string sCaption = "Error!!!";
+                MessageBox.Show(sMessage, sCaption);
+            }
+
         }
 
         private void AddNewOrderButton_Click(object sender, EventArgs e)

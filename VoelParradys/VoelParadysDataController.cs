@@ -10,18 +10,21 @@ namespace VoelParadys
     {
         string sItemCode;           // The code of the item sold
         int iItemQuantitySold;      // The amount of the item sold
+        float fSellPrice;           // The price that the item is sold at
 
-        public SItemDetails(string _sItemCode, int _iItemQuantity)
+        public SItemDetails(string _sItemCode, int _iItemQuantity, float _fSellPrice)
         {
             string sTheItemCode = _sItemCode == null ? "" : _sItemCode;
             sItemCode = sTheItemCode;
             iItemQuantitySold = _iItemQuantity;
+            fSellPrice = _fSellPrice;
         }
 
         public string GetItemCode() { return sItemCode; }
         public int GetItemQuantitySold() { return iItemQuantitySold; }
+        public float GetItemSellPrice() { return fSellPrice; }
         // Setters
-        public void SetSaleItemDetails(string sCode, int iQuantitySold) { sItemCode = sCode; iItemQuantitySold = iQuantitySold; }
+        public void SetSaleItemDetails(string sCode, int iQuantitySold, float fTheSellPrice) { sItemCode = sCode; iItemQuantitySold = iQuantitySold; fSellPrice = fTheSellPrice; }
     }
 
     class VoelParadysDataController
@@ -199,14 +202,19 @@ namespace VoelParadys
             m_XmlParser.VoelParadysStockXmlWriter(lStockList);
         }
         // Read in the daily sale data from the XML file
-        public void ReadDailySaleDataFromDB()
+        public void ReadDailySaleDataFromDB(string sFileName, ref List<VoelParadysXmlParser.SSaleDetails> lSaleDetails, bool bFromCashup)
         {
-            // Not yet implemented (ETS TODO)
+            m_XmlParser.VoelParadysDailySaleDataXmlReader(sFileName, ref lSaleDetails, bFromCashup);
         }
         // Write the daily sale data to the XML file
         public void WriteDailySaleDataToDB(List<SSaleInvoiceData> lSaleItems, float fSubTotal, float fCashReceived, string sPaymentType)
         {
             m_XmlParser.VoelParadysDailySaleDataXmlWriter(lSaleItems, fSubTotal, fCashReceived, sPaymentType);
+        }
+        // Does the daily sale file exist?
+        public bool DoesFileExist(string sFileName, string sFileData)
+        {
+            return m_XmlParser.DoesFileExist(sFileName, sFileData);
         }
         // Customer data functions
         // Get a unique ID for the new customer
