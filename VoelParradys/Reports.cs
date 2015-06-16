@@ -127,10 +127,13 @@ namespace VoelParadys
                 lListPrinter.ListHeaderFormat.BackgroundBrush = null;
                 lListPrinter.ListHeaderFormat.SetBorderPen(Sides.All, new Pen(Color.Black, 0.5f));
                 lListPrinter.ListGridPen = new Pen(Color.Black);
+                lListPrinter.GroupHeaderFormat = BlockFormat.GroupHeader();
+                lListPrinter.GroupHeaderFormat.BackgroundBrush = null;
+                lListPrinter.GroupHeaderFormat.SetBorderPen(Sides.Bottom, new Pen(Color.Black, 0.5f));
 
-                lListPrinter.PrintPreview();
+                // lListPrinter.PrintPreview();
                 // TODO: Once the product is complete, uncomment this to actually print the page, and comment out the PrintPreview to print directly without first viewing it
-                // lListPrinter.PrintWithDialog();
+                lListPrinter.PrintWithDialog();
             }
             else
             {

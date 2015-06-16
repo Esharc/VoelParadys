@@ -123,4 +123,17 @@
     <CashReceived>150.00</CashReceived>
     <TypeOfPayment>Bank Transfer</TypeOfPayment>
   </TimeStamp133248>
+  <!--This is the start of sale item with time stamp 18:01:26-->
+  <TimeStamp180126>
+    <Time>18:01:26</Time>
+    <ItemCode>100200214</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>30</SellPrice>
+    <ItemCode>100200314</ItemCode>
+    <QuantitySold>1</QuantitySold>
+    <SellPrice>41.5</SellPrice>
+    <SaleTotal>71.50</SaleTotal>
+    <CashReceived>0.00</CashReceived>
+    <TypeOfPayment>Cash</TypeOfPayment>
+  </TimeStamp180126>
 </DailySaleData>
