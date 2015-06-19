@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace VoelParadys
 {
@@ -101,8 +102,11 @@ namespace VoelParadys
             m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysInventory.xml");
             m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysCustomers.xml");
             m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysSuppliers.xml");
+            m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysUsage.xml");
             // TODO: Add the other xml files here as they are created 
         }
+        //}
+        //{
         // Inventory data functions
         // Get the amount of inventory items currently in the database 
         public int GetInventoryListSize()
@@ -216,7 +220,8 @@ namespace VoelParadys
         {
             return m_XmlParser.DoesFileExist(sFileName, sFileData);
         }
-        // Customer data functions
+        //}
+        //{ Customer data functions
         // Get a unique ID for the new customer
         public void GetUniqueCustomerID(ref int iUniqueID)
         {
@@ -329,7 +334,8 @@ namespace VoelParadys
         {
             return m_CustomerData.GetAllCustomersNameAndID();
         }
-        // Supplier data functions
+        //}
+        //{ Supplier data functions
         // Get a unique ID for the new supplier
         public void GetUniqueSupplierID(ref int iUniqueID)
         {
@@ -450,5 +456,82 @@ namespace VoelParadys
             return m_SupplierData.GetAllSupplierNames();
         }
         // }
+        //{ Usage functionality
+        public void WriteUsageDataToFile(string sItemCode, int iItemQty)
+        {
+            m_XmlParser.VoelParadysUsageXmlWriter(sItemCode, iItemQty);
+        }
+        public bool GetUsageDataList(string sStartDate, string sEndDate, ref List<UsageData> theUsageList)
+        {
+            string sDateFormat = "dd/MM/yyyy";
+            DateTime TheDateIncrementer;
+            DateTime TheEndDate;
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("de-DE");
+            DateTimeStyles styles = DateTimeStyles.None;
+
+            if (DateTime.TryParse(sStartDate, culture, styles, out TheDateIncrementer) && DateTime.TryParse(sEndDate, culture, styles, out TheEndDate))
+            {
+                if (TheDateIncrementer <= TheEndDate)
+                {
+                    List<UsageData> tempList = new List<UsageData>();
+                    m_XmlParser.VoelParadysUsageXmlReader(tempList);
+
+                    while (TheDateIncrementer <= TheEndDate)
+                    {
+                        for (int i = 0; i < tempList.Count; ++i)
+                        {
+                            if (tempList[i].sDate == TheDateIncrementer.ToString(sDateFormat))
+                                theUsageList.Add(tempList[i]);
+                        }
+                        TheDateIncrementer = TheDateIncrementer.AddDays(1);
+                    }
+                }
+                else
+                    PrintErrorMessage("The end date should be greater than the start date");
+            }
+            else
+            {
+                PrintErrorMessage("Error parsing date(s)");
+            }
+            return theUsageList.Count > 0;
+        }
+        public bool GetDailySaleFileList(string sStartDate, string sEndDate, ref List<DailySaleFileData> theSaleFileList)
+        {
+            DateTime TheDateIncrementer;
+            DateTime TheEndDate;
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("de-DE");
+            DateTimeStyles styles = DateTimeStyles.None;
+
+            if (DateTime.TryParse(sStartDate, culture, styles, out TheDateIncrementer) && DateTime.TryParse(sEndDate, culture, styles, out TheEndDate))
+            {
+                if (TheDateIncrementer <= TheEndDate)
+                {
+                    while (TheDateIncrementer <= TheEndDate)
+                    {
+                        if (DoesFileExist(TheDateIncrementer.ToString("dd_MM_yy"), "Daily"))
+                        {
+                            DailySaleFileData tempData = new DailySaleFileData();
+                            tempData.sDate = TheDateIncrementer.ToString("dd/MM/yyyy");
+                            tempData.sFileName = "../Data/SaleData/Daily/" + TheDateIncrementer.ToString("dd_MM_yy") + ".xml";
+                            theSaleFileList.Add(tempData);
+                        }
+                        TheDateIncrementer = TheDateIncrementer.AddDays(1);
+                    }
+                }
+                else
+                    PrintErrorMessage("The end date should be greater than the start date");
+            }
+            else
+                PrintErrorMessage("Error parsing date(s)");
+
+            return theSaleFileList.Count > 0;
+        }
+        private void PrintErrorMessage(string sMessage)
+        {
+            // Return an error message
+            string sCaption = "Error!!!";
+            MessageBox.Show(sMessage, sCaption);
+        }
+        //}
     }
 }

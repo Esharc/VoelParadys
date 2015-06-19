@@ -89,6 +89,7 @@ namespace VoelParadys
         {
             if (m_iAmountToBeUsed != -1 && m_sSelectedStockItemCode != "")
             {
+                DateTime sCurrentDateTime = DateTime.Now;
                 var rDataController = VoelParadysDataController.GetInstance();
                 string sName = "";
                 int iQuantitySold = -1, iQuantityBought = -1, iQuantityUsed = -1;
@@ -97,6 +98,7 @@ namespace VoelParadys
                 rDataController.GetStockItemData(m_sSelectedStockItemCode, ref sName, ref iQuantitySold, ref iQuantityBought, ref iQuantityUsed, ref fCostPrice, ref fSellPrice);
                 iQuantityUsed += m_iAmountToBeUsed;
                 rDataController.UpdateInventoryItem(m_sSelectedStockItemCode, sName, iQuantitySold, iQuantityBought, iQuantityUsed, fCostPrice, fSellPrice);
+                rDataController.WriteUsageDataToFile(m_sSelectedStockItemCode, m_iAmountToBeUsed);
                 m_iAmountToBeUsed = -1;
                 m_sSelectedStockItemCode = "";
                 UsageTextBox.Clear();

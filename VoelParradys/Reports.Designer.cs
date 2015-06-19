@@ -112,6 +112,7 @@
             this.InventoryRadioButton.TabIndex = 10;
             this.InventoryRadioButton.Text = "Inventory";
             this.InventoryRadioButton.UseVisualStyleBackColor = true;
+            this.InventoryRadioButton.CheckedChanged += new System.EventHandler(this.InventoryRadioButton_CheckedChanged);
             // 
             // CustomersButton
             // 

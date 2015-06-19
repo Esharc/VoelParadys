@@ -1,15 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Inventory>
-  <!--This is the start of Husky Dog Food 10kg-->
-  <HuskyDogFood10kg>
-    <Code>Husk0021</Code>
-    <Name>Husky Dog Food 10kg</Name>
-    <QuantitySold>2</QuantitySold>
-    <QuantityBought>10</QuantityBought>
-    <QuantityUsed>0</QuantityUsed>
-    <CostPrice>25.00</CostPrice>
-    <SellPrice>50.00</SellPrice>
-  </HuskyDogFood10kg>
   <!--This is the start of Knuckle Bones-->
   <KnuckleBones>
     <Code>Bones001</Code>
@@ -100,4 +90,14 @@
     <CostPrice>19.50</CostPrice>
     <SellPrice>41.50</SellPrice>
   </CatFood10kg>
+  <!--This is the start of Husky Dog Food 10kg-->
+  <HuskyDogFood10kg>
+    <Code>Husk0021</Code>
+    <Name>Husky Dog Food 10kg</Name>
+    <QuantitySold>2</QuantitySold>
+    <QuantityBought>10</QuantityBought>
+    <QuantityUsed>2</QuantityUsed>
+    <CostPrice>25.00</CostPrice>
+    <SellPrice>50.00</SellPrice>
+  </HuskyDogFood10kg>
 </Inventory>

@@ -9,6 +9,18 @@ using System.IO;
 
 namespace VoelParadys
 {
+    public struct UsageData
+    {
+        public string sDate { get; set; }
+        public string sItemCode { get; set; }
+        public int iItemQuantity { get; set; }
+    }
+    public struct DailySaleFileData
+    {
+        public string sDate { get; set; }
+        public string sFileName { get; set; }
+    }
+
     class VoelParadysXmlParser
     {
         public struct SSaleDetails
@@ -746,6 +758,96 @@ namespace VoelParadys
                             }
                         }
                         lSupplierItems.Add(TempSupplier);
+                    }
+                }
+                TheReader.Close();
+            }
+        }
+
+        // Write to the usage xml file
+        public void VoelParadysUsageXmlWriter(string sItemCode, int iQuantity)
+        {
+            DateTime theDateAndTime = DateTime.Now;
+            string sTheDate = theDateAndTime.ToString("dd/MM/yyyy");
+            // Get examples for xml reading and writing from http://forum.codecall.net/topic/58239-c-tutorial-reading-and-writing-xml-files/
+            List<UsageData> lUsageList = new List<UsageData>();
+            VoelParadysUsageXmlReader(lUsageList);
+            UsageData TempData = new UsageData();
+            TempData.sDate = sTheDate;
+            TempData.sItemCode = sItemCode;
+            TempData.iItemQuantity = iQuantity;
+            lUsageList.Add(TempData);
+
+            XmlWriterSettings XmlSettings = new XmlWriterSettings();
+            XmlSettings.Indent = true;
+
+            XmlWriter TheWriter = XmlWriter.Create("../Data/VoelParadysUsage.xml", XmlSettings);
+            TheWriter.WriteStartDocument();
+            TheWriter.WriteStartElement("Usage");
+
+            for (int i = 0; i < lUsageList.Count; ++i)
+            {
+                string sStartElement = lUsageList[i].sItemCode + "_" + lUsageList[i].sDate.Replace("/", "");
+                sStartElement = sStartElement.Replace(" ", "");
+                TheWriter.WriteComment("This is the usage of " + lUsageList[i].sItemCode + " for " + lUsageList[i].sDate);
+                TheWriter.WriteStartElement(sStartElement);
+                TheWriter.WriteElementString("Date", lUsageList[i].sDate);
+                TheWriter.WriteElementString("ItemCode", lUsageList[i].sItemCode);
+                TheWriter.WriteElementString("Quantity", lUsageList[i].iItemQuantity.ToString());
+                TheWriter.WriteEndElement();
+            }
+            TheWriter.WriteEndElement();
+            TheWriter.WriteEndDocument();
+            TheWriter.Flush();
+            TheWriter.Close();
+        }
+        // Read from the usage xml file
+        public void VoelParadysUsageXmlReader(List<UsageData> lUsageList)
+        {
+            if (IsXmlFileValid("../Data/VoelParadysUsage.xml"))
+            {
+                XmlReader TheReader = XmlReader.Create("../Data/VoelParadysUsage.xml");
+
+                while (TheReader.Read())
+                {
+                    if (TheReader.NodeType == XmlNodeType.Element)
+                    {
+                        UsageData TempUsageItem = new UsageData();
+                        while (TheReader.NodeType != XmlNodeType.EndElement)
+                        {
+                            TheReader.Read();
+                            if (TheReader.Name == "Date")
+                            {
+                                while (TheReader.NodeType != XmlNodeType.EndElement)
+                                {
+                                    TheReader.Read();
+                                    if (TheReader.NodeType == XmlNodeType.Text)
+                                        TempUsageItem.sDate = TheReader.Value;
+                                }
+                                TheReader.Read();
+                            }
+                            if (TheReader.Name == "ItemCode")
+                            {
+                                while (TheReader.NodeType != XmlNodeType.EndElement)
+                                {
+                                    TheReader.Read();
+                                    if (TheReader.NodeType == XmlNodeType.Text)
+                                        TempUsageItem.sItemCode = TheReader.Value;
+                                }
+                                TheReader.Read();
+                            }
+                            if (TheReader.Name == "Quantity")
+                            {
+                                while (TheReader.NodeType != XmlNodeType.EndElement)
+                                {
+                                    TheReader.Read();
+                                    if (TheReader.NodeType == XmlNodeType.Text)
+                                        TempUsageItem.iItemQuantity = int.Parse(TheReader.Value);
+                                }
+                                TheReader.Read();
+                            }
+                        }
+                        lUsageList.Add(TempUsageItem);
                     }
                 }
                 TheReader.Close();

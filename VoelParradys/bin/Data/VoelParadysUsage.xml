@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Usage>
+  <!--This is the usage of Husk0021 for 15/05/2015-->
+  <ItemCode_Husk0021_15052015>
+    <Date>08/06/2015</Date>
+    <ItemCode>Husk0021</ItemCode>
+    <Quantity>1</Quantity>
+  </ItemCode_Husk0021_15052015>
+  <!--This is the usage of 100200314 for 20/05/2015-->
+  <ItemCode_100200314_20052015>
+    <Date>09/06/2015</Date>
+    <ItemCode>100200314</ItemCode>
+    <Quantity>3</Quantity>
+  </ItemCode_100200314_20052015>
+  <!--This is the usage of 100200314 for 23/05/2015-->
+  <ItemCode_100200314_23052015>
+    <Date>10/06/2015</Date>
+    <ItemCode>100200314</ItemCode>
+    <Quantity>2</Quantity>
+  </ItemCode_100200314_23052015>
+  <!--This is the usage of 100200414 for 25/05/2015-->
+  <ItemCode_100200414_25052015>
+    <Date>12/06/2015</Date>
+    <ItemCode>100200414</ItemCode>
+    <Quantity>2</Quantity>
+  </ItemCode_100200414_25052015>
+  <!--This is the usage of 100200714 for 27/05/2015-->
+  <ItemCode_100200714_27052015>
+    <Date>16/06/2015</Date>
+    <ItemCode>100200714</ItemCode>
+    <Quantity>1</Quantity>
+  </ItemCode_100200714_27052015>
+  <!--This is the usage of 100200114 for 17/06/2015-->
+  <ItemCode_100200114_17062015>
+    <Date>17/06/2015</Date>
+    <ItemCode>100200114</ItemCode>
+    <Quantity>2</Quantity>
+  </ItemCode_100200114_17062015>
+  <!--This is the usage of Husk0021 for 18/06/2015-->
+  <ItemCode_Husk0021_18062015>
+    <Date>18/06/2015</Date>
+    <ItemCode>Husk0021</ItemCode>
+    <Quantity>1</Quantity>
+  </ItemCode_Husk0021_18062015>
+</Usage>
