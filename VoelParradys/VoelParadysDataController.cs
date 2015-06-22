@@ -103,7 +103,6 @@ namespace VoelParadys
             m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysCustomers.xml");
             m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysSuppliers.xml");
             m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysUsage.xml");
-            // TODO: Add the other xml files here as they are created 
         }
         //}
         //{

@@ -407,9 +407,9 @@ namespace VoelParadys
             lListPrinter.ListHeaderFormat.SetBorderPen(Sides.All, new Pen(Color.Black, 0.5f));
             lListPrinter.ListGridPen = new Pen(Color.Black);
 
-            lListPrinter.PrintPreview();
+            // lListPrinter.PrintPreview();
             // TODO: Once the product is complete, uncomment this to actually print the page, and comment out the PrintPreview to print directly without first viewing it
-            // lListPrinter.PrintWithDialog();
+            lListPrinter.PrintWithDialog();
         }
 
         private void StoreUsageButton_Click(object sender, EventArgs e)
