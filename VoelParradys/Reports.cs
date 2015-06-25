@@ -118,7 +118,7 @@ namespace VoelParadys
             string sSelectedDateFile = FromDateTimePicker.Value.ToString("dd_MM_yy");
             string sPrintDate = FromDateTimePicker.Value.ToString("dd MMM yyyy");
 
-            if (rDataController.DoesFileExist(sSelectedDateFile, "Daily"))
+            if (rDataController.DoesFileExist(sSelectedDateFile, true))
             {
                 List<VoelParadysXmlParser.SSaleDetails> theSaleDetailsList = new List<VoelParadysXmlParser.SSaleDetails>();
                 rDataController.ReadDailySaleDataFromDB(sSelectedDateFile, ref theSaleDetailsList, true);
@@ -131,14 +131,18 @@ namespace VoelParadys
                 theListView.GridLines = true;
                 theListView.FullRowSelect = true;
 
-                theListView.Columns.Add("Item Code", 110);
-                theListView.Columns.Add("Qty", 110);
+                theListView.Columns.Add("Item Code", 80);
+                theListView.Columns.Add("Item Description", 110);
+                theListView.Columns.Add("Qty", 50);
                 theListView.Columns.Add("Sell Price", 110);
                 theListView.Columns.Add("Total", 110);
-                theListView.Columns.Add("Cash Received", 160);
-                theListView.Columns.Add("Payment Type", 160);
+                theListView.Columns.Add("Cash Received", 150);
+                theListView.Columns.Add("Payment Type", 150);
 
-                string[] arr = new string[6];
+                string[] arr = new string[7];
+                string sName = "";
+                int iQtyS = -1, iQtyB = -1, iQtyU = -1;
+                float fCost = -1, fSell = -1;
 
                 for (int i = 0; i < theSaleDetailsList.Count; ++i)
                 {
@@ -146,20 +150,23 @@ namespace VoelParadys
                     theListView.Groups.Add(SaleGroup);
                     for (int k = 0; k < theSaleDetailsList[i].GetSaleItemsCount(); ++k)
                     {
+                        rDataController.GetStockItemData(theSaleDetailsList[i].GetSaleItemCodeAt(k), ref sName, ref iQtyS, ref iQtyB, ref iQtyU, ref fCost, ref fSell);
                         arr[0] = theSaleDetailsList[i].GetSaleItemCodeAt(k);
-                        arr[1] = theSaleDetailsList[i].GetSaleItemQuantitySoldAt(k).ToString();
-                        arr[2] = "R " + theSaleDetailsList[i].GetSaleItemSellPriceAt(k).ToString("F2");
-                        arr[3] = "R " + (theSaleDetailsList[i].GetSaleItemQuantitySoldAt(k) * theSaleDetailsList[i].GetSaleItemSellPriceAt(k)).ToString("F2");
-                        arr[4] = "";
+                        arr[1] = sName;
+                        arr[2] = theSaleDetailsList[i].GetSaleItemQuantitySoldAt(k).ToString();
+                        arr[3] = "R " + theSaleDetailsList[i].GetSaleItemSellPriceAt(k).ToString("F2");
+                        arr[4] = "R " + (theSaleDetailsList[i].GetSaleItemQuantitySoldAt(k) * theSaleDetailsList[i].GetSaleItemSellPriceAt(k)).ToString("F2");
                         arr[5] = "";
+                        arr[6] = "";
                         theListView.Items.Add(new ListViewItem(arr, SaleGroup));
                     }
                     arr[0] = "";
                     arr[1] = "";
                     arr[2] = "";
-                    arr[3] = "R " + theSaleDetailsList[i].GetSaleTotal().ToString("F2");
-                    arr[4] = "R " + theSaleDetailsList[i].GetSaleCashReceived().ToString("F2");
-                    arr[5] = theSaleDetailsList[i].GetSalePaymentType();
+                    arr[3] = "";
+                    arr[4] = "R " + theSaleDetailsList[i].GetSaleTotal().ToString("F2");
+                    arr[5] = "R " + theSaleDetailsList[i].GetSaleCashReceived().ToString("F2");
+                    arr[6] = theSaleDetailsList[i].GetSalePaymentType();
                     theListView.Items.Add(new ListViewItem(arr, SaleGroup));
                 }
                 SetupPrinterAndPrintList(theListView, "\tVoel Paradys Cash-up for " + sPrintDate);
@@ -177,7 +184,7 @@ namespace VoelParadys
             string sSelectedDateFile = FromDateTimePicker.Value.ToString("dd_MM_yy");
             string sPrintDate = FromDateTimePicker.Value.ToString("dd MMM yyyy");
 
-            if (rDataController.DoesFileExist(sSelectedDateFile, "Daily"))
+            if (rDataController.DoesFileExist(sSelectedDateFile, true))
             {
                 Excel.Application xlApp = new Excel.Application();
 
@@ -203,16 +210,22 @@ namespace VoelParadys
                 xlWorksheet.Cells[iRowCounter, 1].EntireRow.Font.Size = 15;
                 xlWorksheet.Cells[iRowCounter, 1].EntireRow.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
                 xlWorksheet.Cells[iRowCounter, 1] = "Item Code";
-                xlWorksheet.Cells[iRowCounter, 2] = "Qty";
-                xlWorksheet.Cells[iRowCounter, 3] = "Sell Price";
-                xlWorksheet.Cells[iRowCounter, 4] = "Total";
-                xlWorksheet.Cells[iRowCounter, 5] = "Cash Received";
-                xlWorksheet.Cells[iRowCounter, 6] = "Payment Type";
+                xlWorksheet.Cells[iRowCounter, 2] = "Item Description";
+                xlWorksheet.Cells[iRowCounter, 3] = "Qty";
+                xlWorksheet.Cells[iRowCounter, 4] = "Sell Price";
+                xlWorksheet.Cells[iRowCounter, 5] = "Total";
+                xlWorksheet.Cells[iRowCounter, 6] = "Cash Received";
+                xlWorksheet.Cells[iRowCounter, 7] = "Payment Type";
+
+                xlWorksheet.Cells[iRowCounter, 1].EntireColumn.NumberFormat = "@";                                     // Formatted as text
+                string sName = "";
+                int iQtyS = -1, iQtyB = -1, iQtyU = -1;
+                float fCost = -1, fSell = -1;
 
                 iRowCounter = 4;
                 var theProgressBar = new ProgressBar(1, theSaleDetailsList.Count);
                 theProgressBar.Show();
-                string sCurrencyFormat = "R 0.00_);[Red](R 0.00)";
+                string sCurrencyFormat = "R ####0.00_);[Red](R ####0.00)";
                 for (int i = 0; i < theSaleDetailsList.Count; ++i)
                 {
                     xlWorksheet.Cells[iRowCounter, 1] = theSaleDetailsList[i].GetSaleTime();
@@ -221,21 +234,23 @@ namespace VoelParadys
                     iRowCounter += 1;
                     for (int j = 0; j < theSaleDetailsList[i].GetSaleItemsCount(); ++j)
                     {
+                        rDataController.GetStockItemData(theSaleDetailsList[i].GetSaleItemCodeAt(j), ref sName, ref iQtyS, ref iQtyB, ref iQtyU, ref fCost, ref fSell);
                         xlWorksheet.Cells[iRowCounter, 1].EntireRow.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
                         xlWorksheet.Cells[iRowCounter, 1] = theSaleDetailsList[i].GetSaleItemCodeAt(j);
-                        xlWorksheet.Cells[iRowCounter, 2] = theSaleDetailsList[i].GetSaleItemQuantitySoldAt(j);
-                        xlWorksheet.Cells[iRowCounter, 3] = theSaleDetailsList[i].GetSaleItemSellPriceAt(j);
-                        xlWorksheet.Cells[iRowCounter, 3].NumberFormat = sCurrencyFormat;
-                        xlWorksheet.Cells[iRowCounter, 4] = (theSaleDetailsList[i].GetSaleItemQuantitySoldAt(j) * theSaleDetailsList[i].GetSaleItemSellPriceAt(j));
+                        xlWorksheet.Cells[iRowCounter, 2] = sName;
+                        xlWorksheet.Cells[iRowCounter, 3] = theSaleDetailsList[i].GetSaleItemQuantitySoldAt(j);
+                        xlWorksheet.Cells[iRowCounter, 4] = theSaleDetailsList[i].GetSaleItemSellPriceAt(j);
                         xlWorksheet.Cells[iRowCounter, 4].NumberFormat = sCurrencyFormat;
+                        xlWorksheet.Cells[iRowCounter, 5] = (theSaleDetailsList[i].GetSaleItemQuantitySoldAt(j) * theSaleDetailsList[i].GetSaleItemSellPriceAt(j));
+                        xlWorksheet.Cells[iRowCounter, 5].NumberFormat = sCurrencyFormat;
                         iRowCounter += 1;
                     }
                     xlWorksheet.Cells[iRowCounter, 1].EntireRow.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
-                    xlWorksheet.Cells[iRowCounter, 4] = theSaleDetailsList[i].GetSaleTotal();
-                    xlWorksheet.Cells[iRowCounter, 4].NumberFormat = sCurrencyFormat;
-                    xlWorksheet.Cells[iRowCounter, 5] = theSaleDetailsList[i].GetSaleCashReceived();
+                    xlWorksheet.Cells[iRowCounter, 5] = theSaleDetailsList[i].GetSaleTotal();
                     xlWorksheet.Cells[iRowCounter, 5].NumberFormat = sCurrencyFormat;
-                    xlWorksheet.Cells[iRowCounter, 6] = theSaleDetailsList[i].GetSalePaymentType();
+                    xlWorksheet.Cells[iRowCounter, 6] = theSaleDetailsList[i].GetSaleCashReceived();
+                    xlWorksheet.Cells[iRowCounter, 6].NumberFormat = sCurrencyFormat;
+                    xlWorksheet.Cells[iRowCounter, 7] = theSaleDetailsList[i].GetSalePaymentType();
                     iRowCounter += 1;
                     theProgressBar.UpdateProgressBar();
                 }
@@ -346,7 +361,9 @@ namespace VoelParadys
                 xlWorksheet.Cells[iRowCounter, 6] = "Sell Price";
                 xlWorksheet.Cells[iRowCounter, 7] = "Profit Lost";
 
-                string sName = "", sCurrencyFormat = "R 0.00_);[Red](R 0.00)";
+                xlWorksheet.Cells[iRowCounter, 2].EntireColumn.NumberFormat = "@";                                     // Formatted as text
+
+                string sName = "", sCurrencyFormat = "R ####0.00_);[Red](R ####0.00)";
                 int iQtyS = -1, iQtyB = -1, iQtyU = -1;
                 float fCost = -1, fSell = -1;
 
@@ -463,6 +480,13 @@ namespace VoelParadys
             xlWorksheet.Cells[iRowCounter, 4] = "Qty Sold";
             xlWorksheet.Cells[iRowCounter, 5] = "Qty Used";
             xlWorksheet.Cells[iRowCounter, 6] = "Qty In Stock";
+
+            xlWorksheet.Cells[iRowCounter, 1].EntireColumn.NumberFormat = "@";                                     // Formatted as text
+            xlWorksheet.Cells[iRowCounter, 2].EntireColumn.NumberFormat = "@";                                     // Formatted as text
+            xlWorksheet.Cells[iRowCounter, 3].EntireColumn.NumberFormat = "@";                                     // Formatted as text
+            xlWorksheet.Cells[iRowCounter, 4].EntireColumn.NumberFormat = "@";                                     // Formatted as text
+            xlWorksheet.Cells[iRowCounter, 5].EntireColumn.NumberFormat = "@";                                     // Formatted as text
+            xlWorksheet.Cells[iRowCounter, 6].EntireColumn.NumberFormat = "@";                                     // Formatted as text
 
             string sCode = "", sName = "";
             int iQtyS = -1, iQtyB = -1, iQtyU = -1;
@@ -652,8 +676,10 @@ namespace VoelParadys
                 xlWorksheet.Cells[iRowCounter, 9] = "Total Profit";
                 xlWorksheet.Cells[iRowCounter, 10] = "Usage Cost Price";
 
+                xlWorksheet.Cells[iRowCounter, 2].EntireColumn.NumberFormat = "@";                                     // Formatted as text
+
                 List<VoelParadysXmlParser.SSaleDetails> theSaleDetails = new List<VoelParadysXmlParser.SSaleDetails>();
-                string sName = "", sCurrencyFormat = "R 0.00_);[Red](R 0.00)";
+                string sName = "", sCurrencyFormat = "R ####0.00_);[Red](R ####0.00)";
                 int iQtyS = -1, iQtyB = -1, iQtyU = -1;
                 float fCost = -1, fSell = -1;
 
@@ -739,21 +765,6 @@ namespace VoelParadys
         }
         //}
         //{ The functions for customer database printing or exporting
-        private void ExtractAddress(string sAddress, ref string sLine1, ref string sLine2, ref string sLine3, ref string sLine4, ref string sLine5)
-        {
-            char[] acDelimiterArray = { ';' };
-            string[] aAddressLines = sAddress.Split(acDelimiterArray, StringSplitOptions.RemoveEmptyEntries);
-            if (aAddressLines.Length >= 1)
-                sLine1 = aAddressLines[0];
-            if (aAddressLines.Length >= 2)
-                sLine2 = aAddressLines[1];
-            if (aAddressLines.Length >= 3)
-                sLine3 = aAddressLines[2];
-            if (aAddressLines.Length >= 4)
-                sLine4 = aAddressLines[3];
-            if (aAddressLines.Length >= 5)
-                sLine5 = aAddressLines[4];
-        }
         private void PrintCustomerDatabase()
         {
             var rDataController = VoelParadysDataController.GetInstance();
@@ -775,24 +786,24 @@ namespace VoelParadys
             theListView.Columns.Add("Identity Number", 110);
 
             string[] arr = new string[10];
-            string sName = "", sSurname = "", sAddress = "", sPhone = "";
+            string sName = "", sSurname = "", sPhone = "";
+            string[] saAddress;
             int iID = -1;
             long lIdNumber = -1;
 
             for (int i = 0; i < rDataController.GetCustomerListSize(); ++i)
             {
-                string sAddy1 = "", sAddy2 = "", sAddy3 = "", sAddy4 = "", sAddy5 = "";
-                rDataController.GetCustomerData(i, ref iID, ref sName, ref sSurname, ref sAddress, ref sPhone, ref lIdNumber);
-                ExtractAddress(sAddress, ref sAddy1, ref sAddy2, ref sAddy3, ref sAddy4, ref sAddy5);
+                saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
+                rDataController.GetCustomerData(i, ref iID, ref sName, ref sSurname, ref saAddress, ref sPhone, ref lIdNumber);
                 
                 arr[0] = iID.ToString();
                 arr[1] = sName == "-1" ? "" : sName;
                 arr[2] = sSurname == "-1" ? "" : sSurname;
-                arr[3] = sAddy1 == "-1" ? "" : sAddy1;
-                arr[4] = sAddy2 == "-1" ? "" : sAddy2;
-                arr[5] = sAddy3 == "-1" ? "" : sAddy3;
-                arr[6] = sAddy4 == "-1" ? "" : sAddy4;
-                arr[7] = sAddy5 == "-1" ? "" : sAddy5;
+                arr[3] = saAddress[0] == "-1" ? "" : saAddress[0];
+                arr[4] = saAddress[1] == "-1" ? "" : saAddress[1];
+                arr[5] = saAddress[2] == "-1" ? "" : saAddress[2];
+                arr[6] = saAddress[3] == "-1" ? "" : saAddress[3];
+                arr[7] = saAddress[4] == "-1" ? "" : saAddress[4];
                 arr[8] = sPhone == "-1" ? "" : sPhone;
                 arr[9] = lIdNumber == -1 ? "" : lIdNumber.ToString();
                 theListView.Items.Add(new ListViewItem(arr));
@@ -839,6 +850,7 @@ namespace VoelParadys
             xlWorksheet.Cells[iRowCounter, 9] = "Phone Number";
             xlWorksheet.Cells[iRowCounter, 10] = "ID Number";
 
+           
             xlWorksheet.Cells[iRowCounter, 2].EntireColumn.NumberFormat = "@";                                     // Formatted as text
             xlWorksheet.Cells[iRowCounter, 3].EntireColumn.NumberFormat = "@";                                     // Formatted as text
             xlWorksheet.Cells[iRowCounter, 4].EntireColumn.NumberFormat = "@";                                     // Formatted as text
@@ -849,7 +861,8 @@ namespace VoelParadys
             xlWorksheet.Cells[iRowCounter, 9].EntireColumn.NumberFormat = "@";                                     // Formatted as text
             xlWorksheet.Cells[iRowCounter, 10].EntireColumn.NumberFormat = "@";                                    // Formatted as text
 
-            string sName = "", sSurname = "", sAddress = "", sPhone = "";
+            string sName = "", sSurname = "", sPhone = "";
+            string[] saAddress;
             int iID = -1;
             long lIdNumber = -1;
 
@@ -858,19 +871,18 @@ namespace VoelParadys
             theProgressBar.Show();
             for (int i = 0; i < rDataController.GetCustomerListSize(); ++i)
             {
-                string sAddy1 = "", sAddy2 = "", sAddy3 = "", sAddy4 = "", sAddy5 = "";
-                rDataController.GetCustomerData(i, ref iID, ref sName, ref sSurname, ref sAddress, ref sPhone, ref lIdNumber);
-                ExtractAddress(sAddress, ref sAddy1, ref sAddy2, ref sAddy3, ref sAddy4, ref sAddy5);
+                saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
+                rDataController.GetCustomerData(i, ref iID, ref sName, ref sSurname, ref saAddress, ref sPhone, ref lIdNumber);
 
                 xlWorksheet.Cells[iRowCounter, 1].EntireRow.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
                 xlWorksheet.Cells[iRowCounter, 1] = iID;
                 xlWorksheet.Cells[iRowCounter, 2] = sName == "-1" ? "" : sName;
                 xlWorksheet.Cells[iRowCounter, 3] = sSurname == "-1" ? "" : sSurname;
-                xlWorksheet.Cells[iRowCounter, 4] = sAddy1 == "-1" ? "" : sAddy1;
-                xlWorksheet.Cells[iRowCounter, 5] = sAddy2 == "-1" ? "" : sAddy2;
-                xlWorksheet.Cells[iRowCounter, 6] = sAddy3 == "-1" ? "" : sAddy3;
-                xlWorksheet.Cells[iRowCounter, 7] = sAddy4 == "-1" ? "" : sAddy4;
-                xlWorksheet.Cells[iRowCounter, 8] = sAddy5 == "-1" ? "" : sAddy5;
+                xlWorksheet.Cells[iRowCounter, 4] = saAddress[0] == "-1" ? "" : saAddress[0];
+                xlWorksheet.Cells[iRowCounter, 5] = saAddress[1] == "-1" ? "" : saAddress[1];
+                xlWorksheet.Cells[iRowCounter, 6] = saAddress[2] == "-1" ? "" : saAddress[2];
+                xlWorksheet.Cells[iRowCounter, 7] = saAddress[3] == "-1" ? "" : saAddress[3];
+                xlWorksheet.Cells[iRowCounter, 8] = saAddress[4] == "-1" ? "" : saAddress[4];
                 xlWorksheet.Cells[iRowCounter, 9] = sPhone == "-1" ? "" : sPhone;
                 xlWorksheet.Cells[iRowCounter, 10] = lIdNumber == -1 ? "" : lIdNumber.ToString();
                 iRowCounter += 1;
@@ -910,24 +922,24 @@ namespace VoelParadys
             theListView.Columns.Add("Phone", 85);
 
             string[] arr = new string[10];
-            string sName = "", sRepName = "", sRepSurname = "", sAddress = "", sPhone = "";
+            string sName = "", sRepName = "", sRepSurname = "", sPhone = "";
+            string[] saAddress;
             int iID = -1;
 
             for (int i = 0; i < rDataController.GetSupplierListSize(); ++i)
             {
-                string sAddy1 = "", sAddy2 = "", sAddy3 = "", sAddy4 = "", sAddy5 = "";
-                rDataController.GetSupplierData(i, ref iID, ref sName, ref sRepName, ref sRepSurname, ref sAddress, ref sPhone);
-                ExtractAddress(sAddress, ref sAddy1, ref sAddy2, ref sAddy3, ref sAddy4, ref sAddy5);
+                saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
+                rDataController.GetSupplierData(i, ref iID, ref sName, ref sRepName, ref sRepSurname, ref saAddress, ref sPhone);
 
                 arr[0] = iID.ToString();
                 arr[1] = sName == "-1" ? "" : sName;
                 arr[2] = sRepName == "-1" ? "" : sRepName;
                 arr[3] = sRepSurname == "-1" ? "" : sRepSurname;
-                arr[4] = sAddy1 == "-1" ? "" : sAddy1;
-                arr[5] = sAddy2 == "-1" ? "" : sAddy2;
-                arr[6] = sAddy3 == "-1" ? "" : sAddy3;
-                arr[7] = sAddy4 == "-1" ? "" : sAddy4;
-                arr[8] = sAddy5 == "-1" ? "" : sAddy5;
+                arr[4] = saAddress[0] == "-1" ? "" : saAddress[0];
+                arr[5] = saAddress[1] == "-1" ? "" : saAddress[1];
+                arr[6] = saAddress[2] == "-1" ? "" : saAddress[2];
+                arr[7] = saAddress[3] == "-1" ? "" : saAddress[3];
+                arr[8] = saAddress[4] == "-1" ? "" : saAddress[4];
                 arr[9] = sPhone == "-1" ? "" : sPhone;
                 theListView.Items.Add(new ListViewItem(arr));
             }
@@ -973,7 +985,6 @@ namespace VoelParadys
             xlWorksheet.Cells[iRowCounter, 8] = "Address Line 4";
             xlWorksheet.Cells[iRowCounter, 9] = "Address Line 5";
             xlWorksheet.Cells[iRowCounter, 10] = "Phone Number";
-            
 
             xlWorksheet.Cells[iRowCounter, 2].EntireColumn.NumberFormat = "@";                                     // Formatted as text
             xlWorksheet.Cells[iRowCounter, 3].EntireColumn.NumberFormat = "@";                                     // Formatted as text
@@ -985,7 +996,8 @@ namespace VoelParadys
             xlWorksheet.Cells[iRowCounter, 9].EntireColumn.NumberFormat = "@";                                     // Formatted as text
             xlWorksheet.Cells[iRowCounter, 10].EntireColumn.NumberFormat = "@";                                    // Formatted as text
 
-            string sName = "", sRepName = "", sRepSurname = "", sAddress = "", sPhone = "";
+            string sName = "", sRepName = "", sRepSurname = "", sPhone = "";
+            string[] saAddress;
             int iID = -1;
 
             iRowCounter = 4;
@@ -993,20 +1005,19 @@ namespace VoelParadys
             theProgressBar.Show();
             for (int i = 0; i < rDataController.GetSupplierListSize(); ++i)
             {
-                string sAddy1 = "", sAddy2 = "", sAddy3 = "", sAddy4 = "", sAddy5 = "";
-                rDataController.GetSupplierData(i, ref iID, ref sName, ref sRepName, ref sRepSurname, ref sAddress, ref sPhone);
-                ExtractAddress(sAddress, ref sAddy1, ref sAddy2, ref sAddy3, ref sAddy4, ref sAddy5);
+                saAddress = new string[5] { "", "", "", "", "" };
+                rDataController.GetSupplierData(i, ref iID, ref sName, ref sRepName, ref sRepSurname, ref saAddress, ref sPhone);
 
                 xlWorksheet.Cells[iRowCounter, 1].EntireRow.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
                 xlWorksheet.Cells[iRowCounter, 1] = iID;
                 xlWorksheet.Cells[iRowCounter, 2] = sName == "-1" ? "" : sName;
                 xlWorksheet.Cells[iRowCounter, 3] = sRepName == "-1" ? "" : sRepName;
                 xlWorksheet.Cells[iRowCounter, 4] = sRepSurname == "-1" ? "" : sRepSurname;
-                xlWorksheet.Cells[iRowCounter, 5] = sAddy1 == "-1" ? "" : sAddy1;
-                xlWorksheet.Cells[iRowCounter, 6] = sAddy2 == "-1" ? "" : sAddy2;
-                xlWorksheet.Cells[iRowCounter, 7] = sAddy3 == "-1" ? "" : sAddy3;
-                xlWorksheet.Cells[iRowCounter, 8] = sAddy4 == "-1" ? "" : sAddy4;
-                xlWorksheet.Cells[iRowCounter, 9] = sAddy5 == "-1" ? "" : sAddy5;
+                xlWorksheet.Cells[iRowCounter, 5] = saAddress[0] == "-1" ? "" : saAddress[0];
+                xlWorksheet.Cells[iRowCounter, 6] = saAddress[1] == "-1" ? "" : saAddress[1];
+                xlWorksheet.Cells[iRowCounter, 7] = saAddress[2] == "-1" ? "" : saAddress[2];
+                xlWorksheet.Cells[iRowCounter, 8] = saAddress[3] == "-1" ? "" : saAddress[3];
+                xlWorksheet.Cells[iRowCounter, 9] = saAddress[4] == "-1" ? "" : saAddress[4];
                 xlWorksheet.Cells[iRowCounter, 10] = sPhone == "-1" ? "" : sPhone;
                 iRowCounter += 1;
                 theProgressBar.UpdateProgressBar();
@@ -1049,9 +1060,9 @@ namespace VoelParadys
             lListPrinter.GroupHeaderFormat.BackgroundBrush = null;
             lListPrinter.GroupHeaderFormat.SetBorderPen(Sides.Bottom, new Pen(Color.Black, 0.5f));
 
-            // lListPrinter.PrintPreview();
+            lListPrinter.PrintPreview();
             // TODO: Once the product is complete, uncomment this to actually print the page, and comment out the PrintPreview to print directly without first viewing it
-            lListPrinter.PrintWithDialog();
+            // lListPrinter.PrintWithDialog();
         }
         private void ReleaseObject(object obj)
         {

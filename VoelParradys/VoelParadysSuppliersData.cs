@@ -38,7 +38,7 @@ namespace VoelParadys
         string sSupplierName;                       // The name of the supplier (Required)
         string sRepName;                            // The name of the representative for the supplier (Optional)
         string sRepSurname;                         // The surname of the representative for the supplier (Optional)
-        string sSupplierAddress;                    // The address of the supplier (Optional)
+        string[] saSupplierAddress;                 // The address of the supplier (Optional)
         string sSupplierPhoneNumber;                // The phone number of the supplier (Optional)   
         List<SSuppliedItem> lsSuppliedItemsList;           // A list of all the items bought from the supplier              
 
@@ -49,18 +49,18 @@ namespace VoelParadys
             sSupplierName = "-1";
             sRepName = "-1";
             sRepSurname = "-1";
-            sSupplierAddress = "-1";
+            saSupplierAddress = new string[5] {"-1", "-1", "-1", "-1", "-1"};
             sSupplierPhoneNumber = "-1";
         }
 
-        public CSupplierDetails(int _iCode, string _sSupName, string _sRepName, string _sRepSurname, string _sAddress, string _sPhoneNumber)
+        public CSupplierDetails(int _iCode, string _sSupName, string _sRepName, string _sRepSurname, string[] _saAddress, string _sPhoneNumber)
         {
             lsSuppliedItemsList = new List<SSuppliedItem>();
             iSupplierID = _iCode;
             sSupplierName = _sSupName;
             sRepName = _sRepName;
             sRepSurname = _sRepSurname;
-            sSupplierAddress = _sAddress;
+            saSupplierAddress = _saAddress;
             sSupplierPhoneNumber = _sPhoneNumber;
         }
 
@@ -69,7 +69,7 @@ namespace VoelParadys
         public string GetSupplierName() { return sSupplierName; }
         public string GetRepName() { return sRepName; }
         public string GetRepSurname() { return sRepSurname; }
-        public string GetSupplierAddress() { return sSupplierAddress; }
+        public string[] GetSupplierAddress() { return saSupplierAddress; }
         public string GetSupplierPhone() { return sSupplierPhoneNumber; }
         public int GetSuppliedItemsListCount() { return lsSuppliedItemsList == null ? 0 : lsSuppliedItemsList.Count; }
         public void GetSuppliedItemsListItemAt(int iIndex, ref string sCode, ref int iQuantity) 
@@ -98,10 +98,9 @@ namespace VoelParadys
             string sTheSurname = sSurname == null ? "" : sSurname;
             sRepSurname = sTheSurname;
         }
-        public void SetSupplierAddress(string sAddress)
+        public void SetSupplierAddress(string[] saAddress)
         {
-            string sTheAddress = sAddress == null ? "" : sAddress;
-            sSupplierAddress = sTheAddress;
+            saSupplierAddress = saAddress;
         }
         public void SetSupplierPhoneNumber(string sPhone)
         {
@@ -245,7 +244,7 @@ namespace VoelParadys
                 if (m_lSupplierList[i].GetSupplierID() == iSupplierID)
                     return m_lSupplierList[i];
             }
-            return new CSupplierDetails(-1, "-1", "-1", "-1", "-1", "-1");
+            return new CSupplierDetails(-1, "-1", "-1", "-1", new string[5] {"-1", "-1", "-1", "-1", "-1"}, "-1");
         }
         // Determine if a customer exists in the database with the given ID
         public bool DoesSupplierExistInDatabase(int iSupplierID)

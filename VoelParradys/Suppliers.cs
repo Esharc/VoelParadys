@@ -16,7 +16,7 @@ namespace VoelParadys
         string m_sTempRepName;
         string m_sTempRepSurname;
         string m_sTempPhone;
-        string m_sTempAddress;
+        string[] m_saTempAddress;
             
         public Suppliers()
         {
@@ -27,7 +27,7 @@ namespace VoelParadys
             m_sTempRepName = "-1";
             m_sTempRepSurname = "-1";
             m_sTempPhone = "-1";
-            m_sTempAddress = "-1";
+            m_saTempAddress = new string[5] {"-1", "-1", "-1", "-1", "-1"};
         }
 
         // Add the column headers to the suppliers list
@@ -57,12 +57,26 @@ namespace VoelParadys
             for (int i = 0; i < rDataController.GetSupplierListSize(); ++i)
             {
                 int iID = -1;
-                string sName = "", sRepName = "", sRepSurname = "", sAddress = "", sPhoneNumber = "";
-                rDataController.GetSupplierData(i, ref iID, ref sName, ref sRepName, ref sRepSurname, ref sAddress, ref sPhoneNumber);
+                string sName = "", sRepName = "", sRepSurname = "", sPhoneNumber = "";
+                string[] saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
+                List<string> sAddressList = new List<string>();
+                 
+                rDataController.GetSupplierData(i, ref iID, ref sName, ref sRepName, ref sRepSurname, ref saAddress, ref sPhoneNumber);
+                bool[] bEmptyLines = new bool[5] {saAddress[0] == "-1", saAddress[1] == "-1", saAddress[2] == "-1", saAddress[3] == "-1", saAddress[4] == "-1"};
 
                 string sFormattedAddress = "";
-                if (sAddress != "-1")
-                    sFormattedAddress = sAddress.Replace(";", ", ");
+                for (int j = 0; j < saAddress.Length; ++j)
+                {
+                    if (saAddress[j] != "-1")
+                        sAddressList.Add(saAddress[j]);
+                }
+                for (int k = 0; k < sAddressList.Count; ++k)
+                {
+                    if (k == sAddressList.Count - 1)
+                        sFormattedAddress += sAddressList[k];
+                    else
+                        sFormattedAddress += sAddressList[k] + ", ";
+                }
 
                 arr[0] = iID.ToString();
                 arr[1] = sName == "-1" ? "" : sName;
@@ -86,47 +100,30 @@ namespace VoelParadys
                 DetailsButton.Enabled = true;
 
             var rDataController = VoelParadysDataController.GetInstance();
-            string sName = "", sRepName = "", sRepSurname = "", sAddress = "", sPhoneNumber = "";
+            string sName = "", sRepName = "", sRepSurname = "", sPhoneNumber = "";
+            string[] saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
             m_iSelectedSupplierID = int.Parse(SuppliersListView.SelectedItems[0].SubItems[0].Text.ToString());
-            rDataController.GetSupplierData(m_iSelectedSupplierID, ref sName, ref sRepName, ref sRepSurname, ref sAddress, ref sPhoneNumber);
-            string sFormattedAddress = "-1";
-            if (sAddress != "-1")
-            {
-                sFormattedAddress = "";
-                char[] acDelimiterArray = { ';' };
-                string[] aAddressLines = sAddress.Split(acDelimiterArray, StringSplitOptions.RemoveEmptyEntries);
-                int iCount = aAddressLines.Length < 5 ? aAddressLines.Length : 5;
-                for (int i = 0; i < iCount; ++i)
-                {
-                    if (i == iCount - 1)
-                        sFormattedAddress += aAddressLines[i];
-                    else
-                        sFormattedAddress += aAddressLines[i] + "\r\n";
-                }
-
-                if (aAddressLines.Length > 5)
-                {
-                    iCount = aAddressLines.Length;
-                    for (int j = 5; j < iCount; ++j)
-                    {
-                        if (j == 5)
-                            sFormattedAddress += ", " + aAddressLines[j];
-                        else
-                            sFormattedAddress += aAddressLines[j] + ",";
-                    }
-                }
-            }
+            rDataController.GetSupplierData(m_iSelectedSupplierID, ref sName, ref sRepName, ref sRepSurname, ref saAddress, ref sPhoneNumber);
+   
             m_sTempName = sName;
             m_sTempRepName = sRepName;
             m_sTempRepSurname = sRepSurname;
             m_sTempPhone = sPhoneNumber;
-            m_sTempAddress = sFormattedAddress;
+            m_saTempAddress[0] = saAddress[0];
+            m_saTempAddress[1] = saAddress[1];
+            m_saTempAddress[2] = saAddress[2];
+            m_saTempAddress[3] = saAddress[3];
+            m_saTempAddress[4] = saAddress[4];
             
             NameTextBox.Text = m_sTempName == "-1" ? "" : m_sTempName;
             RepNameTextBox.Text = m_sTempRepName == "-1" ? "" : m_sTempRepName;
             RepSurnameTextBox.Text = m_sTempRepSurname == "-1" ? "" : m_sTempRepSurname;
             PhoneNumberTextBox.Text = m_sTempPhone == "-1" ? "" : m_sTempPhone;
-            AddressTextBox.Text = m_sTempAddress == "-1" ? "" : m_sTempAddress;
+            AddressTextBox1.Text = saAddress[0] == "-1" ? "" : saAddress[0];
+            AddressTextBox2.Text = saAddress[1] == "-1" ? "" : saAddress[1];
+            AddressTextBox3.Text = saAddress[2] == "-1" ? "" : saAddress[2];
+            AddressTextBox4.Text = saAddress[3] == "-1" ? "" : saAddress[3];
+            AddressTextBox5.Text = saAddress[4] == "-1" ? "" : saAddress[4];
         }
 
         private void NameTextBox_LeaveFocus(object sender, EventArgs e)
@@ -149,22 +146,29 @@ namespace VoelParadys
             m_sTempPhone = PhoneNumberTextBox.Text;
         }
 
-        private void AddressTextBox_LeaveFocus(object sender, EventArgs e)
+        private void AddressTextBox1_LeaveFocus(object sender, EventArgs e)
         {
-            // For inserting members into the address text box, remember to add the /r/n delimeters for the different lines.
-            string sAddress = "";
-            m_sTempAddress = "";
-            sAddress = AddressTextBox.Text;
-            char[] acDelimiterArray = { '\r', '\n' };
-            string[] aAddressLines = sAddress.Split(acDelimiterArray, StringSplitOptions.RemoveEmptyEntries);
+            m_saTempAddress[0] = AddressTextBox1.Text == "" ? "-1" : AddressTextBox1.Text;
+        }
 
-            for (int i = 0; i < aAddressLines.Length; ++i)
-            {
-                if (i == aAddressLines.Length - 1)
-                    m_sTempAddress += aAddressLines[i];
-                else
-                    m_sTempAddress += aAddressLines[i] + ";";
-            }
+        private void AddressTextBox2_LeaveFocus(object sender, EventArgs e)
+        {
+            m_saTempAddress[1] = AddressTextBox2.Text == "" ? "-1" : AddressTextBox2.Text;
+        }
+
+        private void AddressTextBox3_LeaveFocus(object sender, EventArgs e)
+        {
+            m_saTempAddress[2] = AddressTextBox3.Text == "" ? "-1" : AddressTextBox3.Text;
+        }
+
+        private void AddressTextBox4_LeaveFocus(object sender, EventArgs e)
+        {
+            m_saTempAddress[3] = AddressTextBox4.Text == "" ? "-1" : AddressTextBox4.Text;
+        }
+
+        private void AddressTextBox5_LeaveFocus(object sender, EventArgs e)
+        {
+            m_saTempAddress[4] = AddressTextBox5.Text == "" ? "-1" : AddressTextBox5.Text;
         }
 
         private void ReturnButton_Click(object sender, EventArgs e)
@@ -177,8 +181,9 @@ namespace VoelParadys
             var rDataController = VoelParadysDataController.GetInstance();
             if (rDataController.DoesSupplierExistInDatabase(m_iSelectedSupplierID))
             {
-                string sName = "", sRepName = "", sRepSurname = "", sAddress = "", sPhoneNumber = "";
-                rDataController.GetSupplierData(m_iSelectedSupplierID, ref sName, ref sRepName, ref sRepSurname, ref sAddress, ref sPhoneNumber);
+                string sName = "", sRepName = "", sRepSurname = "", sPhoneNumber = "";
+                string[] saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
+                rDataController.GetSupplierData(m_iSelectedSupplierID, ref sName, ref sRepName, ref sRepSurname, ref saAddress, ref sPhoneNumber);
 
                 bool bChanged = false;
                 if (m_sTempName != "-1" && m_sTempName != sName)
@@ -201,14 +206,14 @@ namespace VoelParadys
                     sPhoneNumber = m_sTempPhone;
                     bChanged = true;
                 }
-                if (m_sTempAddress != "-1" && sAddress != m_sTempAddress)
+                if (m_saTempAddress != null && saAddress != m_saTempAddress)
                 {
-                    sAddress = m_sTempAddress;
+                    saAddress = m_saTempAddress;
                     bChanged = true;
                 }              
                 if (bChanged)
                 {
-                    rDataController.UpdateSupplierDetails(m_iSelectedSupplierID, sName, sRepName, sRepSurname, sAddress, sPhoneNumber);
+                    rDataController.UpdateSupplierDetails(m_iSelectedSupplierID, sName, sRepName, sRepSurname, saAddress, sPhoneNumber);
                     ClearMemberVairiables();
                     ClearTextBoxes();
                     this.Refresh();
@@ -219,9 +224,10 @@ namespace VoelParadys
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             var rDataController = VoelParadysDataController.GetInstance();
-            string sName = "", sRepName = "", sRepSurname = "", sAddress = "", sPhoneNumber = "";
+            string sName = "", sRepName = "", sRepSurname = "", sPhoneNumber = "";
+            string[] saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
             
-            rDataController.GetSupplierData(m_iSelectedSupplierID, ref sName, ref sRepName, ref sRepSurname, ref sAddress, ref sPhoneNumber);
+            rDataController.GetSupplierData(m_iSelectedSupplierID, ref sName, ref sRepName, ref sRepSurname, ref saAddress, ref sPhoneNumber);
 
             DialogResult messageBoxResult = rDataController.DisplayWarningMessageForDelete(sName);
 
@@ -245,7 +251,7 @@ namespace VoelParadys
             m_sTempRepName = "-1";
             m_sTempRepSurname = "-1";
             m_sTempPhone = "-1";
-            m_sTempAddress = "-1";
+            m_saTempAddress = new string[5] {"-1", "-1", "-1", "-1", "-1"};
             
         }
 
@@ -255,7 +261,11 @@ namespace VoelParadys
             RepNameTextBox.Clear();
             RepSurnameTextBox.Clear();
             PhoneNumberTextBox.Clear();
-            AddressTextBox.Clear();
+            AddressTextBox1.Clear();
+            AddressTextBox2.Clear();
+            AddressTextBox3.Clear();
+            AddressTextBox4.Clear();
+            AddressTextBox5.Clear();
         }
 
         private void OnNoSupplierSelected()

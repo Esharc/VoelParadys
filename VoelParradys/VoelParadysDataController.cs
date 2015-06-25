@@ -215,9 +215,9 @@ namespace VoelParadys
             m_XmlParser.VoelParadysDailySaleDataXmlWriter(lSaleItems, fSubTotal, fCashReceived, sPaymentType);
         }
         // Does the daily sale file exist?
-        public bool DoesFileExist(string sFileName, string sFileData)
+        public bool DoesFileExist(string sFileName, bool bDailySaleData)
         {
-            return m_XmlParser.DoesFileExist(sFileName, sFileData);
+            return m_XmlParser.DoesFileExist(sFileName, bDailySaleData);
         }
         //}
         //{ Customer data functions
@@ -258,23 +258,23 @@ namespace VoelParadys
             return m_CustomerData.GetCustomerFromID(iCustomerID);
         }
         // Get the data for the customer with the given ID code
-        public void GetCustomerData(int iID, ref string sName, ref string sSurname, ref string sAddress, ref string sPhoneNumber, ref long lIDNumber)
+        public void GetCustomerData(int iID, ref string sName, ref string sSurname, ref string[] saAddress, ref string sPhoneNumber, ref long lIDNumber)
         {
             CCustomerDetails theCustomer = GetCustomerFromID(iID);
             sName = theCustomer.GetCustomerName();
             sSurname = theCustomer.GetCustomerSurname();
-            sAddress = theCustomer.GetCustomerAddress();
+            saAddress = theCustomer.GetCustomerAddress();
             sPhoneNumber = theCustomer.GetCustomerPhone();
             lIDNumber = theCustomer.GetCustomerIdNumber();
         }
         // Get the data for the customer with the given index
-        public void GetCustomerData(int iIndex, ref int iID, ref string sName, ref string sSurname, ref string sAddress, ref string sPhoneNumber, ref long lIDNumber)
+        public void GetCustomerData(int iIndex, ref int iID, ref string sName, ref string sSurname, ref string[] saAddress, ref string sPhoneNumber, ref long lIDNumber)
         {
             CCustomerDetails theCustomer = GetCustomerAt(iIndex);
             iID = theCustomer.GetCustomerID();
             sName = theCustomer.GetCustomerName();
             sSurname = theCustomer.GetCustomerSurname();
-            sAddress = theCustomer.GetCustomerAddress();
+            saAddress = theCustomer.GetCustomerAddress();
             sPhoneNumber = theCustomer.GetCustomerPhone();
             lIDNumber = theCustomer.GetCustomerIdNumber();
         }
@@ -284,12 +284,12 @@ namespace VoelParadys
             return m_CustomerData.DoesCustomerExistInDatabase(iCustomerID);
         }
         // Update the customers details with the given details
-        public void UpdateCustomerDetails(int iID, string sName, string sSurname, string sAddress, string sPhoneNumber, long lIDNumber)
+        public void UpdateCustomerDetails(int iID, string sName, string sSurname, string[] saAddress, string sPhoneNumber, long lIDNumber)
         {
             CCustomerDetails UpdatedDetails = GetCustomerFromID(iID);
             UpdatedDetails.SetCustomerName(sName);
             UpdatedDetails.SetCustomerSurname(sSurname);
-            UpdatedDetails.SetCustomerAddress(sAddress);
+            UpdatedDetails.SetCustomerAddress(saAddress);
             UpdatedDetails.SetCustomerPhoneNumber(sPhoneNumber);
             UpdatedDetails.SetCustomerIdNumber(lIDNumber);
             m_CustomerData.UpdateCustomerDetails(UpdatedDetails);
@@ -372,25 +372,25 @@ namespace VoelParadys
             return m_SupplierData.GetSupplierFromID(iSupplierID);
         }
         // Get the data for the Supplier with the given ID code
-        public void GetSupplierData(int iID, ref string sName, ref string sRepName, ref string sRepSurname, ref string sAddress, ref string sPhoneNumber)
+        public void GetSupplierData(int iID, ref string sName, ref string sRepName, ref string sRepSurname, ref string[] saAddress, ref string sPhoneNumber)
         {
             CSupplierDetails theSupplier = GetSupplierFromID(iID);
             sName = theSupplier.GetSupplierName();
             sRepName = theSupplier.GetRepName();
             sRepSurname = theSupplier.GetRepSurname();
-            sAddress = theSupplier.GetSupplierAddress();
+            saAddress = theSupplier.GetSupplierAddress();
             sPhoneNumber = theSupplier.GetSupplierPhone();
             
         }
         // Get the data for the Supplier with the given index
-        public void GetSupplierData(int iIndex, ref int iID, ref string sName, ref string sRepName, ref string sRepSurname, ref string sAddress, ref string sPhoneNumber)
+        public void GetSupplierData(int iIndex, ref int iID, ref string sName, ref string sRepName, ref string sRepSurname, ref string[] saAddress, ref string sPhoneNumber)
         {
             CSupplierDetails theSupplier = GetSupplierAt(iIndex);
             iID = theSupplier.GetSupplierID();
             sName = theSupplier.GetSupplierName();
             sRepName = theSupplier.GetRepName();
             sRepSurname = theSupplier.GetRepSurname();
-            sAddress = theSupplier.GetSupplierAddress();
+            saAddress = theSupplier.GetSupplierAddress();
             sPhoneNumber = theSupplier.GetSupplierPhone();
         }
         // Determine if the Supplier with the given ID exists in the database
@@ -399,13 +399,13 @@ namespace VoelParadys
             return m_SupplierData.DoesSupplierExistInDatabase(iSupplierID);
         }
         // Update the Supplier details with the given details
-        public void UpdateSupplierDetails(int iID, string sName, string sRepName, string sRepSurname, string sAddress, string sPhoneNumber)
+        public void UpdateSupplierDetails(int iID, string sName, string sRepName, string sRepSurname, string[] saAddress, string sPhoneNumber)
         {
             CSupplierDetails UpdatedDetails = GetSupplierFromID(iID);
             UpdatedDetails.SetSupplierName(sName);
             UpdatedDetails.SetRepName(sRepName);
             UpdatedDetails.SetRepSurname(sRepSurname);
-            UpdatedDetails.SetSupplierAddress(sAddress);
+            UpdatedDetails.SetSupplierAddress(saAddress);
             UpdatedDetails.SetSupplierPhoneNumber(sPhoneNumber);
             m_SupplierData.UpdateSupplierDetails(UpdatedDetails);
         }
@@ -507,11 +507,11 @@ namespace VoelParadys
                 {
                     while (TheDateIncrementer <= TheEndDate)
                     {
-                        if (DoesFileExist(TheDateIncrementer.ToString("dd_MM_yy"), "Daily"))
+                        if (DoesFileExist(TheDateIncrementer.ToString("dd_MM_yy"), true))
                         {
                             DailySaleFileData tempData = new DailySaleFileData();
                             tempData.sDate = TheDateIncrementer.ToString("dd/MM/yyyy");
-                            tempData.sFileName = "../Data/SaleData/Daily/" + TheDateIncrementer.ToString("dd_MM_yy") + ".xml";
+                            tempData.sFileName = "../Data/SaleData/" + TheDateIncrementer.ToString("dd_MM_yy") + ".xml";
                             theSaleFileList.Add(tempData);
                         }
                         TheDateIncrementer = TheDateIncrementer.AddDays(1);

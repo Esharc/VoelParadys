@@ -21,7 +21,7 @@ namespace VoelParadys
         int iCustomerID;                            // The ID of the customer (Unique and auto generated)
         string sCustomerName;                       // The name of the customer (Required)
         string sCustomerSurname;                    // The surname of the customer (Optional)
-        string sCustomerAddress;                    // The address of the customer (Optional)
+        string[] saCustomerAddress;                 // The address of the customer (Optional)
         string sCustomerPhoneNumber;                // The phone number of the customer (Optional)   
         long lCustomerIDNumber;                     // The ID number of the customer (Optional)
         List<string> lsCustomerWishList;            // A list of items that the customer has requested             
@@ -32,18 +32,18 @@ namespace VoelParadys
             iCustomerID = -1;
             sCustomerName = "-1";
             sCustomerSurname = "-1";
-            sCustomerAddress = "-1";
+            saCustomerAddress = new string[5] {"-1", "-1", "-1", "-1", "-1"};
             sCustomerPhoneNumber = "-1";
             lCustomerIDNumber = -1;
         }
 
-        public CCustomerDetails(int _iCode, string _sName, string _sSurname, string _sAddress, string _sPhoneNumber, long _lIdNumber)
+        public CCustomerDetails(int _iCode, string _sName, string _sSurname, string[] _saAddress, string _sPhoneNumber, long _lIdNumber)
         {
             lsCustomerWishList = new List<string>();
             iCustomerID = _iCode;
             sCustomerName = _sName;
             sCustomerSurname = _sSurname;
-            sCustomerAddress = _sAddress;
+            saCustomerAddress = _saAddress;
             sCustomerPhoneNumber = _sPhoneNumber;
             lCustomerIDNumber = _lIdNumber;
         }
@@ -52,7 +52,7 @@ namespace VoelParadys
         public int GetCustomerID() { return iCustomerID; }
         public string GetCustomerName() { return sCustomerName; }
         public string GetCustomerSurname() { return sCustomerSurname; }
-        public string GetCustomerAddress() { return sCustomerAddress; }
+        public string[] GetCustomerAddress() { return saCustomerAddress; }
         public string GetCustomerPhone() { return sCustomerPhoneNumber; }
         public long GetCustomerIdNumber() { return lCustomerIDNumber; }
         public int GetCustomerWishListCount() { return lsCustomerWishList == null ? 0 : lsCustomerWishList.Count; }
@@ -72,10 +72,10 @@ namespace VoelParadys
             string sTheSurname = sSurname == null ? "" : sSurname;
             sCustomerSurname = sTheSurname;
         }
-        public void SetCustomerAddress(string sAddress) 
+        public void SetCustomerAddress(string[] saAddress) 
         {
-            string sTheAddress = sAddress == null ? "" : sAddress;
-            sCustomerAddress = sTheAddress; 
+            string[] sTheAddress = saAddress == null ? new string[5] {"", "", "", "", ""} : saAddress;
+            saCustomerAddress = sTheAddress; 
         }
         public void SetCustomerPhoneNumber(string sPhone) 
         {
@@ -203,7 +203,7 @@ namespace VoelParadys
                 if (m_lCustomerList[i].GetCustomerID() == iCustomerID)
                     return m_lCustomerList[i];
             }
-            return new CCustomerDetails(-1, "-1", "-1", "-1", "-1", -1);
+            return new CCustomerDetails(-1, "-1", "-1", new string[5] { "-1", "-1", "-1", "-1", "-1" }, "-1", -1);
         }
         // Determine if a customer exists in the database with the given ID
         public bool DoesCustomerExistInDatabase(int iCustomerID)
