@@ -120,7 +120,7 @@ namespace VoelParadys
 
             if (rDataController.DoesFileExist(sSelectedDateFile, true))
             {
-                List<VoelParadysXmlParser.SSaleDetails> theSaleDetailsList = new List<VoelParadysXmlParser.SSaleDetails>();
+                List<VoelParadysDataStructures.SSaleDetails> theSaleDetailsList = new List<VoelParadysDataStructures.SSaleDetails>();
                 rDataController.ReadDailySaleDataFromDB(sSelectedDateFile, ref theSaleDetailsList, true);
                 
                 // Setup the form for printing
@@ -194,7 +194,7 @@ namespace VoelParadys
                     return;
                 }
 
-                List<VoelParadysXmlParser.SSaleDetails> theSaleDetailsList = new List<VoelParadysXmlParser.SSaleDetails>();
+                List<VoelParadysDataStructures.SSaleDetails> theSaleDetailsList = new List<VoelParadysDataStructures.SSaleDetails>();
                 rDataController.ReadDailySaleDataFromDB(sSelectedDateFile, ref theSaleDetailsList, true);
                 int iRowCounter = 1;
 
@@ -279,7 +279,7 @@ namespace VoelParadys
 
             string sFromPrintDate = FromDateTimePicker.Value.ToString("dd MMM yyyy");
             string sToPrintDate = ToDateTimePicker.Value.ToString("dd MMM yyyy");
-            List<UsageData> theUsageData = new List<UsageData>();
+            List<VoelParadysDataStructures.UsageData> theUsageData = new List<VoelParadysDataStructures.UsageData>();
 
             if (rDataController.GetUsageDataList(FromDateTimePicker.Value.ToString("dd/MM/yyyy"), ToDateTimePicker.Value.ToString("dd/MM/yyyy"), ref theUsageData))
             {
@@ -328,7 +328,7 @@ namespace VoelParadys
 
             string sFromPrintDate = FromDateTimePicker.Value.ToString("dd/MM/yyyy");
             string sToPrintDate = ToDateTimePicker.Value.ToString("dd/MM/yyyy");
-            List<UsageData> theUsageData = new List<UsageData>();
+            List<VoelParadysDataStructures.UsageData> theUsageData = new List<VoelParadysDataStructures.UsageData>();
 
             if (rDataController.GetUsageDataList(FromDateTimePicker.Value.ToString("dd/MM/yyyy"), ToDateTimePicker.Value.ToString("dd/MM/yyyy"), ref theUsageData))
             {
@@ -524,7 +524,7 @@ namespace VoelParadys
         private int GetQtyUsedForDate(string sTheDate, string sTheItemCode)
         {
             int iRetVal = 0;
-            List<UsageData> theUsageList = new List<UsageData>();
+            List<VoelParadysDataStructures.UsageData> theUsageList = new List<VoelParadysDataStructures.UsageData>();
             VoelParadysDataController.GetInstance().GetUsageDataList(sTheDate, sTheDate, ref theUsageList);
 
             for (int i = 0; i < theUsageList.Count; ++i)
@@ -542,7 +542,7 @@ namespace VoelParadys
             var rDataController = VoelParadysDataController.GetInstance();
             string sFromPrintDate = FromDateTimePicker.Value.ToString("dd MMM yyyy");
             string sToPrintDate = ToDateTimePicker.Value.ToString("dd MMM yyyy");
-            List<DailySaleFileData> theDailySaleFileData = new List<DailySaleFileData>();
+            List<VoelParadysDataStructures.DailySaleFileData> theDailySaleFileData = new List<VoelParadysDataStructures.DailySaleFileData>();
 
             if (rDataController.GetDailySaleFileList(FromDateTimePicker.Value.ToString("dd/MM/yyyy"), ToDateTimePicker.Value.ToString("dd/MM/yyyy"), ref theDailySaleFileData))
             {
@@ -564,7 +564,7 @@ namespace VoelParadys
                 theListView.Columns.Add("Usage Cost Price", 100);
 
                 string[] arr = new string[10];
-                List<VoelParadysXmlParser.SSaleDetails> theSaleDetails = new List<VoelParadysXmlParser.SSaleDetails>();
+                List<VoelParadysDataStructures.SSaleDetails> theSaleDetails = new List<VoelParadysDataStructures.SSaleDetails>();
                 string sName = "";
                 int iQtyS = -1, iQtyB = -1, iQtyU = -1;
                 float fCost = -1, fSell = -1;
@@ -640,7 +640,7 @@ namespace VoelParadys
 
             string sFromPrintDate = FromDateTimePicker.Value.ToString("dd/MM/yyyy");
             string sToPrintDate = ToDateTimePicker.Value.ToString("dd/MM/yyyy");
-            List<DailySaleFileData> theDailySaleFileData = new List<DailySaleFileData>();
+            List<VoelParadysDataStructures.DailySaleFileData> theDailySaleFileData = new List<VoelParadysDataStructures.DailySaleFileData>();
 
             if (rDataController.GetDailySaleFileList(FromDateTimePicker.Value.ToString("dd/MM/yyyy"), ToDateTimePicker.Value.ToString("dd/MM/yyyy"), ref theDailySaleFileData))
             {
@@ -678,7 +678,7 @@ namespace VoelParadys
 
                 xlWorksheet.Cells[iRowCounter, 2].EntireColumn.NumberFormat = "@";                                     // Formatted as text
 
-                List<VoelParadysXmlParser.SSaleDetails> theSaleDetails = new List<VoelParadysXmlParser.SSaleDetails>();
+                List<VoelParadysDataStructures.SSaleDetails> theSaleDetails = new List<VoelParadysDataStructures.SSaleDetails>();
                 string sName = "", sCurrencyFormat = "R ####0.00_);[Red](R ####0.00)";
                 int iQtyS = -1, iQtyB = -1, iQtyU = -1;
                 float fCost = -1, fSell = -1;
@@ -799,11 +799,11 @@ namespace VoelParadys
                 arr[0] = iID.ToString();
                 arr[1] = sName == "-1" ? "" : sName;
                 arr[2] = sSurname == "-1" ? "" : sSurname;
-                arr[3] = saAddress[0] == "-1" ? "" : saAddress[0];
-                arr[4] = saAddress[1] == "-1" ? "" : saAddress[1];
-                arr[5] = saAddress[2] == "-1" ? "" : saAddress[2];
-                arr[6] = saAddress[3] == "-1" ? "" : saAddress[3];
-                arr[7] = saAddress[4] == "-1" ? "" : saAddress[4];
+                arr[3] = saAddress.Length >= 1 ? saAddress[0] == "-1" ? "" : saAddress[0] : "";
+                arr[4] = saAddress.Length >= 2 ? saAddress[1] == "-1" ? "" : saAddress[1] : "";
+                arr[5] = saAddress.Length >= 3 ? saAddress[2] == "-1" ? "" : saAddress[2] : "";
+                arr[6] = saAddress.Length >= 4 ? saAddress[3] == "-1" ? "" : saAddress[3] : "";
+                arr[7] = saAddress.Length >= 5 ? saAddress[4] == "-1" ? "" : saAddress[4] : "";
                 arr[8] = sPhone == "-1" ? "" : sPhone;
                 arr[9] = lIdNumber == -1 ? "" : lIdNumber.ToString();
                 theListView.Items.Add(new ListViewItem(arr));
@@ -878,11 +878,11 @@ namespace VoelParadys
                 xlWorksheet.Cells[iRowCounter, 1] = iID;
                 xlWorksheet.Cells[iRowCounter, 2] = sName == "-1" ? "" : sName;
                 xlWorksheet.Cells[iRowCounter, 3] = sSurname == "-1" ? "" : sSurname;
-                xlWorksheet.Cells[iRowCounter, 4] = saAddress[0] == "-1" ? "" : saAddress[0];
-                xlWorksheet.Cells[iRowCounter, 5] = saAddress[1] == "-1" ? "" : saAddress[1];
-                xlWorksheet.Cells[iRowCounter, 6] = saAddress[2] == "-1" ? "" : saAddress[2];
-                xlWorksheet.Cells[iRowCounter, 7] = saAddress[3] == "-1" ? "" : saAddress[3];
-                xlWorksheet.Cells[iRowCounter, 8] = saAddress[4] == "-1" ? "" : saAddress[4];
+                xlWorksheet.Cells[iRowCounter, 4] = saAddress.Length >= 1 ? saAddress[0] == "-1" ? "" : saAddress[0] : "";
+                xlWorksheet.Cells[iRowCounter, 5] = saAddress.Length >= 2 ? saAddress[1] == "-1" ? "" : saAddress[1] : "";
+                xlWorksheet.Cells[iRowCounter, 6] = saAddress.Length >= 3 ? saAddress[2] == "-1" ? "" : saAddress[2] : "";
+                xlWorksheet.Cells[iRowCounter, 7] = saAddress.Length >= 4 ? saAddress[3] == "-1" ? "" : saAddress[3] : "";
+                xlWorksheet.Cells[iRowCounter, 8] = saAddress.Length >= 5 ? saAddress[4] == "-1" ? "" : saAddress[4] : "";
                 xlWorksheet.Cells[iRowCounter, 9] = sPhone == "-1" ? "" : sPhone;
                 xlWorksheet.Cells[iRowCounter, 10] = lIdNumber == -1 ? "" : lIdNumber.ToString();
                 iRowCounter += 1;
@@ -935,11 +935,11 @@ namespace VoelParadys
                 arr[1] = sName == "-1" ? "" : sName;
                 arr[2] = sRepName == "-1" ? "" : sRepName;
                 arr[3] = sRepSurname == "-1" ? "" : sRepSurname;
-                arr[4] = saAddress[0] == "-1" ? "" : saAddress[0];
-                arr[5] = saAddress[1] == "-1" ? "" : saAddress[1];
-                arr[6] = saAddress[2] == "-1" ? "" : saAddress[2];
-                arr[7] = saAddress[3] == "-1" ? "" : saAddress[3];
-                arr[8] = saAddress[4] == "-1" ? "" : saAddress[4];
+                arr[4] = saAddress.Length >= 1 ? saAddress[0] == "-1" ? "" : saAddress[0] : "";
+                arr[5] = saAddress.Length >= 2 ? saAddress[1] == "-1" ? "" : saAddress[1] : "";
+                arr[6] = saAddress.Length >= 3 ? saAddress[2] == "-1" ? "" : saAddress[2] : "";
+                arr[7] = saAddress.Length >= 4 ? saAddress[3] == "-1" ? "" : saAddress[3] : "";
+                arr[8] = saAddress.Length >= 5 ? saAddress[4] == "-1" ? "" : saAddress[4] : "";
                 arr[9] = sPhone == "-1" ? "" : sPhone;
                 theListView.Items.Add(new ListViewItem(arr));
             }
@@ -1013,11 +1013,11 @@ namespace VoelParadys
                 xlWorksheet.Cells[iRowCounter, 2] = sName == "-1" ? "" : sName;
                 xlWorksheet.Cells[iRowCounter, 3] = sRepName == "-1" ? "" : sRepName;
                 xlWorksheet.Cells[iRowCounter, 4] = sRepSurname == "-1" ? "" : sRepSurname;
-                xlWorksheet.Cells[iRowCounter, 5] = saAddress[0] == "-1" ? "" : saAddress[0];
-                xlWorksheet.Cells[iRowCounter, 6] = saAddress[1] == "-1" ? "" : saAddress[1];
-                xlWorksheet.Cells[iRowCounter, 7] = saAddress[2] == "-1" ? "" : saAddress[2];
-                xlWorksheet.Cells[iRowCounter, 8] = saAddress[3] == "-1" ? "" : saAddress[3];
-                xlWorksheet.Cells[iRowCounter, 9] = saAddress[4] == "-1" ? "" : saAddress[4];
+                xlWorksheet.Cells[iRowCounter, 5] = saAddress.Length >= 1 ? saAddress[0] == "-1" ? "" : saAddress[0] : "";
+                xlWorksheet.Cells[iRowCounter, 6] = saAddress.Length >= 2 ? saAddress[1] == "-1" ? "" : saAddress[1] : "";
+                xlWorksheet.Cells[iRowCounter, 7] = saAddress.Length >= 3 ? saAddress[2] == "-1" ? "" : saAddress[2] : "";
+                xlWorksheet.Cells[iRowCounter, 8] = saAddress.Length >= 4 ? saAddress[3] == "-1" ? "" : saAddress[3] : "";
+                xlWorksheet.Cells[iRowCounter, 9] = saAddress.Length >= 5 ? saAddress[4] == "-1" ? "" : saAddress[4] : "";
                 xlWorksheet.Cells[iRowCounter, 10] = sPhone == "-1" ? "" : sPhone;
                 iRowCounter += 1;
                 theProgressBar.UpdateProgressBar();
@@ -1087,6 +1087,7 @@ namespace VoelParadys
             DirectoryInfo theDirectory = new DirectoryInfo(sCurrentDir);
             string sFullDirectory = theDirectory.FullName.ToString();
             sFullDirectory = sFullDirectory.Replace("\\Release", "\\Data\\Exports\\");
+            sFullDirectory = sFullDirectory.Replace("\\Debug", "\\Data\\Exports\\");
             return sFullDirectory;
         }
         private void PrintErrorMessage(string sMessage)

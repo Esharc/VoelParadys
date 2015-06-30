@@ -59,23 +59,16 @@ namespace VoelParadys
                 int iID = -1;
                 string sName = "", sRepName = "", sRepSurname = "", sPhoneNumber = "";
                 string[] saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
-                List<string> sAddressList = new List<string>();
                  
                 rDataController.GetSupplierData(i, ref iID, ref sName, ref sRepName, ref sRepSurname, ref saAddress, ref sPhoneNumber);
-                bool[] bEmptyLines = new bool[5] {saAddress[0] == "-1", saAddress[1] == "-1", saAddress[2] == "-1", saAddress[3] == "-1", saAddress[4] == "-1"};
-
                 string sFormattedAddress = "";
+
                 for (int j = 0; j < saAddress.Length; ++j)
                 {
-                    if (saAddress[j] != "-1")
-                        sAddressList.Add(saAddress[j]);
-                }
-                for (int k = 0; k < sAddressList.Count; ++k)
-                {
-                    if (k == sAddressList.Count - 1)
-                        sFormattedAddress += sAddressList[k];
+                    if (j == saAddress.Length - 1)
+                        sFormattedAddress += saAddress[j];
                     else
-                        sFormattedAddress += sAddressList[k] + ", ";
+                        sFormattedAddress += saAddress[j] + ", ";
                 }
 
                 arr[0] = iID.ToString();
@@ -83,7 +76,7 @@ namespace VoelParadys
                 arr[2] = sRepName == "-1" ? "" : sRepName;
                 arr[3] = sRepSurname == "-1" ? "" : sRepSurname;
                 arr[4] = sPhoneNumber == "-1" ? "" : sPhoneNumber;
-                arr[5] = sFormattedAddress;
+                arr[5] = sFormattedAddress.Contains("-1") ? "" : sFormattedAddress;
                 
                 itm = new ListViewItem(arr);
                 SuppliersListView.Items.Add(itm);
@@ -99,6 +92,7 @@ namespace VoelParadys
            if (!DetailsButton.Enabled)
                 DetailsButton.Enabled = true;
 
+            ClearMemberVairiables();
             var rDataController = VoelParadysDataController.GetInstance();
             string sName = "", sRepName = "", sRepSurname = "", sPhoneNumber = "";
             string[] saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
@@ -109,21 +103,18 @@ namespace VoelParadys
             m_sTempRepName = sRepName;
             m_sTempRepSurname = sRepSurname;
             m_sTempPhone = sPhoneNumber;
-            m_saTempAddress[0] = saAddress[0];
-            m_saTempAddress[1] = saAddress[1];
-            m_saTempAddress[2] = saAddress[2];
-            m_saTempAddress[3] = saAddress[3];
-            m_saTempAddress[4] = saAddress[4];
+            for (int i = 0; i < saAddress.Length; ++i)
+                m_saTempAddress[i] = saAddress[i];
             
             NameTextBox.Text = m_sTempName == "-1" ? "" : m_sTempName;
             RepNameTextBox.Text = m_sTempRepName == "-1" ? "" : m_sTempRepName;
             RepSurnameTextBox.Text = m_sTempRepSurname == "-1" ? "" : m_sTempRepSurname;
             PhoneNumberTextBox.Text = m_sTempPhone == "-1" ? "" : m_sTempPhone;
-            AddressTextBox1.Text = saAddress[0] == "-1" ? "" : saAddress[0];
-            AddressTextBox2.Text = saAddress[1] == "-1" ? "" : saAddress[1];
-            AddressTextBox3.Text = saAddress[2] == "-1" ? "" : saAddress[2];
-            AddressTextBox4.Text = saAddress[3] == "-1" ? "" : saAddress[3];
-            AddressTextBox5.Text = saAddress[4] == "-1" ? "" : saAddress[4];
+            AddressTextBox1.Text = m_saTempAddress[0] == "-1" ? "" : saAddress[0];
+            AddressTextBox2.Text = m_saTempAddress[1] == "-1" ? "" : saAddress[1];
+            AddressTextBox3.Text = m_saTempAddress[2] == "-1" ? "" : saAddress[2];
+            AddressTextBox4.Text = m_saTempAddress[3] == "-1" ? "" : saAddress[3];
+            AddressTextBox5.Text = m_saTempAddress[4] == "-1" ? "" : saAddress[4];
         }
 
         private void NameTextBox_LeaveFocus(object sender, EventArgs e)

@@ -57,30 +57,24 @@ namespace VoelParadys
             {
                 int iID = -1;
                 string sName = "", sSurname = "", sPhoneNumber = "";
-                string[] saAddress = new string[5] { "", "", "", "", "" };
-                List<string> sAddressList = new List<string>();
+                string[] saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
                 long lIDNumber = -1;
                 rDataController.GetCustomerData(i, ref iID, ref sName, ref sSurname, ref saAddress, ref sPhoneNumber, ref lIDNumber);
-
                 string sFormattedAddress = "";
+           
                 for (int j = 0; j < saAddress.Length; ++j)
                 {
-                    if (saAddress[j] != "-1")
-                        sAddressList.Add(saAddress[j]);
-                }
-                for (int k = 0; k < sAddressList.Count; ++k)
-                {
-                    if (k == sAddressList.Count - 1)
-                        sFormattedAddress += sAddressList[k];
+                    if (j == saAddress.Length - 1)
+                        sFormattedAddress += saAddress[j];
                     else
-                        sFormattedAddress += sAddressList[k] + ", ";
+                        sFormattedAddress += saAddress[j] + ", ";
                 }
 
                 arr[0] = iID.ToString();
                 arr[1] = sName == "-1" ? "" : sName;
                 arr[2] = sSurname == "-1" ? "" : sSurname;
                 arr[3] = sPhoneNumber == "-1" ? "" : sPhoneNumber;
-                arr[4] = sFormattedAddress;
+                arr[4] = sFormattedAddress.Contains("-1") ? "" : sFormattedAddress;
                 arr[5] = lIDNumber == -1 ? "" : lIDNumber.ToString();
                 itm = new ListViewItem(arr);
                 CustomersListView.Items.Add(itm);
@@ -106,6 +100,7 @@ namespace VoelParadys
             if (!CustomerDetailsButton.Enabled)
                 CustomerDetailsButton.Enabled = true;
 
+            ClearMemberVairiables();
             var rDataController = VoelParadysDataController.GetInstance();
             string sName = "", sSurname = "", sPhoneNumber = "";
             string[] saAddress = new string[5];
@@ -116,11 +111,8 @@ namespace VoelParadys
             m_sTempName = sName;
             m_sTempSurname = sSurname;
             m_sTempPhone = sPhoneNumber;
-            m_saTempAddress[0] = saAddress[0];
-            m_saTempAddress[1] = saAddress[1];
-            m_saTempAddress[2] = saAddress[2];
-            m_saTempAddress[3] = saAddress[3];
-            m_saTempAddress[4] = saAddress[4];
+            for (int i = 0; i < saAddress.Length; ++i)
+                m_saTempAddress[i] = saAddress[i];
             m_lTempIDNumber = lIDNumber;
 
             NameTextBox.Text = m_sTempName == "-1" ? "" : m_sTempName;

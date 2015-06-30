@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VoelParadysDataStructures.cs" />
     <Compile Include="NewSupplier.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -9,54 +9,8 @@ using System.IO;
 
 namespace VoelParadys
 {
-    public struct UsageData
-    {
-        public string sDate { get; set; }
-        public string sItemCode { get; set; }
-        public int iItemQuantity { get; set; }
-    }
-    public struct DailySaleFileData
-    {
-        public string sDate { get; set; }
-        public string sFileName { get; set; }
-    }
-
     class VoelParadysXmlParser
     {
-        public struct SSaleDetails
-        {
-            List<SItemDetails> lsItemDetailList;   // A list of items sold
-            float fCashReceived;                  // The cash received
-            float fSaleTotal;                     // The total of the sale
-            string sTypeOfPayment;                // Normal cash, EFT or bank transfer
-            string sTime;                         // The time when the transaction took place
-
-            public SSaleDetails(float _fCashReceived, float _fSaleTotal, string _sTypeOfPayment, string _sTime)
-            {
-                lsItemDetailList = new List<SItemDetails>();
-                fCashReceived = _fCashReceived;
-                fSaleTotal = _fSaleTotal;
-                sTypeOfPayment = _sTypeOfPayment;
-                sTime = _sTime;
-            }
-
-            // Getters
-            public string GetSaleItemCodeAt(int iIndex) { return lsItemDetailList[iIndex].GetItemCode(); }
-            public int GetSaleItemQuantitySoldAt(int iIndex) { return lsItemDetailList[iIndex].GetItemQuantitySold(); }
-            public float GetSaleItemSellPriceAt(int iIndex) { return lsItemDetailList[iIndex].GetItemSellPrice(); }
-            public float GetSaleCashReceived() { return fCashReceived; }
-            public float GetSaleTotal() { return fSaleTotal; }
-            public string GetSalePaymentType() { return sTypeOfPayment; }
-            public string GetSaleTime() { return sTime; }
-            public int GetSaleItemsCount() { return lsItemDetailList.Count; }
-            // Setters
-            public void SetSaleItemDetail(string sCode, int iQuantity, float fTheSellPrice) { SItemDetails SItem = new SItemDetails(sCode, iQuantity, fTheSellPrice); lsItemDetailList.Add(SItem); }
-            public void SetSaleCashReceived(float fCash) { fCashReceived = fCash; }
-            public void SetSaleTotal(float fTotal) { fSaleTotal = fTotal; }
-            public void SetSalePaymentType(string sType) { sTypeOfPayment = sType; }
-            public void SetSaleTime(string sTheTime) { sTime = sTheTime; }
-        }
-
         // Create the xml file if it does not exist
         public void CreateXmlFileIfNotFound(string sXmlFileName)
         {
@@ -107,7 +61,7 @@ namespace VoelParadys
             return File.Exists(sFilePath);
         }
         // Write to the stock xml file
-        public void VoelParadysStockXmlWriter(List<SStockItemDetails> lStockItems)
+        public void VoelParadysStockXmlWriter(List<VoelParadysDataStructures.SStockItemDetails> lStockItems)
         {
             // Get examples for xml reading and writing from http://forum.codecall.net/topic/58239-c-tutorial-reading-and-writing-xml-files/
             if (lStockItems.Count > 0)
@@ -140,7 +94,7 @@ namespace VoelParadys
             }
         }
         // Read from the stock xml file
-        public void VoelParadysStockXmlReader(List<SStockItemDetails> lStockItems)
+        public void VoelParadysStockXmlReader(List<VoelParadysDataStructures.SStockItemDetails> lStockItems)
         {
             if (IsXmlFileValid("../Data/VoelParadysInventory.xml"))
             {
@@ -150,7 +104,7 @@ namespace VoelParadys
                 {
                     if (TheReader.NodeType == XmlNodeType.Element)
                     {
-                        SStockItemDetails TempStockItem = new SStockItemDetails();
+                        VoelParadysDataStructures.SStockItemDetails TempStockItem = new VoelParadysDataStructures.SStockItemDetails();
                         while (TheReader.NodeType != XmlNodeType.EndElement)
                         {
                             TheReader.Read();
@@ -232,14 +186,14 @@ namespace VoelParadys
             }
         }
         // Write to the sale file
-        public void VoelParadysDailySaleDataXmlWriter(List<SSaleInvoiceData> lSaleItems, float fSaleTotal, float fCashReceived, string sTypeOfCash)
+        public void VoelParadysDailySaleDataXmlWriter(List<VoelParadysDataStructures.SSaleInvoiceData> lSaleItems, float fSaleTotal, float fCashReceived, string sTypeOfCash)
         {
             DateTime theDateAndTime = DateTime.Now;
             string theDate = theDateAndTime.ToString("dd_MM_yy");
             string theTime = theDateAndTime.ToString("H:mm:ss");
             string sDailySaleDataFile = GetOrCreateSaleInfoFile(theDate);
-            List<SSaleDetails> theSaleDetailsList = new List<SSaleDetails>();
-            SSaleDetails theNewSaleData = new SSaleDetails(0, 0, "Cash", "00:00:00");
+            List<VoelParadysDataStructures.SSaleDetails> theSaleDetailsList = new List<VoelParadysDataStructures.SSaleDetails>();
+            VoelParadysDataStructures.SSaleDetails theNewSaleData = new VoelParadysDataStructures.SSaleDetails(0, 0, "Cash", "00:00:00");
 
             // First we populate the list with all the old sale data before adding the new sale data
             VoelParadysDailySaleDataXmlReader(sDailySaleDataFile, ref theSaleDetailsList);
@@ -289,7 +243,7 @@ namespace VoelParadys
             
         }
         // Reader from the sale file 
-        public void VoelParadysDailySaleDataXmlReader(string sSaleFileName, ref List<SSaleDetails> theSaleDataList, bool bFromCashup = false)
+        public void VoelParadysDailySaleDataXmlReader(string sSaleFileName, ref List<VoelParadysDataStructures.SSaleDetails> theSaleDataList, bool bFromCashup = false)
         {
             string sFilePath = "";
             if (bFromCashup)
@@ -307,7 +261,7 @@ namespace VoelParadys
                 {
                     if (TheReader.NodeType == XmlNodeType.Element)
                     {
-                        SSaleDetails TempSaleDetail = new SSaleDetails(0, 0, "Cash", "00:00:00");
+                        VoelParadysDataStructures.SSaleDetails TempSaleDetail = new VoelParadysDataStructures.SSaleDetails(0, 0, "Cash", "00:00:00");
                         while (TheReader.NodeType != XmlNodeType.EndElement)
                         {
                             TheReader.Read();
@@ -434,7 +388,7 @@ namespace VoelParadys
             return sRetVal;
         }
         // Write to the customer xml file
-        public void VoelParadysCustomerXmlWriter(List<CCustomerDetails> lCustomerItems)
+        public void VoelParadysCustomerXmlWriter(List<VoelParadysDataStructures.CCustomerDetails> lCustomerItems)
         {
             // Get examples for xml reading and writing from http://forum.codecall.net/topic/58239-c-tutorial-reading-and-writing-xml-files/
             if (lCustomerItems.Count > 0)
@@ -472,19 +426,22 @@ namespace VoelParadys
         // Extract the address string into an array of address values
         private string[] ExtractAddressData(string sAddress)
         {
-            string[] saRetValue = new string[5] { "", "", "", "", "" };
+            string[] saRetValue = new string[5] { "-1", "-1", "-1", "-1", "-1" };
             char[] acDelimiterArray = { ';' };
             string[] saAddressLines = sAddress.Split(acDelimiterArray, StringSplitOptions.RemoveEmptyEntries);
 
             for (int i = 0; i < saAddressLines.Length; ++i)
             {
-                saRetValue[i] = saAddressLines[i];
+                if (i >= 5)
+                    saRetValue[4] += ", " + saAddressLines[i];
+                else
+                    saRetValue[i] = saAddressLines[i];
             }
 
             return saRetValue;
         }
         // Read from the customer xml file
-        public void VoelParadysCustomerXmlReader(List<CCustomerDetails> lCustomerItems)
+        public void VoelParadysCustomerXmlReader(List<VoelParadysDataStructures.CCustomerDetails> lCustomerItems)
         {
             if (IsXmlFileValid("../Data/VoelParadysCustomers.xml"))
             {
@@ -494,7 +451,7 @@ namespace VoelParadys
                 {
                     if (TheReader.NodeType == XmlNodeType.Element)
                     {
-                        CCustomerDetails TempCustomer = new CCustomerDetails(-1, "", "", new string[5]{"", "", "", "", ""}, "", -1);
+                        VoelParadysDataStructures.CCustomerDetails TempCustomer = new VoelParadysDataStructures.CCustomerDetails(-1, "", "", new string[5] { "", "", "", "", "" }, "", -1);
                         while (TheReader.NodeType != XmlNodeType.EndElement)
                         {
                             TheReader.Read();
@@ -577,7 +534,7 @@ namespace VoelParadys
         }
 
         // Write to the supplier xml file
-        public void VoelParadysSupplierXmlWriter(List<CSupplierDetails> lSupplierItems)
+        public void VoelParadysSupplierXmlWriter(List<VoelParadysDataStructures.CSupplierDetails> lSupplierItems)
         {
             // Get examples for xml reading and writing from http://forum.codecall.net/topic/58239-c-tutorial-reading-and-writing-xml-files/
             if (lSupplierItems.Count > 0)
@@ -619,7 +576,7 @@ namespace VoelParadys
             }
         }
         // Read from the customer xml file
-        public void VoelParadysSupplierXmlReader(List<CSupplierDetails> lSupplierItems)
+        public void VoelParadysSupplierXmlReader(List<VoelParadysDataStructures.CSupplierDetails> lSupplierItems)
         {
             if (IsXmlFileValid("../Data/VoelParadysSuppliers.xml"))
             {
@@ -630,7 +587,7 @@ namespace VoelParadys
                 {
                     if (TheReader.NodeType == XmlNodeType.Element)
                     {
-                        CSupplierDetails TempSupplier = new CSupplierDetails(-1, "", "", "", new string[5] {"", "", "", "", ""}, "-1");
+                        VoelParadysDataStructures.CSupplierDetails TempSupplier = new VoelParadysDataStructures.CSupplierDetails(-1, "", "", "", new string[5] { "", "", "", "", "" }, "-1");
                         while (TheReader.NodeType != XmlNodeType.EndElement)
                         {
                             TheReader.Read();
@@ -735,9 +692,9 @@ namespace VoelParadys
             DateTime theDateAndTime = DateTime.Now;
             string sTheDate = theDateAndTime.ToString("dd/MM/yyyy");
             // Get examples for xml reading and writing from http://forum.codecall.net/topic/58239-c-tutorial-reading-and-writing-xml-files/
-            List<UsageData> lUsageList = new List<UsageData>();
+            List<VoelParadysDataStructures.UsageData> lUsageList = new List<VoelParadysDataStructures.UsageData>();
             VoelParadysUsageXmlReader(lUsageList);
-            UsageData TempData = new UsageData();
+            VoelParadysDataStructures.UsageData TempData = new VoelParadysDataStructures.UsageData();
             TempData.sDate = sTheDate;
             TempData.sItemCode = sItemCode;
             TempData.iItemQuantity = iQuantity;
@@ -767,7 +724,7 @@ namespace VoelParadys
             TheWriter.Close();
         }
         // Read from the usage xml file
-        public void VoelParadysUsageXmlReader(List<UsageData> lUsageList)
+        public void VoelParadysUsageXmlReader(List<VoelParadysDataStructures.UsageData> lUsageList)
         {
             if (IsXmlFileValid("../Data/VoelParadysUsage.xml"))
             {
@@ -777,7 +734,7 @@ namespace VoelParadys
                 {
                     if (TheReader.NodeType == XmlNodeType.Element)
                     {
-                        UsageData TempUsageItem = new UsageData();
+                        VoelParadysDataStructures.UsageData TempUsageItem = new VoelParadysDataStructures.UsageData();
                         while (TheReader.NodeType != XmlNodeType.EndElement)
                         {
                             TheReader.Read();

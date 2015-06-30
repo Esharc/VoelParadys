@@ -11,7 +11,7 @@ namespace VoelParadys
 {
     public partial class NewCustomer : Form
     {
-        private CCustomerDetails m_NewCustomer;
+        private VoelParadysDataStructures.CCustomerDetails m_NewCustomer;
         private string m_sAddress1;
         private string m_sAddress2;
         private string m_sAddress3;
@@ -22,7 +22,7 @@ namespace VoelParadys
         public NewCustomer()
         {
             InitializeComponent();
-            m_NewCustomer = new CCustomerDetails(-1, "-1", "-1", new string[5] {"-1", "-1", "-1", "-1", "-1"}, "-1", -1);
+            m_NewCustomer = new VoelParadysDataStructures.CCustomerDetails(-1, "-1", "-1", new string[5] { "-1", "-1", "-1", "-1", "-1" }, "-1", -1);
             m_sAddress1 = "";
             m_sAddress2 = "";
             m_sAddress3 = "";
@@ -73,7 +73,7 @@ namespace VoelParadys
 
                 m_NewCustomer.SetCustomerAddress(saAddress);
                 VoelParadysDataController.GetInstance().AddNewCustomerToList(m_NewCustomer);
-                m_NewCustomer = new CCustomerDetails();
+                m_NewCustomer = new VoelParadysDataStructures.CCustomerDetails();
                 m_sAddress1 = m_sAddress2 = m_sAddress3 = m_sAddress4 = m_sAddress5 = "";
                 this.Close();
             }

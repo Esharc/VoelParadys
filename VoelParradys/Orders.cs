@@ -11,8 +11,8 @@ namespace VoelParadys
 {
     public partial class Orders : Form
     {
-        CIntStringMap m_SelectedCustomer;
-        List<CIntStringMap> m_CustomersList;
+        VoelParadysDataStructures.CIntStringMap m_SelectedCustomer;
+        List<VoelParadysDataStructures.CIntStringMap> m_CustomersList;
         List<string> m_lsWishListItems;
         private PointOfSale m_Parent;
 
@@ -20,21 +20,21 @@ namespace VoelParadys
         {
             InitializeComponent();
             m_Parent = theParent;
-            m_SelectedCustomer = new CIntStringMap(-1, "");
+            m_SelectedCustomer = new VoelParadysDataStructures.CIntStringMap(-1, "");
             m_lsWishListItems = new List<string>();
             PopulateCustomersList();
         }
 
         private void PopulateCustomersList()
         {
-            List<CIntStringMap> TempCustomerList = VoelParadysDataController.GetInstance().GetAllCustomersNameAndID();
-            List<CIntStringMap> DataSourceList = new List<CIntStringMap>();
-            DataSourceList.Add(new CIntStringMap(-1, "None"));
+            List<VoelParadysDataStructures.CIntStringMap> TempCustomerList = VoelParadysDataController.GetInstance().GetAllCustomersNameAndID();
+            List<VoelParadysDataStructures.CIntStringMap> DataSourceList = new List<VoelParadysDataStructures.CIntStringMap>();
+            DataSourceList.Add(new VoelParadysDataStructures.CIntStringMap(-1, "None"));
 
             for (int i = 0; i < TempCustomerList.Count; ++i)
                 DataSourceList.Add(TempCustomerList[i]);
 
-            BindingList<CIntStringMap> ListSource = new BindingList<CIntStringMap>(DataSourceList);
+            BindingList<VoelParadysDataStructures.CIntStringMap> ListSource = new BindingList<VoelParadysDataStructures.CIntStringMap>(DataSourceList);
 
             CustomerComboBox.DataSource = DataSourceList;
             CustomerComboBox.DisplayMember = "m_sCustomerName";
@@ -69,7 +69,7 @@ namespace VoelParadys
 
         private void CustomerComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            m_SelectedCustomer = CustomerComboBox.SelectedItem as CIntStringMap;
+            m_SelectedCustomer = CustomerComboBox.SelectedItem as VoelParadysDataStructures.CIntStringMap;
             if (m_SelectedCustomer.m_iCustomerID != -1)
             {
                 var rDataController = VoelParadysDataController.GetInstance();
