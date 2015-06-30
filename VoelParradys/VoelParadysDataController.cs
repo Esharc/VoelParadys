@@ -504,7 +504,7 @@ namespace VoelParadys
             }
             return theUsageList.Count > 0;
         }
-        public bool GetDailySaleFileList(string sStartDate, string sEndDate, ref List<VoelParadysDataStructures.DailySaleFileData> theSaleFileList)
+        public bool GetDailySaleFileList(string sStartDate, string sEndDate, ref List<VoelParadysDataStructures.CStringStringMap> theSaleFileList)
         {
             DateTime TheDateIncrementer;
             DateTime TheEndDate;
@@ -519,9 +519,9 @@ namespace VoelParadys
                     {
                         if (DoesFileExist(TheDateIncrementer.ToString("dd_MM_yy"), true))
                         {
-                            VoelParadysDataStructures.DailySaleFileData tempData = new VoelParadysDataStructures.DailySaleFileData();
-                            tempData.sDate = TheDateIncrementer.ToString("dd/MM/yyyy");
-                            tempData.sFileName = "../Data/SaleData/" + TheDateIncrementer.ToString("dd_MM_yy") + ".xml";
+                            VoelParadysDataStructures.CStringStringMap tempData = new VoelParadysDataStructures.CStringStringMap();
+                            tempData.sString1 = TheDateIncrementer.ToString("dd/MM/yyyy");
+                            tempData.sString2 = "../Data/SaleData/" + TheDateIncrementer.ToString("dd_MM_yy") + ".xml";
                             theSaleFileList.Add(tempData);
                         }
                         TheDateIncrementer = TheDateIncrementer.AddDays(1);

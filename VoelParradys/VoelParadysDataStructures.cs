@@ -14,11 +14,11 @@ namespace VoelParadys
             public string sItemCode { get; set; }
             public int iItemQuantity { get; set; }
         }
-        // The required daily sale file data stored for each item
-        public struct DailySaleFileData
+        // A structure to store a value containing two string variables
+        public struct CStringStringMap
         {
-            public string sDate { get; set; }
-            public string sFileName { get; set; }
+            public string sString1 { get; set; }
+            public string sString2 { get; set; }
         }
         // The details for each sale
         public struct SSaleDetails
@@ -57,12 +57,12 @@ namespace VoelParadys
         // A data structure that can be used to create a map of int and string values 
         public class CIntStringMap
         {
-            public int m_iCustomerID { get; set; }
-            public string m_sCustomerName { get; set; }
-            public CIntStringMap(int iID, string sName)
+            public int m_iInteger { get; set; }
+            public string m_sString { get; set; }
+            public CIntStringMap(int iInt, string sString)
             {
-                m_iCustomerID = iID;
-                m_sCustomerName = sName;
+                m_iInteger = iInt;
+                m_sString = sString;
             }
         }
         // A data structure for the customers details
@@ -188,11 +188,11 @@ namespace VoelParadys
             string sRepSurname;                         // The surname of the representative for the supplier (Optional)
             string[] saSupplierAddress;                 // The address of the supplier (Optional)
             string sSupplierPhoneNumber;                // The phone number of the supplier (Optional)   
-            List<VoelParadysDataStructures.SSuppliedItem> lsSuppliedItemsList;           // A list of all the items bought from the supplier              
+            List<VoelParadysDataStructures.CIntStringMap> lsSuppliedItemsList;           // A list of all the items bought from the supplier              
 
             public CSupplierDetails()
             {
-                lsSuppliedItemsList = new List<VoelParadysDataStructures.SSuppliedItem>();
+                lsSuppliedItemsList = new List<VoelParadysDataStructures.CIntStringMap>();
                 iSupplierID = -1;
                 sSupplierName = "-1";
                 sRepName = "-1";
@@ -203,7 +203,7 @@ namespace VoelParadys
 
             public CSupplierDetails(int _iCode, string _sSupName, string _sRepName, string _sRepSurname, string[] _saAddress, string _sPhoneNumber)
             {
-                lsSuppliedItemsList = new List<VoelParadysDataStructures.SSuppliedItem>();
+                lsSuppliedItemsList = new List<VoelParadysDataStructures.CIntStringMap>();
                 iSupplierID = _iCode;
                 sSupplierName = _sSupName;
                 sRepName = _sRepName;
@@ -222,9 +222,9 @@ namespace VoelParadys
             public int GetSuppliedItemsListCount() { return lsSuppliedItemsList == null ? 0 : lsSuppliedItemsList.Count; }
             public void GetSuppliedItemsListItemAt(int iIndex, ref string sCode, ref int iQuantity)
             {
-                VoelParadysDataStructures.SSuppliedItem TempItem = lsSuppliedItemsList[iIndex];
-                sCode = TempItem.GetItemCode();
-                iQuantity = TempItem.GetItemQuantity();
+                VoelParadysDataStructures.CIntStringMap TempItem = lsSuppliedItemsList[iIndex];
+                sCode = TempItem.m_sString;
+                iQuantity = TempItem.m_iInteger;
             }
             // Setters
             public void SetSupplierID(int iID)
@@ -257,7 +257,7 @@ namespace VoelParadys
             }
             public void AddSuppliedItemsListItem(string sItemCode, int iQuantity)
             {
-                VoelParadysDataStructures.SSuppliedItem TempItem = new VoelParadysDataStructures.SSuppliedItem(sItemCode, iQuantity);
+                VoelParadysDataStructures.CIntStringMap TempItem = new VoelParadysDataStructures.CIntStringMap(iQuantity, sItemCode);
                 lsSuppliedItemsList.Add(TempItem);
             }
             public void UpdateSuppliedItemsListItem(string sItemCode, int iQuantity)
@@ -265,21 +265,21 @@ namespace VoelParadys
                 for (int i = 0; i < lsSuppliedItemsList.Count; ++i)
                 {
                     // If the item exists in the list, then update it
-                    if (lsSuppliedItemsList[i].GetItemCode() == sItemCode)
+                    if (lsSuppliedItemsList[i].m_sString == sItemCode)
                     {
-                        lsSuppliedItemsList[i].UpdateItemQuantity(iQuantity);
+                        lsSuppliedItemsList[i].m_iInteger += iQuantity;
                         return;
                     }
                 }
 
                 // If the item does not exist in the list, then we add it. This will only be reached if the for loop does not return
-                lsSuppliedItemsList.Add(new VoelParadysDataStructures.SSuppliedItem(sItemCode, iQuantity));
+                lsSuppliedItemsList.Add(new VoelParadysDataStructures.CIntStringMap(iQuantity, sItemCode));
             }
             public void DeleteSuppliedItemsListItem(string sItemCode)
             {
                 for (int i = 0; i < lsSuppliedItemsList.Count; ++i)
                 {
-                    if (lsSuppliedItemsList[i].GetItemCode() == sItemCode)
+                    if (lsSuppliedItemsList[i].m_sString == sItemCode)
                         lsSuppliedItemsList.RemoveAt(i);
                 }
             }
@@ -377,34 +377,6 @@ namespace VoelParadys
             public void SetStockItemQuantityUsed(int iQuantity) { iItemQuantityUsed = iQuantity; }
             public void SetStockItemCostPrice(float fCostPrice) { fItemCostPrice = fCostPrice; }
             public void SetStockItemSellPrice(float fSellPrice) { fItemSellPrice = fSellPrice; }
-        }
-
-        // A data structure for the items supplied by a supplier
-        public struct SSuppliedItem
-        {
-            string sItemCode;
-            int iItemQuantity;
-
-            public SSuppliedItem(string sCode, int iQuantity)
-            {
-                sItemCode = sCode;
-                iItemQuantity = iQuantity;
-            }
-
-            // Getters
-            public string GetItemCode() { return sItemCode; }
-            public int GetItemQuantity() { return iItemQuantity; }
-
-            // Setters
-            public void SetItemDetails(string sCode, int iQuantity)
-            {
-                sItemCode = sCode;
-                iItemQuantity = iQuantity;
-            }
-            public void UpdateItemQuantity(int QuantityIncrement)
-            {
-                iItemQuantity += QuantityIncrement;
-            }
         }
         // A data structure for the current sale item
         public struct SSaleInvoiceData

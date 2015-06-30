@@ -93,6 +93,7 @@ namespace VoelParadys
 
         private void CustomerOnSelected(object sender, EventArgs e)
         {
+            ClearMemberVairiables();
             if (!UpdateCustomerButton.Enabled)
                 UpdateCustomerButton.Enabled = true;
             if (!DeleteCustomerButton.Enabled)
@@ -100,7 +101,6 @@ namespace VoelParadys
             if (!CustomerDetailsButton.Enabled)
                 CustomerDetailsButton.Enabled = true;
 
-            ClearMemberVairiables();
             var rDataController = VoelParadysDataController.GetInstance();
             string sName = "", sSurname = "", sPhoneNumber = "";
             string[] saAddress = new string[5];

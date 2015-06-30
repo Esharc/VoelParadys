@@ -12,7 +12,6 @@ namespace VoelParadys
     public partial class Orders : Form
     {
         VoelParadysDataStructures.CIntStringMap m_SelectedCustomer;
-        List<VoelParadysDataStructures.CIntStringMap> m_CustomersList;
         List<string> m_lsWishListItems;
         private PointOfSale m_Parent;
 
@@ -70,21 +69,21 @@ namespace VoelParadys
         private void CustomerComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             m_SelectedCustomer = CustomerComboBox.SelectedItem as VoelParadysDataStructures.CIntStringMap;
-            if (m_SelectedCustomer.m_iCustomerID != -1)
+            if (m_SelectedCustomer.m_iInteger != -1)
             {
                 var rDataController = VoelParadysDataController.GetInstance();
 
-                if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID) > 1)
+                if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iInteger) > 1)
                 {
                     List<string> TempList = new List<string>();
-                    for (int i = 0; i < rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID); ++i)
-                        TempList.Add(rDataController.GetCustomerWishListItemAt(m_SelectedCustomer.m_iCustomerID, i));
+                    for (int i = 0; i < rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iInteger); ++i)
+                        TempList.Add(rDataController.GetCustomerWishListItemAt(m_SelectedCustomer.m_iInteger, i));
                     var theWishListItems = new WishListItems(this, TempList);
                     theWishListItems.Show();
                 }
-                else if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID) == 1)
+                else if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iInteger) == 1)
                 {
-                    m_lsWishListItems.Add(rDataController.GetCustomerWishListItemAt(m_SelectedCustomer.m_iCustomerID, 0));
+                    m_lsWishListItems.Add(rDataController.GetCustomerWishListItemAt(m_SelectedCustomer.m_iInteger, 0));
                     CallParentWindow();
                 }
                 else
@@ -100,11 +99,11 @@ namespace VoelParadys
         {
             var rDataController = VoelParadysDataController.GetInstance();
 
-            if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID) == 0)
-                return "No wish list items found for " + m_SelectedCustomer.m_sCustomerName;
-            else if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iCustomerID) == 1)
+            if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iInteger) == 0)
+                return "No wish list items found for " + m_SelectedCustomer.m_iInteger;
+            else if (rDataController.GetCustomerWishListCount(m_SelectedCustomer.m_iInteger) == 1)
             {
-                string sStockItem = rDataController.GetCustomerWishListItemAt(m_SelectedCustomer.m_iCustomerID, 0);
+                string sStockItem = rDataController.GetCustomerWishListItemAt(m_SelectedCustomer.m_iInteger, 0);
                 string sItemCode = "";
                 if (!rDataController.DoesItemExistInDatabase(sStockItem, ref sItemCode))
                     return sStockItem + " does not exist in the database";
@@ -145,7 +144,7 @@ namespace VoelParadys
         {
             if (m_lsWishListItems.Count > 0 && VoelParadysDataController.GetInstance().AllItemsExistInDatabase(m_lsWishListItems))
             {
-                m_Parent.SetWishListSaleData(m_lsWishListItems, m_SelectedCustomer.m_iCustomerID);
+                m_Parent.SetWishListSaleData(m_lsWishListItems, m_SelectedCustomer.m_iInteger);
                 this.Close();
             }
             else

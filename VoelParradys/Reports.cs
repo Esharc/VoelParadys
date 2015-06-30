@@ -542,7 +542,7 @@ namespace VoelParadys
             var rDataController = VoelParadysDataController.GetInstance();
             string sFromPrintDate = FromDateTimePicker.Value.ToString("dd MMM yyyy");
             string sToPrintDate = ToDateTimePicker.Value.ToString("dd MMM yyyy");
-            List<VoelParadysDataStructures.DailySaleFileData> theDailySaleFileData = new List<VoelParadysDataStructures.DailySaleFileData>();
+            List<VoelParadysDataStructures.CStringStringMap> theDailySaleFileData = new List<VoelParadysDataStructures.CStringStringMap>();
 
             if (rDataController.GetDailySaleFileList(FromDateTimePicker.Value.ToString("dd/MM/yyyy"), ToDateTimePicker.Value.ToString("dd/MM/yyyy"), ref theDailySaleFileData))
             {
@@ -571,16 +571,16 @@ namespace VoelParadys
 
                 for (int i = 0; i < theDailySaleFileData.Count; ++i)
                 {
-                    rDataController.ReadDailySaleDataFromDB(theDailySaleFileData[i].sFileName, ref theSaleDetails, false);
+                    rDataController.ReadDailySaleDataFromDB(theDailySaleFileData[i].sString2, ref theSaleDetails, false);
 
                     for (int j = 0; j < theSaleDetails.Count;  ++j)
                     {
                         for (int k = 0; k < theSaleDetails[j].GetSaleItemsCount(); ++k)
                         {
                             rDataController.GetStockItemData(theSaleDetails[j].GetSaleItemCodeAt(k), ref sName, ref iQtyS, ref iQtyB, ref iQtyU, ref fCost, ref fSell);
-                            iQtyU = GetQtyUsedForDate(theDailySaleFileData[i].sDate, theSaleDetails[j].GetSaleItemCodeAt(k));
+                            iQtyU = GetQtyUsedForDate(theDailySaleFileData[i].sString1, theSaleDetails[j].GetSaleItemCodeAt(k));
 
-                            arr[0] = theDailySaleFileData[i].sDate;
+                            arr[0] = theDailySaleFileData[i].sString1;
                             arr[1] = theSaleDetails[j].GetSaleItemCodeAt(k);
                             arr[2] = sName;
                             arr[3] = theSaleDetails[j].GetSaleItemQuantitySoldAt(k).ToString();
@@ -640,7 +640,7 @@ namespace VoelParadys
 
             string sFromPrintDate = FromDateTimePicker.Value.ToString("dd/MM/yyyy");
             string sToPrintDate = ToDateTimePicker.Value.ToString("dd/MM/yyyy");
-            List<VoelParadysDataStructures.DailySaleFileData> theDailySaleFileData = new List<VoelParadysDataStructures.DailySaleFileData>();
+            List<VoelParadysDataStructures.CStringStringMap> theDailySaleFileData = new List<VoelParadysDataStructures.CStringStringMap>();
 
             if (rDataController.GetDailySaleFileList(FromDateTimePicker.Value.ToString("dd/MM/yyyy"), ToDateTimePicker.Value.ToString("dd/MM/yyyy"), ref theDailySaleFileData))
             {
@@ -692,15 +692,15 @@ namespace VoelParadys
                 theProgressBar.Show();
                 for (int i = 0; i < theDailySaleFileData.Count; ++i)
                 {
-                    rDataController.ReadDailySaleDataFromDB(theDailySaleFileData[i].sFileName, ref theSaleDetails, false);
+                    rDataController.ReadDailySaleDataFromDB(theDailySaleFileData[i].sString2, ref theSaleDetails, false);
                     
                     for (int j = 0; j < theSaleDetails.Count; ++j)
                     {
                         for (int k = 0; k < theSaleDetails[j].GetSaleItemsCount(); ++k)
                         {
                             rDataController.GetStockItemData(theSaleDetails[j].GetSaleItemCodeAt(k), ref sName, ref iQtyS, ref iQtyB, ref iQtyU, ref fCost, ref fSell);
-                            iQtyU = GetQtyUsedForDate(theDailySaleFileData[i].sDate, theSaleDetails[j].GetSaleItemCodeAt(k));
-                            DateTime.TryParse(theDailySaleFileData[i].sDate, culture, styles, out TheDateFormatter);
+                            iQtyU = GetQtyUsedForDate(theDailySaleFileData[i].sString1, theSaleDetails[j].GetSaleItemCodeAt(k));
+                            DateTime.TryParse(theDailySaleFileData[i].sString1, culture, styles, out TheDateFormatter);
 
                             xlWorksheet.Cells[iRowCounter, 1].EntireRow.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
                             xlWorksheet.Cells[iRowCounter, 1] = TheDateFormatter;

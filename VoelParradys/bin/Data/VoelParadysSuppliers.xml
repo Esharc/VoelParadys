@@ -15,7 +15,7 @@
     <Name>Mariza Kattle</Name>
     <RepName>Mariza</RepName>
     <RepSurname>Prinsloo</RepSurname>
-    <Address>1 Merensky;Setaria;Limpopo;0362</Address>
+    <Address>1 Merensky;Setaria;Limpopo;0362;-1</Address>
     <Phone>0826527102</Phone>
   </MarizaKattle>
   <!--This is the start of Nadia Horns-->
@@ -24,7 +24,7 @@
     <Name>Nadia Horns</Name>
     <RepName>Nadia</RepName>
     <RepSurname>Prinsloo</RepSurname>
-    <Address>1 Merensky;Setaria;Limpopo;0362</Address>
+    <Address>1 Merensky;Setaria;Limpopo;0362;-1</Address>
     <Phone>0826527102</Phone>
   </NadiaHorns>
   <!--This is the start of Timothy Bones-->
@@ -33,10 +33,14 @@
     <Name>Timothy Bones</Name>
     <RepName>Timothy</RepName>
     <RepSurname>Harcombe</RepSurname>
-    <Address>3914 Zeldriepark;Tabazimbi</Address>
+    <Address>3914 Zeldriepark;Tabazimbi;-1;-1;-1</Address>
     <Phone>0722464840</Phone>
     <SuppliedItemCode>Bones001</SuppliedItemCode>
     <SuppliedItemQuantity>20</SuppliedItemQuantity>
+    <SuppliedItemCode>100200214</SuppliedItemCode>
+    <SuppliedItemQuantity>20</SuppliedItemQuantity>
+    <SuppliedItemCode>100200714</SuppliedItemCode>
+    <SuppliedItemQuantity>10</SuppliedItemQuantity>
   </TimothyBones>
   <!--This is the start of Angus Fish-->
   <AngusFish>
@@ -44,7 +48,7 @@
     <Name>Angus Fish</Name>
     <RepName>Angus</RepName>
     <RepSurname>Watson</RepSurname>
-    <Address>Plot 1;Northam;Tabazimbi</Address>
+    <Address>Plot 1;Northam;Tabazimbi;-1;-1</Address>
     <Phone>0147841248</Phone>
   </AngusFish>
 </Suppliers>

@@ -85,14 +85,14 @@ namespace VoelParadys
 
         private void SupplierOnSelected(object sender, EventArgs e)
         {
+            ClearMemberVairiables();
             if (!UpdateButton.Enabled)
                 UpdateButton.Enabled = true;
             if (!DeleteButton.Enabled)
                 DeleteButton.Enabled = true;
-           if (!DetailsButton.Enabled)
+            if (!DetailsButton.Enabled)
                 DetailsButton.Enabled = true;
 
-            ClearMemberVairiables();
             var rDataController = VoelParadysDataController.GetInstance();
             string sName = "", sRepName = "", sRepSurname = "", sPhoneNumber = "";
             string[] saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
