@@ -36,8 +36,8 @@ namespace VoelParadys
             BindingList<VoelParadysDataStructures.CIntStringMap> ListSource = new BindingList<VoelParadysDataStructures.CIntStringMap>(DataSourceList);
 
             CustomerComboBox.DataSource = DataSourceList;
-            CustomerComboBox.DisplayMember = "m_sCustomerName";
-            CustomerComboBox.ValueMember = "m_iCustomerID";
+            CustomerComboBox.DisplayMember = "m_sString";
+            CustomerComboBox.ValueMember = "m_iInteger";
         }
 
         private void TheHelpButton_Click(object sender, EventArgs e)

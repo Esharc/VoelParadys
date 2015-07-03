@@ -11,12 +11,13 @@ namespace VoelParadys
 {
     public partial class Suppliers : Form
     {
-        int m_iSelectedSupplierID;
-        string m_sTempName;
-        string m_sTempRepName;
-        string m_sTempRepSurname;
-        string m_sTempPhone;
-        string[] m_saTempAddress;
+        private bool m_bDeleteWarningShown;                         // Has the delete message box warning been shown
+        int m_iSelectedSupplierID;                                  // The selected supplier's ID
+        string m_sTempName;                                         // The selected supplier's name
+        string m_sTempRepName;                                      // The selected supplier's representative name
+        string m_sTempRepSurname;                                   // The selected supplier's representative surname
+        string m_sTempPhone;                                        // The selected supplier's phone number
+        string[] m_saTempAddress;                                   // The selected supplier's address
             
         public Suppliers()
         {
@@ -28,6 +29,7 @@ namespace VoelParadys
             m_sTempRepSurname = "-1";
             m_sTempPhone = "-1";
             m_saTempAddress = new string[5] {"-1", "-1", "-1", "-1", "-1"};
+            m_bDeleteWarningShown = false;
         }
 
         // Add the column headers to the suppliers list
@@ -38,8 +40,8 @@ namespace VoelParadys
             SuppliersListView.GridLines = true;
             SuppliersListView.FullRowSelect = true;
             
-            SuppliersListView.Columns.Add("ID", 50);
-            SuppliersListView.Columns.Add("Name", 80);
+            SuppliersListView.Columns.Add("ID", 30);
+            SuppliersListView.Columns.Add("Name", 100);
             SuppliersListView.Columns.Add("Rep Name", 80);
             SuppliersListView.Columns.Add("Rep Surname", 100);
             SuppliersListView.Columns.Add("Phone", 85);
@@ -220,13 +222,15 @@ namespace VoelParadys
             
             rDataController.GetSupplierData(m_iSelectedSupplierID, ref sName, ref sRepName, ref sRepSurname, ref saAddress, ref sPhoneNumber);
 
+            m_bDeleteWarningShown = true;
             DialogResult messageBoxResult = rDataController.DisplayWarningMessageForDelete(sName);
 
             if (messageBoxResult == DialogResult.Yes)
             {
                 if (rDataController.DoesSupplierExistInDatabase(m_iSelectedSupplierID))
                 {
-                    rDataController.DeleteCustomerFromDB(m_iSelectedSupplierID);
+                    rDataController.DeleteSupplierFromDB(m_iSelectedSupplierID);
+                    m_bDeleteWarningShown = false;
                     ClearMemberVairiables();
                     ClearTextBoxes();
                     this.Refresh();
@@ -273,10 +277,13 @@ namespace VoelParadys
 
         private void SuppliersForm_Activated(object sender, EventArgs e)
         {
-            // We want to refresh once when we have focus again.
-            this.Refresh();
-            ClearMemberVairiables();
-            ClearTextBoxes();
+            if (!m_bDeleteWarningShown)
+            {
+                // We want to refresh once when we have focus again.
+                this.Refresh();
+                ClearMemberVairiables();
+                ClearTextBoxes();
+            }
         }
 
         private void DetailsButton_Click(object sender, EventArgs e)

@@ -64,14 +64,15 @@ namespace VoelParadys
         public void VoelParadysStockXmlWriter(List<VoelParadysDataStructures.SStockItemDetails> lStockItems)
         {
             // Get examples for xml reading and writing from http://forum.codecall.net/topic/58239-c-tutorial-reading-and-writing-xml-files/
+            XmlWriterSettings XmlSettings = new XmlWriterSettings();
+            XmlSettings.Indent = true;
+
+            XmlWriter TheWriter = XmlWriter.Create("../Data/VoelParadysInventory.xml", XmlSettings);
+            TheWriter.WriteStartDocument();
+            TheWriter.WriteStartElement("Inventory");
+
             if (lStockItems.Count > 0)
             {
-                XmlWriterSettings XmlSettings = new XmlWriterSettings();
-                XmlSettings.Indent = true;
-
-                XmlWriter TheWriter = XmlWriter.Create("../Data/VoelParadysInventory.xml", XmlSettings);
-                TheWriter.WriteStartDocument();
-                TheWriter.WriteStartElement("Inventory");
                 for (int i = 0; i < lStockItems.Count; ++i)
                 {
                     string sName = lStockItems[i].GetStockItemName().Replace(" ", "");
@@ -87,11 +88,12 @@ namespace VoelParadys
                     TheWriter.WriteElementString("SellPrice", lStockItems[i].GetStockItemSellPrice().ToString("F2"));
                     TheWriter.WriteEndElement();
                 }
-                TheWriter.WriteEndElement();
-                TheWriter.WriteEndDocument();
-                TheWriter.Flush();
-                TheWriter.Close();
             }
+
+            TheWriter.WriteEndElement();
+            TheWriter.WriteEndDocument();
+            TheWriter.Flush();
+            TheWriter.Close();
         }
         // Read from the stock xml file
         public void VoelParadysStockXmlReader(List<VoelParadysDataStructures.SStockItemDetails> lStockItems)
@@ -391,14 +393,14 @@ namespace VoelParadys
         public void VoelParadysCustomerXmlWriter(List<VoelParadysDataStructures.CCustomerDetails> lCustomerItems)
         {
             // Get examples for xml reading and writing from http://forum.codecall.net/topic/58239-c-tutorial-reading-and-writing-xml-files/
+            XmlWriterSettings XmlSettings = new XmlWriterSettings();
+            XmlSettings.Indent = true;
+            XmlWriter TheWriter = XmlWriter.Create("../Data/VoelParadysCustomers.xml", XmlSettings);
+            TheWriter.WriteStartDocument();
+            TheWriter.WriteStartElement("Customers");
+
             if (lCustomerItems.Count > 0)
             {
-                XmlWriterSettings XmlSettings = new XmlWriterSettings();
-                XmlSettings.Indent = true;
-
-                XmlWriter TheWriter = XmlWriter.Create("../Data/VoelParadysCustomers.xml", XmlSettings);
-                TheWriter.WriteStartDocument();
-                TheWriter.WriteStartElement("Customers");
                 for (int i = 0; i < lCustomerItems.Count; ++i)
                 {
                     string sName = lCustomerItems[i].GetCustomerName().Replace(" ", "");
@@ -417,11 +419,12 @@ namespace VoelParadys
                     }
                     TheWriter.WriteEndElement();
                 }
-                TheWriter.WriteEndElement();
-                TheWriter.WriteEndDocument();
-                TheWriter.Flush();
-                TheWriter.Close();
             }
+
+            TheWriter.WriteEndElement();
+            TheWriter.WriteEndDocument();
+            TheWriter.Flush();
+            TheWriter.Close();
         }
         // Extract the address string into an array of address values
         private string[] ExtractAddressData(string sAddress)
@@ -537,14 +540,15 @@ namespace VoelParadys
         public void VoelParadysSupplierXmlWriter(List<VoelParadysDataStructures.CSupplierDetails> lSupplierItems)
         {
             // Get examples for xml reading and writing from http://forum.codecall.net/topic/58239-c-tutorial-reading-and-writing-xml-files/
+            XmlWriterSettings XmlSettings = new XmlWriterSettings();
+            XmlSettings.Indent = true;
+
+            XmlWriter TheWriter = XmlWriter.Create("../Data/VoelParadysSuppliers.xml", XmlSettings);
+            TheWriter.WriteStartDocument();
+            TheWriter.WriteStartElement("Suppliers");
+
             if (lSupplierItems.Count > 0)
             {
-                XmlWriterSettings XmlSettings = new XmlWriterSettings();
-                XmlSettings.Indent = true;
-
-                XmlWriter TheWriter = XmlWriter.Create("../Data/VoelParadysSuppliers.xml", XmlSettings);
-                TheWriter.WriteStartDocument();
-                TheWriter.WriteStartElement("Suppliers");
                 for (int i = 0; i < lSupplierItems.Count; ++i)
                 {
                     string sName = lSupplierItems[i].GetSupplierName();
@@ -569,11 +573,12 @@ namespace VoelParadys
                     }
                     TheWriter.WriteEndElement();
                 }
-                TheWriter.WriteEndElement();
-                TheWriter.WriteEndDocument();
-                TheWriter.Flush();
-                TheWriter.Close();
             }
+
+            TheWriter.WriteEndElement();
+            TheWriter.WriteEndDocument();
+            TheWriter.Flush();
+            TheWriter.Close();
         }
         // Read from the customer xml file
         public void VoelParadysSupplierXmlReader(List<VoelParadysDataStructures.CSupplierDetails> lSupplierItems)

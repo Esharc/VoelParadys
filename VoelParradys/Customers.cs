@@ -11,6 +11,7 @@ namespace VoelParadys
 {
     public partial class Customers : Form
     {
+        private bool m_bDeleteWarningShown;                         // Has the delete message box warning been shown
         private int m_iSelectedCustomerID;                          // The ID of the selected customer [can be edited]
         private string m_sTempName;                                 // The name of the selected customer [can be edited]
         private string m_sTempSurname;                              // The surname of the selected customer [can be edited]
@@ -28,6 +29,7 @@ namespace VoelParadys
             m_sTempPhone = "-1";
             m_saTempAddress = new string[5] {"-1", "-1", "-1", "-1", "-1"};
             m_lTempIDNumber = -1;
+            m_bDeleteWarningShown = false;
         }
 
         // Add the column headers to the customers list
@@ -238,6 +240,7 @@ namespace VoelParadys
             long lIDNumber = -1;
             rDataController.GetCustomerData(m_iSelectedCustomerID, ref sName, ref sSurname, ref saAddress, ref sPhoneNumber, ref lIDNumber);
 
+            m_bDeleteWarningShown = true;
             DialogResult messageBoxResult = rDataController.DisplayWarningMessageForDelete(sName);
           
             if (messageBoxResult == DialogResult.Yes)
@@ -245,6 +248,7 @@ namespace VoelParadys
                 if (rDataController.DoesCustomerExistInDatabase(m_iSelectedCustomerID))
                 {
                     rDataController.DeleteCustomerFromDB(m_iSelectedCustomerID);
+                    m_bDeleteWarningShown = false;
                     ClearMemberVairiables();
                     ClearTextBoxes();
                     this.Refresh();
@@ -284,10 +288,13 @@ namespace VoelParadys
 
         private void CustomerForm_Activated(object sender, EventArgs e)
         {
-            // We want to refresh once when we have focus again.
-            this.Refresh();
-            ClearMemberVairiables();
-            ClearTextBoxes();
+            if (!m_bDeleteWarningShown)
+            {
+                // We want to refresh once when we have focus again.
+                this.Refresh();
+                ClearMemberVairiables();
+                ClearTextBoxes();
+            }
         }
 
         private void CustomerDetailsButton_Click(object sender, EventArgs e)
