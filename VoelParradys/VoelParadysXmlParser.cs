@@ -68,11 +68,11 @@ namespace VoelParadys
             XmlSettings.Indent = true;
 
             XmlWriter TheWriter = XmlWriter.Create("../Data/VoelParadysInventory.xml", XmlSettings);
-            TheWriter.WriteStartDocument();
-            TheWriter.WriteStartElement("Inventory");
 
             if (lStockItems.Count > 0)
             {
+                TheWriter.WriteStartDocument();
+                TheWriter.WriteStartElement("Inventory");
                 for (int i = 0; i < lStockItems.Count; ++i)
                 {
                     string sName = lStockItems[i].GetStockItemName().Replace(" ", "");
@@ -88,10 +88,10 @@ namespace VoelParadys
                     TheWriter.WriteElementString("SellPrice", lStockItems[i].GetStockItemSellPrice().ToString("F2"));
                     TheWriter.WriteEndElement();
                 }
+                TheWriter.WriteEndElement();
+                TheWriter.WriteEndDocument();
             }
 
-            TheWriter.WriteEndElement();
-            TheWriter.WriteEndDocument();
             TheWriter.Flush();
             TheWriter.Close();
         }
@@ -396,11 +396,11 @@ namespace VoelParadys
             XmlWriterSettings XmlSettings = new XmlWriterSettings();
             XmlSettings.Indent = true;
             XmlWriter TheWriter = XmlWriter.Create("../Data/VoelParadysCustomers.xml", XmlSettings);
-            TheWriter.WriteStartDocument();
-            TheWriter.WriteStartElement("Customers");
 
             if (lCustomerItems.Count > 0)
             {
+                TheWriter.WriteStartDocument();
+                TheWriter.WriteStartElement("Customers");
                 for (int i = 0; i < lCustomerItems.Count; ++i)
                 {
                     string sName = lCustomerItems[i].GetCustomerName().Replace(" ", "");
@@ -419,10 +419,10 @@ namespace VoelParadys
                     }
                     TheWriter.WriteEndElement();
                 }
+                TheWriter.WriteEndElement();
+                TheWriter.WriteEndDocument();
             }
 
-            TheWriter.WriteEndElement();
-            TheWriter.WriteEndDocument();
             TheWriter.Flush();
             TheWriter.Close();
         }
@@ -544,11 +544,11 @@ namespace VoelParadys
             XmlSettings.Indent = true;
 
             XmlWriter TheWriter = XmlWriter.Create("../Data/VoelParadysSuppliers.xml", XmlSettings);
-            TheWriter.WriteStartDocument();
-            TheWriter.WriteStartElement("Suppliers");
 
             if (lSupplierItems.Count > 0)
             {
+                TheWriter.WriteStartDocument();
+                TheWriter.WriteStartElement("Suppliers");
                 for (int i = 0; i < lSupplierItems.Count; ++i)
                 {
                     string sName = lSupplierItems[i].GetSupplierName();
@@ -573,10 +573,10 @@ namespace VoelParadys
                     }
                     TheWriter.WriteEndElement();
                 }
+                TheWriter.WriteEndElement();
+                TheWriter.WriteEndDocument();
             }
 
-            TheWriter.WriteEndElement();
-            TheWriter.WriteEndDocument();
             TheWriter.Flush();
             TheWriter.Close();
         }

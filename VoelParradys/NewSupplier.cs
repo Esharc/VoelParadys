@@ -82,28 +82,28 @@ namespace VoelParadys
         {
             if (!m_bSupplierIdCreated)
                 CreateUniqueSupplierId();
-            m_NewSupplier.SetSupplierName(NameTextBox.Text);
+            m_NewSupplier.SetSupplierName(NameTextBox.Text == "" ? "-1" : NameTextBox.Text);
         }
 
         private void RepNameTextBox_LooseFocus(object sender, EventArgs e)
         {
             if (!m_bSupplierIdCreated)
                 CreateUniqueSupplierId();
-            m_NewSupplier.SetRepName(RepNameTextBox.Text);
+            m_NewSupplier.SetRepName(RepNameTextBox.Text == "" ? "-1" : RepNameTextBox.Text);
         }
 
         private void RepSurnameTextBox_LooseFocus(object sender, EventArgs e)
         {
             if (!m_bSupplierIdCreated)
                 CreateUniqueSupplierId();
-            m_NewSupplier.SetRepSurname(RepSurnameTextBox.Text);
+            m_NewSupplier.SetRepSurname(RepSurnameTextBox.Text == "" ? "-1" : RepSurnameTextBox.Text);
         }
 
         private void PhoneTextBox_LooseFocus(object sender, EventArgs e)
         {
             if (!m_bSupplierIdCreated)
                 CreateUniqueSupplierId();
-            m_NewSupplier.SetSupplierPhoneNumber(PhoneTextBox.Text);
+            m_NewSupplier.SetSupplierPhoneNumber(PhoneTextBox.Text == "" ? "-1" : PhoneTextBox.Text);
         }
 
         private void AddressTextBox1_LooseFocus(object sender, EventArgs e)

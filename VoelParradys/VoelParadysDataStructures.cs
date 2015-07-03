@@ -124,7 +124,7 @@ namespace VoelParadys
             }
             public void SetCustomerAddress(string[] saAddress)
             {
-                string[] sTheAddress = saAddress == null ? new string[5] { "", "", "", "", "" } : saAddress;
+                string[] sTheAddress = saAddress == null ? new string[5] { "-1", "-1", "-1", "-1", "-1" } : saAddress;
                 saCustomerAddress = sTheAddress;
             }
             public void SetCustomerPhoneNumber(string sPhone)

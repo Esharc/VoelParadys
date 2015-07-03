@@ -59,7 +59,7 @@ namespace VoelParadys
         {
             if (m_NewCustomer.GetCustomerName() != "-1" || m_NewCustomer.GetCustomerName() != "")
             {
-                string[] saAddress = new string[5] {"", "", "", "", ""};
+                string[] saAddress = new string[5] {"-1", "-1", "-1", "-1", "-1"};
                 if (m_sAddress1 != "")
                     saAddress[0] = m_sAddress1;
                 if (m_sAddress2 != "")
@@ -83,21 +83,21 @@ namespace VoelParadys
         {
             if (!m_bCustomerIdCreated)
                 CreateUniqueCustomerId();
-            m_NewCustomer.SetCustomerName(NameTextBox.Text);
+            m_NewCustomer.SetCustomerName(NameTextBox.Text == "" ? "-1" : NameTextBox.Text);
         }
 
         private void SurnameTextBox_LooseFocus(object sender, EventArgs e)
         {
             if (!m_bCustomerIdCreated)
                 CreateUniqueCustomerId();
-            m_NewCustomer.SetCustomerSurname(SurnameTextBox.Text);
+            m_NewCustomer.SetCustomerSurname(SurnameTextBox.Text == "" ? "-1" : SurnameTextBox.Text);
         }
 
         private void PhoneTextBox_LooseFocus(object sender, EventArgs e)
         {
             if (!m_bCustomerIdCreated)
                 CreateUniqueCustomerId();
-            m_NewCustomer.SetCustomerPhoneNumber(PhoneTextBox.Text);
+            m_NewCustomer.SetCustomerPhoneNumber(PhoneTextBox.Text == "" ? "-1" : PhoneTextBox.Text);
         }
 
         private void IdNumberTextBox_LooseFocus(object sender, EventArgs e)
