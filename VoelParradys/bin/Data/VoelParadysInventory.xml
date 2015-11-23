@@ -1,15 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Inventory>
-  <!--This is the start of Husky Dog Food 10kg-->
-  <HuskyDogFood10kg>
-    <Code>Husk0021</Code>
-    <Name>Husky Dog Food 10kg</Name>
-    <QuantitySold>2</QuantitySold>
-    <QuantityBought>10</QuantityBought>
-    <QuantityUsed>0</QuantityUsed>
-    <CostPrice>25.00</CostPrice>
-    <SellPrice>50.00</SellPrice>
-  </HuskyDogFood10kg>
   <!--This is the start of Knuckle Bones-->
   <KnuckleBones>
     <Code>Bones001</Code>
@@ -20,16 +10,6 @@
     <CostPrice>10.50</CostPrice>
     <SellPrice>21.55</SellPrice>
   </KnuckleBones>
-  <!--This is the start of Dog Food 10kg-->
-  <DogFood10kg>
-    <Code>100200214</Code>
-    <Name>Dog Food 10kg</Name>
-    <QuantitySold>28</QuantitySold>
-    <QuantityBought>120</QuantityBought>
-    <QuantityUsed>0</QuantityUsed>
-    <CostPrice>15.00</CostPrice>
-    <SellPrice>30.00</SellPrice>
-  </DogFood10kg>
   <!--This is the start of Dog Food Tins-->
   <DogFoodTins>
     <Code>100200114</Code>
@@ -60,16 +40,6 @@
     <CostPrice>5.00</CostPrice>
     <SellPrice>15.00</SellPrice>
   </CatFood5kg>
-  <!--This is the start of Bird Seed 2kg-->
-  <BirdSeed2kg>
-    <Code>100200714</Code>
-    <Name>Bird Seed 2kg</Name>
-    <QuantitySold>7</QuantitySold>
-    <QuantityBought>120</QuantityBought>
-    <QuantityUsed>1</QuantityUsed>
-    <CostPrice>12.50</CostPrice>
-    <SellPrice>25.00</SellPrice>
-  </BirdSeed2kg>
   <!--This is the start of Cat Food Tins-->
   <CatFoodTins>
     <Code>100200614</Code>
@@ -100,4 +70,34 @@
     <CostPrice>19.50</CostPrice>
     <SellPrice>41.50</SellPrice>
   </CatFood10kg>
+  <!--This is the start of Husky Dog Food 10kg-->
+  <HuskyDogFood10kg>
+    <Code>Husk0021</Code>
+    <Name>Husky Dog Food 10kg</Name>
+    <QuantitySold>2</QuantitySold>
+    <QuantityBought>10</QuantityBought>
+    <QuantityUsed>2</QuantityUsed>
+    <CostPrice>25.00</CostPrice>
+    <SellPrice>50.00</SellPrice>
+  </HuskyDogFood10kg>
+  <!--This is the start of Dog Food 10kg-->
+  <DogFood10kg>
+    <Code>100200214</Code>
+    <Name>Dog Food 10kg</Name>
+    <QuantitySold>28</QuantitySold>
+    <QuantityBought>140</QuantityBought>
+    <QuantityUsed>0</QuantityUsed>
+    <CostPrice>15.00</CostPrice>
+    <SellPrice>30.00</SellPrice>
+  </DogFood10kg>
+  <!--This is the start of Bird Seed 2kg-->
+  <BirdSeed2kg>
+    <Code>100200714</Code>
+    <Name>Bird Seed 2kg</Name>
+    <QuantitySold>7</QuantitySold>
+    <QuantityBought>130</QuantityBought>
+    <QuantityUsed>1</QuantityUsed>
+    <CostPrice>12.50</CostPrice>
+    <SellPrice>25.00</SellPrice>
+  </BirdSeed2kg>
 </Inventory>

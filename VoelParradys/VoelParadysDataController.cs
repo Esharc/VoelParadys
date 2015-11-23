@@ -3,30 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace VoelParadys
 {
-    public struct SItemDetails
-    {
-        string sItemCode;           // The code of the item sold
-        int iItemQuantitySold;      // The amount of the item sold
-        float fSellPrice;           // The price that the item is sold at
-
-        public SItemDetails(string _sItemCode, int _iItemQuantity, float _fSellPrice)
-        {
-            string sTheItemCode = _sItemCode == null ? "" : _sItemCode;
-            sItemCode = sTheItemCode;
-            iItemQuantitySold = _iItemQuantity;
-            fSellPrice = _fSellPrice;
-        }
-
-        public string GetItemCode() { return sItemCode; }
-        public int GetItemQuantitySold() { return iItemQuantitySold; }
-        public float GetItemSellPrice() { return fSellPrice; }
-        // Setters
-        public void SetSaleItemDetails(string sCode, int iQuantitySold, float fTheSellPrice) { sItemCode = sCode; iItemQuantitySold = iQuantitySold; fSellPrice = fTheSellPrice; }
-    }
-
     class VoelParadysDataController
     {
         // Instance of this class that can be viewed by everybody
@@ -101,8 +81,10 @@ namespace VoelParadys
             m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysInventory.xml");
             m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysCustomers.xml");
             m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysSuppliers.xml");
-            // TODO: Add the other xml files here as they are created 
+            m_XmlParser.CreateXmlFileIfNotFound("../Data/VoelParadysUsage.xml");
         }
+        //}
+        //{
         // Inventory data functions
         // Get the amount of inventory items currently in the database 
         public int GetInventoryListSize()
@@ -142,19 +124,19 @@ namespace VoelParadys
             return bRetval;
         }
         // Get an inventory item given the code of the item
-        private SStockItemDetails GetInventoryItem(string sCode)
+        private VoelParadysDataStructures.SStockItemDetails GetInventoryItem(string sCode)
         {
             return m_InventoryData.GetStockItem(sCode);
         }
         // Get an inventory item at a specified index
-        private SStockItemDetails GetInventoryItemAt(int iIndex)
+        private VoelParadysDataStructures.SStockItemDetails GetInventoryItemAt(int iIndex)
         {
             return m_InventoryData.GetStockItemAt(iIndex);
         }
         // Get the data for the stock item with the given code
         public void GetStockItemData(string sCode, ref string sName, ref int iQuantitySold, ref int iQuantityBought, ref int iQuantityUsed, ref float fCostPrice, ref float fSellPrice)
         {
-            SStockItemDetails theStockItem = GetInventoryItem(sCode);
+            VoelParadysDataStructures.SStockItemDetails theStockItem = GetInventoryItem(sCode);
             sName = theStockItem.GetStockItemName();
             iQuantitySold = theStockItem.GetStockItemQuantitySold();
             iQuantityBought = theStockItem.GetStockItemQuantityBought();
@@ -165,7 +147,7 @@ namespace VoelParadys
         // Get the data for the stock item with the given index
         public void GetStockItemData(int iIndex, ref string sCode, ref string sName, ref int iQuantitySold, ref int iQuantityBought, ref int iQuantityUsed, ref float fCostPrice, ref float fSellPrice)
         {
-            SStockItemDetails theStockItem = GetInventoryItemAt(iIndex);
+            VoelParadysDataStructures.SStockItemDetails theStockItem = GetInventoryItemAt(iIndex);
             sCode = theStockItem.GetStockItemCode();
             sName = theStockItem.GetStockItemName();
             iQuantitySold = theStockItem.GetStockItemQuantitySold();
@@ -177,7 +159,7 @@ namespace VoelParadys
         // Update an inventory item that already exists in the database
         public void UpdateInventoryItem(string sCode, string sName, int iQuantitySold, int iQuantityBought, int iQuantityUsed, float fCostPrice, float fSellPrice)
         {
-            SStockItemDetails UpdatedDetails = GetInventoryItem(sCode);
+            VoelParadysDataStructures.SStockItemDetails UpdatedDetails = GetInventoryItem(sCode);
             UpdatedDetails.SetStockItemName(sName);
             UpdatedDetails.SetStockItemQuantitySold(iQuantitySold);
             UpdatedDetails.SetStockItemQuantityBought(iQuantityBought);
@@ -192,38 +174,39 @@ namespace VoelParadys
             m_InventoryData.DeleteStockItem(sItemCode);
         }
         // Read in the stock details from the XML file
-        private void ReadStockDataFromDB(List<SStockItemDetails> lStockList)
+        private void ReadStockDataFromDB(List<VoelParadysDataStructures.SStockItemDetails> lStockList)
         {
             m_XmlParser.VoelParadysStockXmlReader(lStockList);
         }
         // Write the stock details to the XML file
-        public void WriteStockDataToDB(List<SStockItemDetails> lStockList)
+        public void WriteStockDataToDB(List<VoelParadysDataStructures.SStockItemDetails> lStockList)
         {
             m_XmlParser.VoelParadysStockXmlWriter(lStockList);
         }
         // Read in the daily sale data from the XML file
-        public void ReadDailySaleDataFromDB(string sFileName, ref List<VoelParadysXmlParser.SSaleDetails> lSaleDetails, bool bFromCashup)
+        public void ReadDailySaleDataFromDB(string sFileName, ref List<VoelParadysDataStructures.SSaleDetails> lSaleDetails, bool bFromCashup)
         {
             m_XmlParser.VoelParadysDailySaleDataXmlReader(sFileName, ref lSaleDetails, bFromCashup);
         }
         // Write the daily sale data to the XML file
-        public void WriteDailySaleDataToDB(List<SSaleInvoiceData> lSaleItems, float fSubTotal, float fCashReceived, string sPaymentType)
+        public void WriteDailySaleDataToDB(List<VoelParadysDataStructures.SSaleInvoiceData> lSaleItems, float fSubTotal, float fCashReceived, string sPaymentType)
         {
             m_XmlParser.VoelParadysDailySaleDataXmlWriter(lSaleItems, fSubTotal, fCashReceived, sPaymentType);
         }
         // Does the daily sale file exist?
-        public bool DoesFileExist(string sFileName, string sFileData)
+        public bool DoesFileExist(string sFileName, bool bDailySaleData)
         {
-            return m_XmlParser.DoesFileExist(sFileName, sFileData);
+            return m_XmlParser.DoesFileExist(sFileName, bDailySaleData);
         }
-        // Customer data functions
+        //}
+        //{ Customer data functions
         // Get a unique ID for the new customer
         public void GetUniqueCustomerID(ref int iUniqueID)
         {
             m_CustomerData.GetUniqueCustomerID(ref iUniqueID);
         }
         // Read in the customer details from the XML file
-        public void ReadCustomerDataFromDB(List<CCustomerDetails> lCustomerList)
+        public void ReadCustomerDataFromDB(List<VoelParadysDataStructures.CCustomerDetails> lCustomerList)
         {
             m_XmlParser.VoelParadysCustomerXmlReader(lCustomerList);
         }
@@ -234,7 +217,7 @@ namespace VoelParadys
             m_XmlParser.VoelParadysCustomerXmlWriter(m_CustomerData.GetCustomerList());
         }
         // Add a new customer to the database
-        public void AddNewCustomerToList(CCustomerDetails theNewCustomer)
+        public void AddNewCustomerToList(VoelParadysDataStructures.CCustomerDetails theNewCustomer)
         {
             m_CustomerData.AddNewCustomerToList(theNewCustomer);
         }
@@ -244,35 +227,51 @@ namespace VoelParadys
             return m_CustomerData.GetCustomerListSize();
         }
         // Get a customer at a specified index
-        private CCustomerDetails GetCustomerAt(int iIndex)
+        private VoelParadysDataStructures.CCustomerDetails GetCustomerAt(int iIndex)
         {
             return m_CustomerData.GetCustomerAt(iIndex);
         }
         // Get the customer from a given ID
-        private CCustomerDetails GetCustomerFromID(int iCustomerID)
+        private VoelParadysDataStructures.CCustomerDetails GetCustomerFromID(int iCustomerID)
         {
             return m_CustomerData.GetCustomerFromID(iCustomerID);
         }
         // Get the data for the customer with the given ID code
-        public void GetCustomerData(int iID, ref string sName, ref string sSurname, ref string sAddress, ref string sPhoneNumber, ref long lIDNumber)
+        public void GetCustomerData(int iID, ref string sName, ref string sSurname, ref string[] saAddress, ref string sPhoneNumber, ref long lIDNumber)
         {
-            CCustomerDetails theCustomer = GetCustomerFromID(iID);
+            VoelParadysDataStructures.CCustomerDetails theCustomer = GetCustomerFromID(iID);
+            List<string> lsCustAddress = new List<string>();
+            saAddress = theCustomer.GetCustomerAddress();
             sName = theCustomer.GetCustomerName();
             sSurname = theCustomer.GetCustomerSurname();
-            sAddress = theCustomer.GetCustomerAddress();
             sPhoneNumber = theCustomer.GetCustomerPhone();
             lIDNumber = theCustomer.GetCustomerIdNumber();
+
+            for (int i = 0; i < saAddress.Length; ++i)
+            {
+                if (saAddress[i] != "-1")
+                    lsCustAddress.Add(saAddress[i]);
+            }
+            saAddress = lsCustAddress.ToArray();
         }
         // Get the data for the customer with the given index
-        public void GetCustomerData(int iIndex, ref int iID, ref string sName, ref string sSurname, ref string sAddress, ref string sPhoneNumber, ref long lIDNumber)
+        public void GetCustomerData(int iIndex, ref int iID, ref string sName, ref string sSurname, ref string[] saAddress, ref string sPhoneNumber, ref long lIDNumber)
         {
-            CCustomerDetails theCustomer = GetCustomerAt(iIndex);
+            VoelParadysDataStructures.CCustomerDetails theCustomer = GetCustomerAt(iIndex);
+            List<string> lsCustAddress = new List<string>();
+            saAddress = theCustomer.GetCustomerAddress();
             iID = theCustomer.GetCustomerID();
             sName = theCustomer.GetCustomerName();
             sSurname = theCustomer.GetCustomerSurname();
-            sAddress = theCustomer.GetCustomerAddress();
             sPhoneNumber = theCustomer.GetCustomerPhone();
             lIDNumber = theCustomer.GetCustomerIdNumber();
+
+            for (int i = 0; i < saAddress.Length; ++i)
+            {
+                if (saAddress[i] != "-1")
+                    lsCustAddress.Add(saAddress[i]);
+            }
+            saAddress = lsCustAddress.ToArray();
         }
         // Determine if the customer with the given ID exists in the database
         public bool DoesCustomerExistInDatabase(int iCustomerID)
@@ -280,12 +279,12 @@ namespace VoelParadys
             return m_CustomerData.DoesCustomerExistInDatabase(iCustomerID);
         }
         // Update the customers details with the given details
-        public void UpdateCustomerDetails(int iID, string sName, string sSurname, string sAddress, string sPhoneNumber, long lIDNumber)
+        public void UpdateCustomerDetails(int iID, string sName, string sSurname, string[] saAddress, string sPhoneNumber, long lIDNumber)
         {
-            CCustomerDetails UpdatedDetails = GetCustomerFromID(iID);
+            VoelParadysDataStructures.CCustomerDetails UpdatedDetails = GetCustomerFromID(iID);
             UpdatedDetails.SetCustomerName(sName);
             UpdatedDetails.SetCustomerSurname(sSurname);
-            UpdatedDetails.SetCustomerAddress(sAddress);
+            UpdatedDetails.SetCustomerAddress(saAddress);
             UpdatedDetails.SetCustomerPhoneNumber(sPhoneNumber);
             UpdatedDetails.SetCustomerIdNumber(lIDNumber);
             m_CustomerData.UpdateCustomerDetails(UpdatedDetails);
@@ -325,18 +324,19 @@ namespace VoelParadys
             return m_CustomerData.GetCustomerIDFromName(sName);
         }
         // Get a list of all the customer names
-        public List<CIntStringMap> GetAllCustomersNameAndID()
+        public List<VoelParadysDataStructures.CIntStringMap> GetAllCustomersNameAndID()
         {
             return m_CustomerData.GetAllCustomersNameAndID();
         }
-        // Supplier data functions
+        //}
+        //{ Supplier data functions
         // Get a unique ID for the new supplier
         public void GetUniqueSupplierID(ref int iUniqueID)
         {
             m_SupplierData.GetUniqueSupplierID(ref iUniqueID);
         }
         // Read in the supplier details from the XML file
-        public void ReadSupplierDataFromDB(List<CSupplierDetails> lSupplierList)
+        public void ReadSupplierDataFromDB(List<VoelParadysDataStructures.CSupplierDetails> lSupplierList)
         {
             m_XmlParser.VoelParadysSupplierXmlReader(lSupplierList);
         }
@@ -347,7 +347,7 @@ namespace VoelParadys
             m_XmlParser.VoelParadysSupplierXmlWriter(m_SupplierData.GetSupplierList());
         }
         // Add a new Supplier to the database
-        public void AddNewSupplierToList(CSupplierDetails theNewSupplier)
+        public void AddNewSupplierToList(VoelParadysDataStructures.CSupplierDetails theNewSupplier)
         {
             m_SupplierData.AddNewSupplierToList(theNewSupplier);
         }
@@ -357,36 +357,51 @@ namespace VoelParadys
             return m_SupplierData.GetSupplierListSize();
         }
         // Get a Supplier at a specified index
-        private CSupplierDetails GetSupplierAt(int iIndex)
+        private VoelParadysDataStructures.CSupplierDetails GetSupplierAt(int iIndex)
         {
             return m_SupplierData.GetSupplierAt(iIndex);
         }
         // Get the Supplier from a given ID
-        private CSupplierDetails GetSupplierFromID(int iSupplierID)
+        private VoelParadysDataStructures.CSupplierDetails GetSupplierFromID(int iSupplierID)
         {
             return m_SupplierData.GetSupplierFromID(iSupplierID);
         }
         // Get the data for the Supplier with the given ID code
-        public void GetSupplierData(int iID, ref string sName, ref string sRepName, ref string sRepSurname, ref string sAddress, ref string sPhoneNumber)
+        public void GetSupplierData(int iID, ref string sName, ref string sRepName, ref string sRepSurname, ref string[] saAddress, ref string sPhoneNumber)
         {
-            CSupplierDetails theSupplier = GetSupplierFromID(iID);
+            VoelParadysDataStructures.CSupplierDetails theSupplier = GetSupplierFromID(iID);
+            List<string> lsSuppAddress = new List<string>();
+            saAddress = theSupplier.GetSupplierAddress();
             sName = theSupplier.GetSupplierName();
             sRepName = theSupplier.GetRepName();
             sRepSurname = theSupplier.GetRepSurname();
-            sAddress = theSupplier.GetSupplierAddress();
             sPhoneNumber = theSupplier.GetSupplierPhone();
-            
+
+            for (int i = 0; i < saAddress.Length; ++i)
+            {
+                if (saAddress[i] != "-1")
+                    lsSuppAddress.Add(saAddress[i]);
+            }
+            saAddress = lsSuppAddress.ToArray();
         }
         // Get the data for the Supplier with the given index
-        public void GetSupplierData(int iIndex, ref int iID, ref string sName, ref string sRepName, ref string sRepSurname, ref string sAddress, ref string sPhoneNumber)
+        public void GetSupplierData(int iIndex, ref int iID, ref string sName, ref string sRepName, ref string sRepSurname, ref string[] saAddress, ref string sPhoneNumber)
         {
-            CSupplierDetails theSupplier = GetSupplierAt(iIndex);
+            VoelParadysDataStructures.CSupplierDetails theSupplier = GetSupplierAt(iIndex);
+            List<string> lsSuppAddress = new List<string>();
+            saAddress = theSupplier.GetSupplierAddress();
             iID = theSupplier.GetSupplierID();
             sName = theSupplier.GetSupplierName();
             sRepName = theSupplier.GetRepName();
             sRepSurname = theSupplier.GetRepSurname();
-            sAddress = theSupplier.GetSupplierAddress();
             sPhoneNumber = theSupplier.GetSupplierPhone();
+
+            for (int i = 0; i < saAddress.Length; ++i)
+            {
+                if (saAddress[i] != "-1")
+                    lsSuppAddress.Add(saAddress[i]);
+            }
+            saAddress = lsSuppAddress.ToArray();
         }
         // Determine if the Supplier with the given ID exists in the database
         public bool DoesSupplierExistInDatabase(int iSupplierID)
@@ -394,13 +409,13 @@ namespace VoelParadys
             return m_SupplierData.DoesSupplierExistInDatabase(iSupplierID);
         }
         // Update the Supplier details with the given details
-        public void UpdateSupplierDetails(int iID, string sName, string sRepName, string sRepSurname, string sAddress, string sPhoneNumber)
+        public void UpdateSupplierDetails(int iID, string sName, string sRepName, string sRepSurname, string[] saAddress, string sPhoneNumber)
         {
-            CSupplierDetails UpdatedDetails = GetSupplierFromID(iID);
+            VoelParadysDataStructures.CSupplierDetails UpdatedDetails = GetSupplierFromID(iID);
             UpdatedDetails.SetSupplierName(sName);
             UpdatedDetails.SetRepName(sRepName);
             UpdatedDetails.SetRepSurname(sRepSurname);
-            UpdatedDetails.SetSupplierAddress(sAddress);
+            UpdatedDetails.SetSupplierAddress(saAddress);
             UpdatedDetails.SetSupplierPhoneNumber(sPhoneNumber);
             m_SupplierData.UpdateSupplierDetails(UpdatedDetails);
         }
@@ -450,5 +465,82 @@ namespace VoelParadys
             return m_SupplierData.GetAllSupplierNames();
         }
         // }
+        //{ Usage functionality
+        public void WriteUsageDataToFile(string sItemCode, int iItemQty)
+        {
+            m_XmlParser.VoelParadysUsageXmlWriter(sItemCode, iItemQty);
+        }
+        public bool GetUsageDataList(string sStartDate, string sEndDate, ref List<VoelParadysDataStructures.UsageData> theUsageList)
+        {
+            string sDateFormat = "dd/MM/yyyy";
+            DateTime TheDateIncrementer;
+            DateTime TheEndDate;
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("de-DE");
+            DateTimeStyles styles = DateTimeStyles.None;
+
+            if (DateTime.TryParse(sStartDate, culture, styles, out TheDateIncrementer) && DateTime.TryParse(sEndDate, culture, styles, out TheEndDate))
+            {
+                if (TheDateIncrementer <= TheEndDate)
+                {
+                    List<VoelParadysDataStructures.UsageData> tempList = new List<VoelParadysDataStructures.UsageData>();
+                    m_XmlParser.VoelParadysUsageXmlReader(tempList);
+
+                    while (TheDateIncrementer <= TheEndDate)
+                    {
+                        for (int i = 0; i < tempList.Count; ++i)
+                        {
+                            if (tempList[i].sDate == TheDateIncrementer.ToString(sDateFormat))
+                                theUsageList.Add(tempList[i]);
+                        }
+                        TheDateIncrementer = TheDateIncrementer.AddDays(1);
+                    }
+                }
+                else
+                    PrintErrorMessage("The end date should be greater than the start date");
+            }
+            else
+            {
+                PrintErrorMessage("Error parsing date(s)");
+            }
+            return theUsageList.Count > 0;
+        }
+        public bool GetDailySaleFileList(string sStartDate, string sEndDate, ref List<VoelParadysDataStructures.CStringStringMap> theSaleFileList)
+        {
+            DateTime TheDateIncrementer;
+            DateTime TheEndDate;
+            CultureInfo culture = CultureInfo.CreateSpecificCulture("de-DE");
+            DateTimeStyles styles = DateTimeStyles.None;
+
+            if (DateTime.TryParse(sStartDate, culture, styles, out TheDateIncrementer) && DateTime.TryParse(sEndDate, culture, styles, out TheEndDate))
+            {
+                if (TheDateIncrementer <= TheEndDate)
+                {
+                    while (TheDateIncrementer <= TheEndDate)
+                    {
+                        if (DoesFileExist(TheDateIncrementer.ToString("dd_MM_yy"), true))
+                        {
+                            VoelParadysDataStructures.CStringStringMap tempData = new VoelParadysDataStructures.CStringStringMap();
+                            tempData.sString1 = TheDateIncrementer.ToString("dd/MM/yyyy");
+                            tempData.sString2 = "../Data/SaleData/" + TheDateIncrementer.ToString("dd_MM_yy") + ".xml";
+                            theSaleFileList.Add(tempData);
+                        }
+                        TheDateIncrementer = TheDateIncrementer.AddDays(1);
+                    }
+                }
+                else
+                    PrintErrorMessage("The end date should be greater than the start date");
+            }
+            else
+                PrintErrorMessage("Error parsing date(s)");
+
+            return theSaleFileList.Count > 0;
+        }
+        private void PrintErrorMessage(string sMessage)
+        {
+            // Return an error message
+            string sCaption = "Error!!!";
+            MessageBox.Show(sMessage, sCaption);
+        }
+        //}
     }
 }

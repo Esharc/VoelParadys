@@ -11,7 +11,7 @@ namespace VoelParadys
 {
     public partial class NewSupplier : Form
     {
-        private CSupplierDetails m_NewSupplier;
+        private VoelParadysDataStructures.CSupplierDetails m_NewSupplier;
         private string m_sAddress1;
         private string m_sAddress2;
         private string m_sAddress3;
@@ -22,7 +22,7 @@ namespace VoelParadys
         public NewSupplier()
         {
             InitializeComponent();
-            m_NewSupplier = new CSupplierDetails(-1, "-1", "-1", "-1", "-1", "-1");
+            m_NewSupplier = new VoelParadysDataStructures.CSupplierDetails(-1, "-1", "-1", "-1", new string[5] { "-1", "-1", "-1", "-1", "-1" }, "-1");
             m_sAddress1 = "";
             m_sAddress2 = "";
             m_sAddress3 = "";
@@ -59,22 +59,21 @@ namespace VoelParadys
         {
             if (m_NewSupplier.GetSupplierName() != "-1" || m_NewSupplier.GetSupplierName() != "")
             {
-                string sAddress = "";
+                string[] saAddress = new string[5] {"-1", "-1", "-1", "-1", "-1"};
                 if (m_sAddress1 != "")
-                    sAddress += m_sAddress1;
+                    saAddress[0] = m_sAddress1;
                 if (m_sAddress2 != "")
-                    sAddress += ";" + m_sAddress2;
+                    saAddress[1] = m_sAddress2;
                 if (m_sAddress3 != "")
-                    sAddress += ";" + m_sAddress3;
+                    saAddress[2] = m_sAddress3;
                 if (m_sAddress4 != "")
-                    sAddress += ";" + m_sAddress4;
+                    saAddress[3] = m_sAddress4;
                 if (m_sAddress5 != "")
-                    sAddress += ";" + m_sAddress5;
+                    saAddress[4] = m_sAddress5;
 
-                if (sAddress != "")
-                    m_NewSupplier.SetSupplierAddress(sAddress);
+                m_NewSupplier.SetSupplierAddress(saAddress);
                 VoelParadysDataController.GetInstance().AddNewSupplierToList(m_NewSupplier);
-                m_NewSupplier = new CSupplierDetails();
+                m_NewSupplier = new VoelParadysDataStructures.CSupplierDetails();
                 m_sAddress1 = m_sAddress2 = m_sAddress3 = m_sAddress4 = m_sAddress5 = "";
                 this.Close();
             }
@@ -83,28 +82,28 @@ namespace VoelParadys
         {
             if (!m_bSupplierIdCreated)
                 CreateUniqueSupplierId();
-            m_NewSupplier.SetSupplierName(NameTextBox.Text);
+            m_NewSupplier.SetSupplierName(NameTextBox.Text == "" ? "-1" : NameTextBox.Text);
         }
 
         private void RepNameTextBox_LooseFocus(object sender, EventArgs e)
         {
             if (!m_bSupplierIdCreated)
                 CreateUniqueSupplierId();
-            m_NewSupplier.SetRepName(RepNameTextBox.Text);
+            m_NewSupplier.SetRepName(RepNameTextBox.Text == "" ? "-1" : RepNameTextBox.Text);
         }
 
         private void RepSurnameTextBox_LooseFocus(object sender, EventArgs e)
         {
             if (!m_bSupplierIdCreated)
                 CreateUniqueSupplierId();
-            m_NewSupplier.SetRepSurname(RepSurnameTextBox.Text);
+            m_NewSupplier.SetRepSurname(RepSurnameTextBox.Text == "" ? "-1" : RepSurnameTextBox.Text);
         }
 
         private void PhoneTextBox_LooseFocus(object sender, EventArgs e)
         {
             if (!m_bSupplierIdCreated)
                 CreateUniqueSupplierId();
-            m_NewSupplier.SetSupplierPhoneNumber(PhoneTextBox.Text);
+            m_NewSupplier.SetSupplierPhoneNumber(PhoneTextBox.Text == "" ? "-1" : PhoneTextBox.Text);
         }
 
         private void AddressTextBox1_LooseFocus(object sender, EventArgs e)

@@ -40,11 +40,15 @@
             this.SurnameTextBox = new System.Windows.Forms.TextBox();
             this.PhoneNumberTextBox = new System.Windows.Forms.TextBox();
             this.PhoneNumberLabel = new System.Windows.Forms.Label();
-            this.AddressTextBox = new System.Windows.Forms.TextBox();
             this.AddressLabel = new System.Windows.Forms.Label();
             this.IdNumberTextBox = new System.Windows.Forms.TextBox();
             this.IdNumberLabel = new System.Windows.Forms.Label();
             this.CustomerDetailsButton = new System.Windows.Forms.Button();
+            this.AddressTextBox1 = new System.Windows.Forms.TextBox();
+            this.AddressTextBox2 = new System.Windows.Forms.TextBox();
+            this.AddressTextBox3 = new System.Windows.Forms.TextBox();
+            this.AddressTextBox4 = new System.Windows.Forms.TextBox();
+            this.AddressTextBox5 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // CustomersListView
@@ -52,7 +56,7 @@
             this.CustomersListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CustomersListView.Location = new System.Drawing.Point(13, 13);
             this.CustomersListView.Name = "CustomersListView";
-            this.CustomersListView.Size = new System.Drawing.Size(526, 689);
+            this.CustomersListView.Size = new System.Drawing.Size(526, 722);
             this.CustomersListView.TabIndex = 0;
             this.CustomersListView.UseCompatibleStateImageBehavior = false;
             this.CustomersListView.Click += new System.EventHandler(this.CustomerOnSelected);
@@ -60,7 +64,7 @@
             // ReturnButton
             // 
             this.ReturnButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ReturnButton.Location = new System.Drawing.Point(546, 667);
+            this.ReturnButton.Location = new System.Drawing.Point(548, 700);
             this.ReturnButton.Name = "ReturnButton";
             this.ReturnButton.Size = new System.Drawing.Size(146, 35);
             this.ReturnButton.TabIndex = 8;
@@ -72,7 +76,7 @@
             // 
             this.DeleteCustomerButton.Enabled = false;
             this.DeleteCustomerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DeleteCustomerButton.Location = new System.Drawing.Point(546, 604);
+            this.DeleteCustomerButton.Location = new System.Drawing.Point(548, 637);
             this.DeleteCustomerButton.Name = "DeleteCustomerButton";
             this.DeleteCustomerButton.Size = new System.Drawing.Size(146, 57);
             this.DeleteCustomerButton.TabIndex = 7;
@@ -83,7 +87,7 @@
             // AddCustomerButton
             // 
             this.AddCustomerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddCustomerButton.Location = new System.Drawing.Point(546, 541);
+            this.AddCustomerButton.Location = new System.Drawing.Point(548, 574);
             this.AddCustomerButton.Name = "AddCustomerButton";
             this.AddCustomerButton.Size = new System.Drawing.Size(146, 57);
             this.AddCustomerButton.TabIndex = 6;
@@ -95,7 +99,7 @@
             // 
             this.UpdateCustomerButton.Enabled = false;
             this.UpdateCustomerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.UpdateCustomerButton.Location = new System.Drawing.Point(546, 478);
+            this.UpdateCustomerButton.Location = new System.Drawing.Point(548, 511);
             this.UpdateCustomerButton.Name = "UpdateCustomerButton";
             this.UpdateCustomerButton.Size = new System.Drawing.Size(146, 57);
             this.UpdateCustomerButton.TabIndex = 5;
@@ -170,16 +174,6 @@
             this.PhoneNumberLabel.TabIndex = 10;
             this.PhoneNumberLabel.Text = "Phone Number";
             // 
-            // AddressTextBox
-            // 
-            this.AddressTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddressTextBox.Location = new System.Drawing.Point(546, 232);
-            this.AddressTextBox.Multiline = true;
-            this.AddressTextBox.Name = "AddressTextBox";
-            this.AddressTextBox.Size = new System.Drawing.Size(146, 108);
-            this.AddressTextBox.TabIndex = 3;
-            this.AddressTextBox.Leave += new System.EventHandler(this.AddressTextBox_LeaveFocus);
-            // 
             // AddressLabel
             // 
             this.AddressLabel.AutoSize = true;
@@ -193,7 +187,7 @@
             // IdNumberTextBox
             // 
             this.IdNumberTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IdNumberTextBox.Location = new System.Drawing.Point(546, 370);
+            this.IdNumberTextBox.Location = new System.Drawing.Point(546, 416);
             this.IdNumberTextBox.Name = "IdNumberTextBox";
             this.IdNumberTextBox.Size = new System.Drawing.Size(146, 26);
             this.IdNumberTextBox.TabIndex = 4;
@@ -203,7 +197,7 @@
             // 
             this.IdNumberLabel.AutoSize = true;
             this.IdNumberLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.IdNumberLabel.Location = new System.Drawing.Point(542, 343);
+            this.IdNumberLabel.Location = new System.Drawing.Point(545, 389);
             this.IdNumberLabel.Name = "IdNumberLabel";
             this.IdNumberLabel.Size = new System.Drawing.Size(110, 24);
             this.IdNumberLabel.TabIndex = 14;
@@ -213,7 +207,7 @@
             // 
             this.CustomerDetailsButton.Enabled = false;
             this.CustomerDetailsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CustomerDetailsButton.Location = new System.Drawing.Point(546, 415);
+            this.CustomerDetailsButton.Location = new System.Drawing.Point(548, 448);
             this.CustomerDetailsButton.Name = "CustomerDetailsButton";
             this.CustomerDetailsButton.Size = new System.Drawing.Size(146, 57);
             this.CustomerDetailsButton.TabIndex = 15;
@@ -221,15 +215,64 @@
             this.CustomerDetailsButton.UseVisualStyleBackColor = true;
             this.CustomerDetailsButton.Click += new System.EventHandler(this.CustomerDetailsButton_Click);
             // 
-            // CustomersForm
+            // AddressTextBox1
+            // 
+            this.AddressTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddressTextBox1.Location = new System.Drawing.Point(546, 232);
+            this.AddressTextBox1.Name = "AddressTextBox1";
+            this.AddressTextBox1.Size = new System.Drawing.Size(146, 26);
+            this.AddressTextBox1.TabIndex = 16;
+            this.AddressTextBox1.Leave += new System.EventHandler(this.AddressTextBox1_LeaveFocus);
+            // 
+            // AddressTextBox2
+            // 
+            this.AddressTextBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddressTextBox2.Location = new System.Drawing.Point(546, 264);
+            this.AddressTextBox2.Name = "AddressTextBox2";
+            this.AddressTextBox2.Size = new System.Drawing.Size(146, 26);
+            this.AddressTextBox2.TabIndex = 17;
+            this.AddressTextBox2.Leave += new System.EventHandler(this.AddressTextBox2_LeaveFocus);
+            // 
+            // AddressTextBox3
+            // 
+            this.AddressTextBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddressTextBox3.Location = new System.Drawing.Point(546, 296);
+            this.AddressTextBox3.Name = "AddressTextBox3";
+            this.AddressTextBox3.Size = new System.Drawing.Size(146, 26);
+            this.AddressTextBox3.TabIndex = 18;
+            this.AddressTextBox3.Leave += new System.EventHandler(this.AddressTextBox3_LeaveFocus);
+            // 
+            // AddressTextBox4
+            // 
+            this.AddressTextBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddressTextBox4.Location = new System.Drawing.Point(546, 328);
+            this.AddressTextBox4.Name = "AddressTextBox4";
+            this.AddressTextBox4.Size = new System.Drawing.Size(146, 26);
+            this.AddressTextBox4.TabIndex = 19;
+            this.AddressTextBox4.Leave += new System.EventHandler(this.AddressTextBox4_LeaveFocus);
+            // 
+            // AddressTextBox5
+            // 
+            this.AddressTextBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddressTextBox5.Location = new System.Drawing.Point(546, 360);
+            this.AddressTextBox5.Name = "AddressTextBox5";
+            this.AddressTextBox5.Size = new System.Drawing.Size(146, 26);
+            this.AddressTextBox5.TabIndex = 20;
+            this.AddressTextBox5.Leave += new System.EventHandler(this.AddressTextBox5_LeaveFocus);
+            // 
+            // Customers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(705, 713);
+            this.ClientSize = new System.Drawing.Size(705, 747);
+            this.Controls.Add(this.AddressTextBox5);
+            this.Controls.Add(this.AddressTextBox4);
+            this.Controls.Add(this.AddressTextBox3);
+            this.Controls.Add(this.AddressTextBox2);
+            this.Controls.Add(this.AddressTextBox1);
             this.Controls.Add(this.CustomerDetailsButton);
             this.Controls.Add(this.IdNumberTextBox);
             this.Controls.Add(this.IdNumberLabel);
-            this.Controls.Add(this.AddressTextBox);
             this.Controls.Add(this.AddressLabel);
             this.Controls.Add(this.PhoneNumberTextBox);
             this.Controls.Add(this.PhoneNumberLabel);
@@ -244,7 +287,7 @@
             this.Controls.Add(this.ReturnButton);
             this.Controls.Add(this.CustomersListView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "CustomersForm";
+            this.Name = "Customers";
             this.Text = "Customers";
             this.Activated += new System.EventHandler(this.CustomerForm_Activated);
             this.ResumeLayout(false);
@@ -266,10 +309,14 @@
         private System.Windows.Forms.TextBox SurnameTextBox;
         private System.Windows.Forms.TextBox PhoneNumberTextBox;
         private System.Windows.Forms.Label PhoneNumberLabel;
-        private System.Windows.Forms.TextBox AddressTextBox;
         private System.Windows.Forms.Label AddressLabel;
         private System.Windows.Forms.TextBox IdNumberTextBox;
         private System.Windows.Forms.Label IdNumberLabel;
         private System.Windows.Forms.Button CustomerDetailsButton;
+        private System.Windows.Forms.TextBox AddressTextBox1;
+        private System.Windows.Forms.TextBox AddressTextBox2;
+        private System.Windows.Forms.TextBox AddressTextBox3;
+        private System.Windows.Forms.TextBox AddressTextBox4;
+        private System.Windows.Forms.TextBox AddressTextBox5;
     }
 }

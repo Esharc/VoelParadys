@@ -21,8 +21,9 @@ namespace VoelParadys
             InitializeComponent();
             m_iSelectedCustomerID = theSelectedCustomerId;
 
-            string sName = "", sRepName = "", sRepSurname = "", sAddress = "", sPhoneNumber = "";
-            VoelParadysDataController.GetInstance().GetSupplierData(m_iSelectedCustomerID, ref sName, ref sRepName, ref sRepSurname, ref sAddress, ref sPhoneNumber);
+            string sName = "", sRepName = "", sRepSurname = "", sPhoneNumber = "";
+            string[] saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
+            VoelParadysDataController.GetInstance().GetSupplierData(m_iSelectedCustomerID, ref sName, ref sRepName, ref sRepSurname, ref saAddress, ref sPhoneNumber);
 
             HeadingLabel.Text = "Supplied items for " + sName;
             SetUpSuppliedItems();

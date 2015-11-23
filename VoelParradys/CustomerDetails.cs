@@ -24,9 +24,10 @@ namespace VoelParadys
             m_sSelectedItem = "";
             m_iSelectedCustomerID = theSelectedCustomerId;
 
-            string sName = "", sSurname = "", sAddress = "", sPhoneNumber = "";
+            string sName = "", sSurname = "", sPhoneNumber = "";
+            string[] saAddress = new string[5] { "", "", "", "", "" };
             long lIDNumber = -1;
-            VoelParadysDataController.GetInstance().GetCustomerData(m_iSelectedCustomerID, ref sName, ref sSurname, ref sAddress, ref sPhoneNumber, ref lIDNumber);
+            VoelParadysDataController.GetInstance().GetCustomerData(m_iSelectedCustomerID, ref sName, ref sSurname, ref saAddress, ref sPhoneNumber, ref lIDNumber);
 
             HeadingLabel.Text = "Wish list items for " + sName;
             SetUpWishList();

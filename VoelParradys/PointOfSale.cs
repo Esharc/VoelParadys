@@ -13,78 +13,13 @@ using BrightIdeasSoftware;
 
 namespace VoelParadys
 {
-    struct SSaleInvoiceData
-    {
-        string m_sItemCode;                 // The code of the item to be sold
-        string m_sItemName;                 // The name of the item to be sold
-        int m_iItemQuantity;                // The amount of the item to be sold
-        float m_fItemSellPrice;             // The price that the item was sold at
-
-        public SSaleInvoiceData(string sItemCode, string sItemName, int iItemQuantity, float fSellPrice)
-        {
-            m_sItemCode = sItemCode;
-            m_sItemName = sItemName;
-            m_iItemQuantity = iItemQuantity;
-            m_fItemSellPrice = fSellPrice;
-        }
-
-        // Add the item code to the sale item
-        public void AddCode(string sCode)
-        {
-            m_sItemCode = sCode;
-        }
-        // Add the item name to the sale item
-        public void AddName(string sName)
-        {
-            m_sItemName = sName;
-        }
-        // Add the quantity to the sale item
-        public void AddQuantity(int iQuantity)
-        {
-            m_iItemQuantity = iQuantity;
-        }
-        // Add the quantity to the sale item
-        public void AddSellPrice(float fPrice)
-        {
-            m_fItemSellPrice = fPrice;
-        }
-        // Clear the sale item for a new entry
-        public void ClearItem()
-        {
-            m_sItemCode = "";
-            m_sItemName = "";
-            m_iItemQuantity = 1;
-            m_fItemSellPrice = 0;
-        }
-        // Get the sale item code
-        public string GetItemCode()
-        {
-            return m_sItemCode;
-        }
-        // Get the sale item name
-        public string GetItemName()
-        {
-            return m_sItemName;
-        }
-        // Get the sale item quantity
-        public int GetItemQuantity()
-        {
-            return m_iItemQuantity;
-        }
-        // Get the sale item sell price
-        public float GetItemSellPrice()
-        {
-            return m_fItemSellPrice;
-        }
-    }
-
     public partial class PointOfSale : Form
     {
         private float m_fCashReceived;
         float m_fSubTotal;
         string m_sSelectedItemCode;            // The currently selected item in the list
-        private List<SSaleInvoiceData> m_lSaleItems;
-        private SSaleInvoiceData m_SItem;
+        private List<VoelParadysDataStructures.SSaleInvoiceData> m_lSaleItems;
+        private VoelParadysDataStructures.SSaleInvoiceData m_SItem;
 
         public PointOfSale()
         {
@@ -92,8 +27,8 @@ namespace VoelParadys
             VoelParadysDataController.GetInstance();
             InitializeComponent();
             SetUpInvoiceList();
-            m_lSaleItems = new List<SSaleInvoiceData>();
-            m_SItem = new SSaleInvoiceData("", "", 1, 0);
+            m_lSaleItems = new List<VoelParadysDataStructures.SSaleInvoiceData>();
+            m_SItem = new VoelParadysDataStructures.SSaleInvoiceData("", "", 1, 0);
             m_fCashReceived = 0;
             m_fSubTotal = 0;
             m_sSelectedItemCode = "";
@@ -111,7 +46,7 @@ namespace VoelParadys
                     int iQuantS = -1, iQuantB = -1, iQuantU = -1;
                     float fCPrice = 0, fSPrice = 0;
                     rDataController.GetStockItemData(sTempItemCode, ref sName, ref iQuantS, ref iQuantB, ref iQuantU, ref fCPrice, ref fSPrice);
-                    m_lSaleItems.Add(new SSaleInvoiceData(sTempItemCode, WishListItems[i], 1, fSPrice));
+                    m_lSaleItems.Add(new VoelParadysDataStructures.SSaleInvoiceData(sTempItemCode, WishListItems[i], 1, fSPrice));
                     rDataController.DeleteCustomerWishListItem(iCustomerID, WishListItems[i]);
                 }
             }
@@ -187,7 +122,7 @@ namespace VoelParadys
             }
         }
         // If the item already exists in the sale data, then just rewrite it
-        private void AddSaleItem(SSaleInvoiceData theSaleData)
+        private void AddSaleItem(VoelParadysDataStructures.SSaleInvoiceData theSaleData)
         {
             for (int i = 0; i < m_lSaleItems.Count; ++i)
             {
@@ -407,9 +342,9 @@ namespace VoelParadys
             lListPrinter.ListHeaderFormat.SetBorderPen(Sides.All, new Pen(Color.Black, 0.5f));
             lListPrinter.ListGridPen = new Pen(Color.Black);
 
-            lListPrinter.PrintPreview();
+            // lListPrinter.PrintPreview();
             // TODO: Once the product is complete, uncomment this to actually print the page, and comment out the PrintPreview to print directly without first viewing it
-            // lListPrinter.PrintWithDialog();
+            lListPrinter.PrintWithDialog();
         }
 
         private void StoreUsageButton_Click(object sender, EventArgs e)

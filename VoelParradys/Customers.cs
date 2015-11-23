@@ -11,11 +11,12 @@ namespace VoelParadys
 {
     public partial class Customers : Form
     {
+        private bool m_bDeleteWarningShown;                         // Has the delete message box warning been shown
         private int m_iSelectedCustomerID;                          // The ID of the selected customer [can be edited]
         private string m_sTempName;                                 // The name of the selected customer [can be edited]
         private string m_sTempSurname;                              // The surname of the selected customer [can be edited]
         private string m_sTempPhone;                                // The phone number of the selected customer [can be edited]
-        private string m_sTempAddress;                              // The address of the selected customer [can be edited]
+        private string[] m_saTempAddress;                           // The address of the selected customer [can be edited]
         private long m_lTempIDNumber;                               // The ID number of the selected customer [can be edited]
 
         public Customers()
@@ -26,8 +27,9 @@ namespace VoelParadys
             m_sTempName = "-1";
             m_sTempSurname = "-1";
             m_sTempPhone = "-1";
-            m_sTempAddress = "-1";
+            m_saTempAddress = new string[5] {"-1", "-1", "-1", "-1", "-1"};
             m_lTempIDNumber = -1;
+            m_bDeleteWarningShown = false;
         }
 
         // Add the column headers to the customers list
@@ -47,7 +49,7 @@ namespace VoelParadys
         }
         private void AddCustomersToList()
         {
-            // Here we should get all the stock items and add them to the list.
+            // Here we should get all the cutomers and add them to the list.
             CustomersListView.Items.Clear();
             string[] arr = new string[6];
             ListViewItem itm;
@@ -56,19 +58,25 @@ namespace VoelParadys
             for (int i = 0; i < rDataController.GetCustomerListSize(); ++i)
             {
                 int iID = -1;
-                string sName = "", sSurname = "", sAddress = "", sPhoneNumber = "";
+                string sName = "", sSurname = "", sPhoneNumber = "";
+                string[] saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
                 long lIDNumber = -1;
-                rDataController.GetCustomerData(i, ref iID, ref sName, ref sSurname, ref sAddress, ref sPhoneNumber, ref lIDNumber);
-
+                rDataController.GetCustomerData(i, ref iID, ref sName, ref sSurname, ref saAddress, ref sPhoneNumber, ref lIDNumber);
                 string sFormattedAddress = "";
-                if (sAddress != "-1")
-                    sFormattedAddress = sAddress.Replace(";", ", ");
+           
+                for (int j = 0; j < saAddress.Length; ++j)
+                {
+                    if (j == saAddress.Length - 1)
+                        sFormattedAddress += saAddress[j];
+                    else
+                        sFormattedAddress += saAddress[j] + ", ";
+                }
 
                 arr[0] = iID.ToString();
                 arr[1] = sName == "-1" ? "" : sName;
                 arr[2] = sSurname == "-1" ? "" : sSurname;
                 arr[3] = sPhoneNumber == "-1" ? "" : sPhoneNumber;
-                arr[4] = sFormattedAddress;
+                arr[4] = sFormattedAddress.Contains("-1") ? "" : sFormattedAddress;
                 arr[5] = lIDNumber == -1 ? "" : lIDNumber.ToString();
                 itm = new ListViewItem(arr);
                 CustomersListView.Items.Add(itm);
@@ -87,6 +95,7 @@ namespace VoelParadys
 
         private void CustomerOnSelected(object sender, EventArgs e)
         {
+            ClearMemberVairiables();
             if (!UpdateCustomerButton.Enabled)
                 UpdateCustomerButton.Enabled = true;
             if (!DeleteCustomerButton.Enabled)
@@ -95,47 +104,27 @@ namespace VoelParadys
                 CustomerDetailsButton.Enabled = true;
 
             var rDataController = VoelParadysDataController.GetInstance();
-            string sName = "", sSurname = "", sAddress = "", sPhoneNumber = "";
+            string sName = "", sSurname = "", sPhoneNumber = "";
+            string[] saAddress = new string[5];
             long lIDNumber = -1;
             m_iSelectedCustomerID = int.Parse(CustomersListView.SelectedItems[0].SubItems[0].Text.ToString());
-            rDataController.GetCustomerData(m_iSelectedCustomerID, ref sName, ref sSurname, ref sAddress, ref sPhoneNumber, ref lIDNumber);
-            string sFormattedAddress = "-1";
-            if (sAddress != "-1")
-            {
-                sFormattedAddress = "";
-                char[] acDelimiterArray = {';'};
-                string[] aAddressLines = sAddress.Split(acDelimiterArray, StringSplitOptions.RemoveEmptyEntries);
-                int iCount = aAddressLines.Length < 5 ? aAddressLines.Length : 5;
-                for (int i = 0; i < iCount; ++i)
-                {
-                    if (i == iCount - 1)
-                        sFormattedAddress += aAddressLines[i];
-                    else
-                        sFormattedAddress += aAddressLines[i] + "\r\n";
-                }
-
-                if (aAddressLines.Length > 5)
-                {
-                    iCount = aAddressLines.Length;
-                    for (int j = 5; j < iCount; ++j)
-                    {
-                        if (j == 5)
-                            sFormattedAddress += ", " + aAddressLines[j];
-                        else
-                            sFormattedAddress += aAddressLines[j] + ",";
-                    }
-                }
-            }
+            rDataController.GetCustomerData(m_iSelectedCustomerID, ref sName, ref sSurname, ref saAddress, ref sPhoneNumber, ref lIDNumber);
+            
             m_sTempName = sName;
             m_sTempSurname = sSurname;
             m_sTempPhone = sPhoneNumber;
-            m_sTempAddress = sFormattedAddress;
+            for (int i = 0; i < saAddress.Length; ++i)
+                m_saTempAddress[i] = saAddress[i];
             m_lTempIDNumber = lIDNumber;
 
             NameTextBox.Text = m_sTempName == "-1" ? "" : m_sTempName;
             SurnameTextBox.Text = m_sTempSurname == "-1" ? "" : m_sTempSurname;
             PhoneNumberTextBox.Text = m_sTempPhone == "-1" ? "" : m_sTempPhone;
-            AddressTextBox.Text = m_sTempAddress == "-1" ? "" : m_sTempAddress;
+            AddressTextBox1.Text = m_saTempAddress[0] == "-1" ? "" : m_saTempAddress[0];
+            AddressTextBox2.Text = m_saTempAddress[1] == "-1" ? "" : m_saTempAddress[1];
+            AddressTextBox3.Text = m_saTempAddress[2] == "-1" ? "" : m_saTempAddress[2];
+            AddressTextBox4.Text = m_saTempAddress[3] == "-1" ? "" : m_saTempAddress[3];
+            AddressTextBox5.Text = m_saTempAddress[4] == "-1" ? "" : m_saTempAddress[4];
             IdNumberTextBox.Text = m_lTempIDNumber == -1 ? "" : m_lTempIDNumber.ToString();
         }
 
@@ -154,22 +143,29 @@ namespace VoelParadys
             m_sTempPhone = PhoneNumberTextBox.Text;
         }
 
-        private void AddressTextBox_LeaveFocus(object sender, EventArgs e)
+        private void AddressTextBox1_LeaveFocus(object sender, EventArgs e)
         {
-            // For inserting members into the address text box, remember to add the /r/n delimeters for the different lines.
-            string sAddress = "";
-            m_sTempAddress = "";
-            sAddress = AddressTextBox.Text;
-            char[] acDelimiterArray = { '\r', '\n' };
-            string[] aAddressLines = sAddress.Split(acDelimiterArray, StringSplitOptions.RemoveEmptyEntries);
+            m_saTempAddress[0] = AddressTextBox1.Text == "" ? "-1" : AddressTextBox1.Text;
+        }
 
-            for (int i = 0; i < aAddressLines.Length; ++i)
-            {
-                if (i == aAddressLines.Length - 1)
-                    m_sTempAddress += aAddressLines[i];
-                else
-                    m_sTempAddress += aAddressLines[i] + ";";
-            }
+        private void AddressTextBox2_LeaveFocus(object sender, EventArgs e)
+        {
+            m_saTempAddress[1] = AddressTextBox2.Text == "" ? "-1" : AddressTextBox2.Text;
+        }
+
+        private void AddressTextBox3_LeaveFocus(object sender, EventArgs e)
+        {
+            m_saTempAddress[2] = AddressTextBox3.Text == "" ? "-1" : AddressTextBox3.Text;
+        }
+
+        private void AddressTextBox4_LeaveFocus(object sender, EventArgs e)
+        {
+            m_saTempAddress[3] = AddressTextBox4.Text == "" ? "-1" : AddressTextBox4.Text;
+        }
+
+        private void AddressTextBox5_LeaveFocus(object sender, EventArgs e)
+        {
+            m_saTempAddress[4] = AddressTextBox5.Text == "" ? "-1" : AddressTextBox5.Text;
         }
 
         private void IdNumberTextBox_LeaveFocus(object sender, EventArgs e)
@@ -195,9 +191,10 @@ namespace VoelParadys
             var rDataController = VoelParadysDataController.GetInstance();
             if (rDataController.DoesCustomerExistInDatabase(m_iSelectedCustomerID))
             {
-                string sName = "", sSurname = "", sAddress = "", sPhoneNumber = "";
+                string sName = "", sSurname = "", sPhoneNumber = "";
+                string[] saAddress = new string[5] { "-1", "-1", "-1", "-1", "-1" };
                 long lIDNumber = -1;
-                rDataController.GetCustomerData(m_iSelectedCustomerID, ref sName, ref sSurname, ref sAddress, ref sPhoneNumber, ref lIDNumber);
+                rDataController.GetCustomerData(m_iSelectedCustomerID, ref sName, ref sSurname, ref saAddress, ref sPhoneNumber, ref lIDNumber);
 
                 bool bChanged = false;
                 if (m_sTempName != "-1" && m_sTempName != sName)
@@ -215,9 +212,9 @@ namespace VoelParadys
                     sPhoneNumber = m_sTempPhone;
                     bChanged = true;
                 }
-                if (m_sTempAddress != "-1" && sAddress != m_sTempAddress)
+                if (m_saTempAddress != null && saAddress != m_saTempAddress)
                 {
-                    sAddress = m_sTempAddress;
+                    saAddress = m_saTempAddress;
                     bChanged = true;
                 }
                 if (m_lTempIDNumber != -1 && lIDNumber != m_lTempIDNumber)
@@ -227,7 +224,7 @@ namespace VoelParadys
                 }
                 if (bChanged)
                 {
-                    rDataController.UpdateCustomerDetails(m_iSelectedCustomerID, sName, sSurname, sAddress, sPhoneNumber, lIDNumber);
+                    rDataController.UpdateCustomerDetails(m_iSelectedCustomerID, sName, sSurname, saAddress, sPhoneNumber, lIDNumber);
                     ClearMemberVairiables();
                     ClearTextBoxes();
                     this.Refresh();
@@ -238,10 +235,12 @@ namespace VoelParadys
         private void DeleteCustomerButton_Click(object sender, EventArgs e)
         {
             var rDataController = VoelParadysDataController.GetInstance();
-            string sName = "", sSurname = "", sAddress = "", sPhoneNumber = "";
+            string sName = "", sSurname = "", sPhoneNumber = "";
+            string[] saAddress = new string[5] { "", "", "", "", "" };
             long lIDNumber = -1;
-            rDataController.GetCustomerData(m_iSelectedCustomerID, ref sName, ref sSurname, ref sAddress, ref sPhoneNumber, ref lIDNumber);
+            rDataController.GetCustomerData(m_iSelectedCustomerID, ref sName, ref sSurname, ref saAddress, ref sPhoneNumber, ref lIDNumber);
 
+            m_bDeleteWarningShown = true;
             DialogResult messageBoxResult = rDataController.DisplayWarningMessageForDelete(sName);
           
             if (messageBoxResult == DialogResult.Yes)
@@ -249,6 +248,7 @@ namespace VoelParadys
                 if (rDataController.DoesCustomerExistInDatabase(m_iSelectedCustomerID))
                 {
                     rDataController.DeleteCustomerFromDB(m_iSelectedCustomerID);
+                    m_bDeleteWarningShown = false;
                     ClearMemberVairiables();
                     ClearTextBoxes();
                     this.Refresh();
@@ -263,7 +263,7 @@ namespace VoelParadys
             m_sTempName = "-1";
             m_sTempSurname = "-1";
             m_sTempPhone = "-1";
-            m_sTempAddress = "-1";
+            m_saTempAddress = new string[5] {"-1", "-1", "-1", "-1", "-1"};
             m_lTempIDNumber = -1;
         }
 
@@ -272,7 +272,11 @@ namespace VoelParadys
             NameTextBox.Clear();
             SurnameTextBox.Clear();
             PhoneNumberTextBox.Clear();
-            AddressTextBox.Clear();
+            AddressTextBox1.Clear();
+            AddressTextBox2.Clear();
+            AddressTextBox3.Clear();
+            AddressTextBox4.Clear();
+            AddressTextBox5.Clear();
             IdNumberTextBox.Clear();
         }
 
@@ -284,10 +288,13 @@ namespace VoelParadys
 
         private void CustomerForm_Activated(object sender, EventArgs e)
         {
-            // We want to refresh once when we have focus again.
-            this.Refresh();
-            ClearMemberVairiables();
-            ClearTextBoxes();
+            if (!m_bDeleteWarningShown)
+            {
+                // We want to refresh once when we have focus again.
+                this.Refresh();
+                ClearMemberVairiables();
+                ClearTextBoxes();
+            }
         }
 
         private void CustomerDetailsButton_Click(object sender, EventArgs e)

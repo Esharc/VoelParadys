@@ -11,6 +11,7 @@ namespace VoelParadys
 {
     public partial class Inventory : Form
     {
+        private bool m_bDeleteWarningShown;                 // Has the delete message box warning been shown
         private string m_sSelectedItemCode;                 // The code of the currently selected item
         private int m_iSelectedSupplierID;                  // The details of the currently selected item
         private string m_sTempQuantityBought;               // The temporary quantity bought that was entered by the user
@@ -30,6 +31,7 @@ namespace VoelParadys
             SetUpInventoryList();
             PopulateSupplierComboBox();
             AddItemsToList();
+            m_bDeleteWarningShown = false;
         }
 
         private void InventoryReturn_Click(object sender, EventArgs e)
@@ -228,7 +230,7 @@ namespace VoelParadys
         private void Inventory_Activated(object sender, EventArgs e)
         {
             // We want to refresh once when we have focus again.
-            if (m_bNewItemWindowLoaded)
+            if (m_bNewItemWindowLoaded || !m_bDeleteWarningShown)
             {
                 m_sSelectedItemCode = "";
                 ClearTextFields();
@@ -240,7 +242,7 @@ namespace VoelParadys
 
         private void Inventory_Deactivate(object sender, EventArgs e)
         {
-            if (!m_bNewItemWindowLoaded)
+            if (!m_bNewItemWindowLoaded && !m_bDeleteWarningShown)
                 this.Close();
         }
 
@@ -253,6 +255,7 @@ namespace VoelParadys
 
             rDataController.GetStockItemData(m_sSelectedItemCode, ref sName, ref iQuantitySold, ref iQuantityBought, ref iQuantityUsed, ref fCostPrice, ref fSellPrice);
 
+            m_bDeleteWarningShown = true;
             DialogResult messageBoxResult = rDataController.DisplayWarningMessageForDelete(sName);
 
             if (messageBoxResult == DialogResult.Yes)
@@ -262,6 +265,7 @@ namespace VoelParadys
                     UpdateItemButton.Enabled = false;
                     DeleteItemButton.Enabled = false;
                     rDataController.DeleteInventoryItem(m_sSelectedItemCode);
+                    m_bDeleteWarningShown = false;
                     m_sSelectedItemCode = "";
                     m_iSelectedSupplierID = -1;
                     BuyPriceTextBox.Clear();
@@ -303,7 +307,5 @@ namespace VoelParadys
             UpdateItemButton.Enabled = false;
             DeleteItemButton.Enabled = false;
         }
-
-        
     }
 }

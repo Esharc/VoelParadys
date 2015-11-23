@@ -5,180 +5,13 @@ using System.Text;
 
 namespace VoelParadys
 {
-    public class CSupplierDetails : IEquatable<CSupplierDetails>, IComparable<CSupplierDetails>
-    {
-        struct SSuppliedItem
-        {
-            string sItemCode;
-            int iItemQuantity;
-
-            public SSuppliedItem(string sCode, int iQuantity)
-            {
-                sItemCode = sCode;
-                iItemQuantity = iQuantity;
-            }
-
-            // Getters
-            public string GetItemCode() { return sItemCode; }
-            public int GetItemQuantity() { return iItemQuantity; }
-
-            // Setters
-            public void SetItemDetails(string sCode, int iQuantity)
-            {
-                sItemCode = sCode;
-                iItemQuantity = iQuantity;
-            }
-            public void UpdateItemQuantity(int QuantityIncrement)
-            {
-                iItemQuantity += QuantityIncrement;
-            }
-        }
-
-        int iSupplierID;                            // The ID of the supplier (Unique and auto generated)
-        string sSupplierName;                       // The name of the supplier (Required)
-        string sRepName;                            // The name of the representative for the supplier (Optional)
-        string sRepSurname;                         // The surname of the representative for the supplier (Optional)
-        string sSupplierAddress;                    // The address of the supplier (Optional)
-        string sSupplierPhoneNumber;                // The phone number of the supplier (Optional)   
-        List<SSuppliedItem> lsSuppliedItemsList;           // A list of all the items bought from the supplier              
-
-        public CSupplierDetails()
-        {
-            lsSuppliedItemsList = new List<SSuppliedItem>();
-            iSupplierID = -1;
-            sSupplierName = "-1";
-            sRepName = "-1";
-            sRepSurname = "-1";
-            sSupplierAddress = "-1";
-            sSupplierPhoneNumber = "-1";
-        }
-
-        public CSupplierDetails(int _iCode, string _sSupName, string _sRepName, string _sRepSurname, string _sAddress, string _sPhoneNumber)
-        {
-            lsSuppliedItemsList = new List<SSuppliedItem>();
-            iSupplierID = _iCode;
-            sSupplierName = _sSupName;
-            sRepName = _sRepName;
-            sRepSurname = _sRepSurname;
-            sSupplierAddress = _sAddress;
-            sSupplierPhoneNumber = _sPhoneNumber;
-        }
-
-        // Getters
-        public int GetSupplierID() { return iSupplierID; }
-        public string GetSupplierName() { return sSupplierName; }
-        public string GetRepName() { return sRepName; }
-        public string GetRepSurname() { return sRepSurname; }
-        public string GetSupplierAddress() { return sSupplierAddress; }
-        public string GetSupplierPhone() { return sSupplierPhoneNumber; }
-        public int GetSuppliedItemsListCount() { return lsSuppliedItemsList == null ? 0 : lsSuppliedItemsList.Count; }
-        public void GetSuppliedItemsListItemAt(int iIndex, ref string sCode, ref int iQuantity) 
-        { 
-            SSuppliedItem TempItem = lsSuppliedItemsList[iIndex];
-            sCode = TempItem.GetItemCode();
-            iQuantity = TempItem.GetItemQuantity();
-        }
-        // Setters
-        public void SetSupplierID(int iID)
-        {
-            iSupplierID = iID;
-        }
-        public void SetSupplierName(string sName)
-        {
-            string sTheSupplierName = sName == null ? "" : sName;
-            sSupplierName = sTheSupplierName;
-        }
-        public void SetRepName(string sName)
-        {
-            string sTheRepName = sName == null ? "" : sName;
-            sRepName = sTheRepName;
-        }
-        public void SetRepSurname(string sSurname)
-        {
-            string sTheSurname = sSurname == null ? "" : sSurname;
-            sRepSurname = sTheSurname;
-        }
-        public void SetSupplierAddress(string sAddress)
-        {
-            string sTheAddress = sAddress == null ? "" : sAddress;
-            sSupplierAddress = sTheAddress;
-        }
-        public void SetSupplierPhoneNumber(string sPhone)
-        {
-            string sThePhoneNumber = sPhone == null ? "" : sPhone;
-            sSupplierPhoneNumber = sThePhoneNumber;
-        }
-        public void AddSuppliedItemsListItem(string sItemCode, int iQuantity)
-        {
-            SSuppliedItem TempItem = new SSuppliedItem(sItemCode, iQuantity);
-            lsSuppliedItemsList.Add(TempItem);
-        }
-        public void UpdateSuppliedItemsListItem(string sItemCode, int iQuantity)
-        {
-            for (int i = 0; i < lsSuppliedItemsList.Count; ++i)
-            {
-                // If the item exists in the list, then update it
-                if (lsSuppliedItemsList[i].GetItemCode() == sItemCode)
-                {
-                    lsSuppliedItemsList[i].UpdateItemQuantity(iQuantity);
-                    return;
-                }
-            }
-
-            // If the item does not exist in the list, then we add it. This will only be reached if the for loop does not return
-            lsSuppliedItemsList.Add(new SSuppliedItem(sItemCode, iQuantity));
-        }
-        public void DeleteSuppliedItemsListItem(string sItemCode)
-        {
-            for (int i = 0; i < lsSuppliedItemsList.Count; ++i)
-            {
-                if (lsSuppliedItemsList[i].GetItemCode() == sItemCode)
-                    lsSuppliedItemsList.RemoveAt(i);
-            }
-        }
-
-        // Comparison overrides
-        // Override the Equals function
-        public override bool Equals(object obj)
-        {
-            if (obj == null)
-                return false;
-            CSupplierDetails ObjAsSupplierDetails = obj as CSupplierDetails;
-            if (ObjAsSupplierDetails == null)
-                return false;
-            else
-                return Equals(ObjAsSupplierDetails);
-        }
-        // Default comparer for CSupplierDetails Type
-        public int CompareTo(CSupplierDetails SupplierToCompare)
-        {
-            // A null value means that this object is greater
-            if (SupplierToCompare == null)
-                return 1;
-            else
-                return this.iSupplierID.CompareTo(SupplierToCompare.iSupplierID);
-        }
-        // Override the GetHashCode function to return the supplier ID
-        public override int GetHashCode()
-        {
-            return iSupplierID;
-        }
-        // My equals function
-        public bool Equals(CSupplierDetails other)
-        {
-            if (other == null)
-                return false;
-            return (this.iSupplierID.Equals(other.iSupplierID));
-        }
-    }
-
     class VoelParadysSuppliersData
     {
-        List<CSupplierDetails> m_lSupplierList;
+        List<VoelParadysDataStructures.CSupplierDetails> m_lSupplierList;
 
         public VoelParadysSuppliersData()
         {
-            m_lSupplierList = new List<CSupplierDetails>();
+            m_lSupplierList = new List<VoelParadysDataStructures.CSupplierDetails>();
         }
 
         private bool HasIDBeenUsed(int iSupplierID)
@@ -217,12 +50,12 @@ namespace VoelParadys
             iUniqueId = iTempID;
         }
         // This function should only be used by the controller to populate the list
-        public List<CSupplierDetails> GetSupplierList()
+        public List<VoelParadysDataStructures.CSupplierDetails> GetSupplierList()
         {
             return m_lSupplierList;
         }
         // Add a new customer to the database
-        public void AddNewSupplierToList(CSupplierDetails theNewSupplier)
+        public void AddNewSupplierToList(VoelParadysDataStructures.CSupplierDetails theNewSupplier)
         {
             m_lSupplierList.Add(theNewSupplier);
             VoelParadysDataController.GetInstance().WriteSupplierDataToDB();
@@ -233,19 +66,19 @@ namespace VoelParadys
             return m_lSupplierList.Count;
         }
         // Get a customer at a given index
-        public CSupplierDetails GetSupplierAt(int iIndex)
+        public VoelParadysDataStructures.CSupplierDetails GetSupplierAt(int iIndex)
         {
             return m_lSupplierList[iIndex];
         }
         // Get the customer from a given ID
-        public CSupplierDetails GetSupplierFromID(int iSupplierID)
+        public VoelParadysDataStructures.CSupplierDetails GetSupplierFromID(int iSupplierID)
         {
             for (int i = 0; i < m_lSupplierList.Count; ++i)
             {
                 if (m_lSupplierList[i].GetSupplierID() == iSupplierID)
                     return m_lSupplierList[i];
             }
-            return new CSupplierDetails(-1, "-1", "-1", "-1", "-1", "-1");
+            return new VoelParadysDataStructures.CSupplierDetails(-1, "-1", "-1", "-1", new string[5] { "-1", "-1", "-1", "-1", "-1" }, "-1");
         }
         // Determine if a customer exists in the database with the given ID
         public bool DoesSupplierExistInDatabase(int iSupplierID)
@@ -258,7 +91,7 @@ namespace VoelParadys
             return false;
         }
         // Update the customers details with the given details
-        public void UpdateSupplierDetails(CSupplierDetails UpdatedDetails)
+        public void UpdateSupplierDetails(VoelParadysDataStructures.CSupplierDetails UpdatedDetails)
         {
             for (int i = 0; i < m_lSupplierList.Count; ++i)
             {
