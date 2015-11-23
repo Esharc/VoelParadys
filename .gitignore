@@ -30,3 +30,5 @@ VoelParradys/VoelParradys.suo
 /VoelParradys/*.suo
 /VoelParradys/bin/Release/*.config
 /VoelParradys/bin/Release/*.manifest
+/Prints/Print1.pdf
+/VoelParradys/bin/Release/ObjectListView.xml
